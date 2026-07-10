@@ -237,6 +237,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .entry-link:hover { border-color: var(--ink); box-shadow: 4px 4px 0 #f4cf72; }
 .entry-link:hover > svg:last-child { transform: translateX(3px); }
 .primary-entry { background: #fff4ef; border-color: #d8a39a; }
+.agent-intro .hero-search { margin-top: 18px; }
 .agent-loop { border: 1px solid var(--ink); background: var(--surface); box-shadow: 10px 10px 0 var(--yellow); }
 .loop-title { padding: 13px 18px; background: var(--ink); color: #fff; font-size: .8rem; font-weight: 800; text-transform: uppercase; }
 .loop-parts { display: grid; grid-template-columns: repeat(3, 1fr); }

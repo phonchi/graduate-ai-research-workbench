@@ -5,6 +5,13 @@ import { describe, expect, it } from 'vitest';
 const source = (path: string) => readFileSync(resolve(process.cwd(), path), 'utf8');
 
 describe('search index contract', () => {
+  it('renders the shared search entry on the homepage', () => {
+    const homepage = source('src/pages/index.astro');
+
+    expect(homepage).toMatch(/import SearchBox from ['"]\.\.\/components\/SearchBox\.astro['"]/);
+    expect(homepage).toMatch(/<SearchBox\s*\/>/);
+  });
+
   it('passes a URL query to the initialized Pagefind UI', () => {
     const searchPage = source('src/pages/search/index.astro');
 

@@ -3,6 +3,7 @@ import { ArrowRight, Brain, FolderSearch, MessageSquareMore, ScrollText, Wrench 
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CollectionCard from '../components/CollectionCard.astro';
+import SearchBox from '../components/SearchBox.astro';
 import { buildSitePath } from '../lib/site';
 
 const base = import.meta.env.BASE_URL;
@@ -28,6 +29,7 @@ const featuredTools = ['notebooklm', 'codex', 'claude-code', 'git-github', 'skil
           <a class="entry-link" href={buildSitePath(base, '/tools/')}><Wrench aria-hidden="true" /><span><strong>查工具名詞</strong><small>NotebookLM、Codex、Skill 到 MCP</small></span><ArrowRight aria-hidden="true" /></a>
           <a class="entry-link" href={buildSitePath(base, '/tasks/')}><FolderSearch aria-hidden="true" /><span><strong>我有研究任務</strong><small>從論文、程式、簡報或網站進入</small></span><ArrowRight aria-hidden="true" /></a>
         </div>
+        <SearchBox />
       </div>
       <div class="agent-loop" aria-label="Agent 由腦、手、規矩與驗證迴圈組成">
         <div class="loop-title">會做事的助手</div>
