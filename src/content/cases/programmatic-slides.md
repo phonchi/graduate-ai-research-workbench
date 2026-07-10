@@ -4,10 +4,8 @@ summary: 把版型、內容資料與講者備註交給 Agent 組成可重跑簡�
 order: 40
 part: 封裝
 difficulty: 進階
-slideRefs:
-  - 30
-  - 31
-  - 32
+category: 公開成果
+reproducible: false
 relatedTools:
   - codex
   - claude-code
@@ -19,14 +17,14 @@ graduateTransfer:
 lastVerified: 2026-07-10
 draft: false
 sourceUrl: https://docs.google.com/presentation/d/1mnjmwNZKsl1afDW2ia_QjWbJ9t45-FNC/
-sourceLicense: 封面是作者 phonchi 的公開投影片並由作者授權本站以 CC BY 4.0 收錄；簡報內其他圖像、圖示和字型仍依各自授權使用。
-privacyReview: 封面保留已公開的作者名稱 phonchi、活動名稱與日期；未收錄聯絡資料、學生資料、未公開研究結果或投影片備註。
+sourceLicense: 封面是作者 phonchi 的公開簡報並由作者授權本站以 CC BY 4.0 收錄；簡報內其他圖像、圖示和字型仍依各自授權使用。
+privacyReview: 封面保留已公開的作者名稱 phonchi、活動名稱與日期；未收錄聯絡資料、學生資料、未公開研究結果或講者備註。
 coverImage: /graduate-ai-research-workbench/images/cases/programmatic-slides.webp
 ---
 
 ## 成果先看
 
-這場「AI 教學助攻」簡報本身就是程式化產物：PptxGenJS 生成 13.3 × 7.5 吋寬螢幕版面，以共用元件維持標題、卡片、圖示與頁碼一致，34 張投影片逐頁帶有講者備註。產出不是一張圖片，而是可重新生成的 `deck.pptx`。
+這場「AI 教學助攻」簡報本身就是程式化產物：生成器建立寬螢幕版面，以共用元件維持標題、卡片、圖示與頁碼一致，並為每頁加入對應備註。產出不是單張圖片，而是一份可以由來源重新生成的簡報檔。
 
 ## 當時怎麼交辦
 
@@ -36,11 +34,12 @@ coverImage: /graduate-ai-research-workbench/images/cases/programmatic-slides.web
 
 流程跑順後，將生成、渲染與 QA 習慣封裝成 Skill，下次換主題仍可沿用。
 
-## 研究生可以怎麼轉用
+## 輸入、動作、輸出與驗證
 
-- 為 seminar、proposal 或口試建立固定簡報骨架，讓標題頁、方法頁、結果頁和備註保持一致。
-- 把圖表標題、數值與來源集中管理，更新結果時同步重建所有引用該資料的頁面。
-- 將「輸出 PPTX、渲染預覽、逐頁抽查」封裝成實驗室共用 Skill，交接給學弟妹。
+- **輸入**：章節大綱、結構化文字與圖表資料、版型規則、備註和來源標記。
+- **動作**：內容與版面分開管理，以共用元件生成簡報，再渲染成逐頁預覽。
+- **輸出**：可重新生成的簡報檔、預覽圖與講述備註。
+- **驗證**：比較來源數字與簡報文字；逐頁檢查截字、遮擋、字型替換與實際投影可讀性。
 
 ## 踩坑提醒
 

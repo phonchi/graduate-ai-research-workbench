@@ -3,9 +3,7 @@ title: 開工前先反問
 summary: 不要求自己一次想完所有規格，先讓 AI 把缺少的條件整理成容易回答的選項。
 order: 20
 category: 交辦
-slideRefs:
-  - 13
-  - 32
+applicableTasks: [read, write, experiment, present, publish, automate]
 relatedTools:
   - ask-user-question
   - chatgpt

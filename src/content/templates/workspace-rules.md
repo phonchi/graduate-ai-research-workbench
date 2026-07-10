@@ -3,11 +3,7 @@ title: 一頁工作守則
 summary: 把長期有效的研究慣例、可動範圍與紅線寫進 AGENTS.md 或 CLAUDE.md，讓 Agent 每次自動沿用。
 order: 40
 category: 規矩
-slideRefs:
-  - 8
-  - 9
-  - 28
-  - 30
+applicableTasks: [experiment, publish, automate]
 relatedTools:
   - agents-md
   - claude-md

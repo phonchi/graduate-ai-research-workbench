@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head><meta charset="utf-8" /><title>可重跑實驗預覽</title></head>
+  <body style="margin:0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title description">
+      <title id="title">從原始量測到可驗證摘要</title>
+      <desc id="description">原始 CSV 經零依賴分析器產生統計與完整 manifest</desc>
+      <rect width="1200" height="675" fill="#f3f5ef"/>
+      <text x="64" y="66" fill="#3b6953" font-family="sans-serif" font-size="17" font-weight="700">REPRODUCIBLE RESEARCH FIXTURE</text>
+      <text x="64" y="120" fill="#18201d" font-family="sans-serif" font-size="43" font-weight="800">從原始量測到可驗證摘要</text>
+      <text x="1136" y="112" text-anchor="end" fill="#b63e2f" font-family="monospace" font-size="18" font-weight="700">node analyze.mjs</text>
+      <line x1="64" y1="148" x2="1136" y2="148" stroke="#18201d" stroke-width="2"/>
+
+      <rect x="64" y="184" width="290" height="330" rx="6" fill="#ffffff" stroke="#aeb9b1"/>
+      <text x="88" y="220" fill="#66736c" font-family="sans-serif" font-size="14" font-weight="700">INPUT · READ ONLY</text>
+      <text x="88" y="258" fill="#18201d" font-family="sans-serif" font-size="22" font-weight="800">raw/measurements.csv</text>
+      <g fill="#354139" font-family="monospace" font-size="16" font-weight="600">
+        <text x="88" y="304">sample_id,measurement</text><text x="88" y="340">S01,10.2</text>
+        <text x="88" y="376">S02,11.8</text><text x="88" y="412">S03,12.4</text>
+        <text x="88" y="448">S04,13.6</text><text x="88" y="484">S05,14.0</text>
+      </g>
+
+      <text x="382" y="355" fill="#b63e2f" font-family="sans-serif" font-size="34">→</text>
+      <rect x="430" y="184" width="340" height="330" rx="6" fill="#173f32"/>
+      <text x="454" y="220" fill="#a9d2bf" font-family="sans-serif" font-size="14" font-weight="700">DETERMINISTIC ACTION</text>
+      <text x="454" y="258" fill="#ffffff" font-family="sans-serif" font-size="22" font-weight="800">Built-ins only</text>
+      <g fill="#ecf7f1" font-family="monospace" font-size="18" font-weight="600">
+        <text x="454" y="310">count  ·  mean</text><text x="454" y="348">min    ·  max</text>
+        <text x="454" y="410">SHA-256(input)</text><text x="454" y="448">SHA-256(config)</text>
+        <text x="454" y="486">fixed timestamp</text>
+      </g>
+
+      <text x="798" y="355" fill="#b63e2f" font-family="sans-serif" font-size="34">→</text>
+      <rect x="846" y="184" width="290" height="330" rx="6" fill="#ffffff" stroke="#aeb9b1"/>
+      <text x="870" y="220" fill="#66736c" font-family="sans-serif" font-size="14" font-weight="700">DERIVED · VERIFIED</text>
+      <text x="870" y="258" fill="#18201d" font-family="sans-serif" font-size="22" font-weight="800">summary.json</text>
+      <g fill="#354139" font-family="monospace" font-size="18" font-weight="600">
+        <text x="870" y="310">count  5</text><text x="870" y="348">mean   12.4</text>
+        <text x="870" y="386">min    10.2</text><text x="870" y="424">max    14</text>
+        <text x="870" y="486" fill="#2e7253">manifest ✓</text>
+      </g>
+
+      <g fill="#18201d" font-family="sans-serif" font-size="17" font-weight="700">
+        <text x="64" y="585"><tspan fill="#2e7253">✓</tspan> raw 不變</text>
+        <text x="210" y="585"><tspan fill="#2e7253">✓</tspan> gold output 相符</text>
+        <text x="430" y="585"><tspan fill="#2e7253">✓</tspan> manifest 完整</text>
+      </g>
+      <text x="1136" y="585" text-anchor="end" fill="#66736c" font-family="monospace" font-size="14">9f4aef16…df79483</text>
+    </svg>
+  </body>
+</html>

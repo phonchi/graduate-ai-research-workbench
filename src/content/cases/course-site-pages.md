@@ -4,11 +4,8 @@ summary: 從課程 GitHub Pages 經驗出發，把 lab、project 與研究成果
 order: 30
 part: 實作
 difficulty: 實作
-slideRefs:
-  - 23
-  - 24
-  - 25
-  - 32
+category: 公開成果
+reproducible: false
 relatedTools:
   - git-github
   - codex
@@ -36,11 +33,12 @@ coverImage: /graduate-ai-research-workbench/images/cases/course-site-pages.webp
 
 這樣既保留 Agent 動手更新的效率，也讓公開發布仍有清楚的人工決策點。
 
-## 研究生可以怎麼轉用
+## 輸入、動作、輸出與驗證
 
-- 建立 lab 或個人研究網站，集中研究主題、論文、程式、demo、簡報與聯絡方式。
-- 為 project 建立成果頁，讓合作者從固定網址取得最新方法說明與可重現步驟。
-- 把 Git 當遊戲存檔點、GitHub 當共享與發布位置，讓助教或共同作者沿同一份歷史接力。
+- **輸入**：現有網站結構、要新增的公開教材、固定網址與不可公開清單。
+- **動作**：只修改指定索引與資產，執行建置及連結檢查，人工檢視 diff 後才 commit 與 push。
+- **輸出**：可追溯的 Git 版本、部署紀錄與公開頁面。
+- **驗證**：從正式網址抽查導覽、圖片、下載與手機版；部署成功訊息不能取代公開結果檢查。
 
 ## 踩坑提醒
 

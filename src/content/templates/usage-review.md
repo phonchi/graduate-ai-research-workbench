@@ -3,10 +3,7 @@ title: AI 使用習慣回顧
 summary: 定期請 AI 回顧你的交辦方式、反覆卡點與可封裝流程，把好習慣寫回工作守則。
 order: 70
 category: 回顧
-slideRefs:
-  - 28
-  - 32
-  - 33
+applicableTasks: [automate]
 relatedTools:
   - insights
   - chatgpt

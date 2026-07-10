@@ -1,0 +1,7 @@
+{
+  "input": "raw/measurements.csv",
+  "output": "derived/summary.json",
+  "roundDigits": 2,
+  "seed": 20260710,
+  "timestamp": "2026-07-10T00:00:00.000Z"
+}

@@ -4,10 +4,8 @@ summary: 用搜尋與排序動畫示範如何交代狀態、控制與邊界，�
 order: 20
 part: 實作
 difficulty: 實作
-slideRefs:
-  - 19
-  - 27
-  - 31
+category: 公開成果
+reproducible: false
 relatedTools:
   - codex
   - claude-code
@@ -25,7 +23,7 @@ coverImage: /graduate-ai-research-workbench/images/cases/algorithm-visualization
 
 ## 成果先看
 
-[搜尋與排序互動頁](https://phonchi.github.io/nsysu-math208/static_files/presentations/searching_sorting.html#selection)把演算法從一張靜態流程圖變成可播放、暫停和逐步查看的教材。投影片也提到，這類動畫後來被固定成可轉為帶書籤 PDF 的流程，讓網頁上會動的內容在課後版本仍看得懂。
+[搜尋與排序互動頁](https://phonchi.github.io/nsysu-math208/static_files/presentations/searching_sorting.html#selection)把演算法從一張靜態流程圖變成可播放、暫停和逐步查看的教材。相同內容另有適合課後閱讀的靜態輸出，避免互動效果成為理解步驟的唯一入口。
 
 ## 當時怎麼交辦
 
@@ -35,11 +33,12 @@ coverImage: /graduate-ai-research-workbench/images/cases/algorithm-visualization
 
 這種交辦讓 Agent 寫程式，作者則用已知演算法結果逐步核對動畫。
 
-## 研究生可以怎麼轉用
+## 輸入、動作、輸出與驗證
 
-- 把前處理、模型推論、啟發式搜尋或取樣流程拆成事件，做成論文方法頁與口頭報告 demo。
-- 用 5 到 20 筆合成資料先做 prototype，確認觀眾看得懂狀態轉換，再接真實輸出。
-- 將成功的互動與輸出流程封裝成 Skill，之後換資料或換方法時沿用同一套控制與 QA 習慣。
+- **輸入**：短陣列、演算法定義，以及重複值、已排序、空輸入等邊界案例。
+- **動作**：把比較、交換與目前索引拆成離散狀態，讓播放、暫停、單步與重設都操作同一份狀態。
+- **輸出**：互動動畫、每一步的文字說明，以及離線仍可理解的靜態版本。
+- **驗證**：用已知輸入逐步比對真正演算法；另測快速連按控制、重設與手機畫面。
 
 ## 踩坑提醒
 

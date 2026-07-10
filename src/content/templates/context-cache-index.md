@@ -3,11 +3,7 @@ title: Context 快取索引
 summary: 先建立 quick notes、索引與全文三層目錄，需要時才打開原文，避免一次塞入全部資料。
 order: 30
 category: Context
-slideRefs:
-  - 14
-  - 15
-  - 16
-  - 17
+applicableTasks: [read, write]
 relatedTools:
   - notebooklm
   - codex

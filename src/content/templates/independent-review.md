@@ -3,10 +3,7 @@ title: 挑錯與獨立檢查
 summary: 讓另一個乾淨對話或分身專門找錯、找反例與核對限制，避免產出者成為唯一驗收者。
 order: 50
 category: 驗證
-slideRefs:
-  - 20
-  - 27
-  - 32
+applicableTasks: [read, write, experiment, present, publish]
 relatedTools:
   - subagent
   - codex

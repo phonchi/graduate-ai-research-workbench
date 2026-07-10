@@ -3,10 +3,7 @@ title: 六要素交辦單
 summary: 把願望改寫成目標、範圍、格式、限制、範例與驗收標準，減少 Agent 自行腦補。
 order: 10
 category: 交辦
-slideRefs:
-  - 12
-  - 13
-  - 32
+applicableTasks: [read, write, experiment, present, publish, automate]
 relatedTools:
   - chatgpt
   - codex

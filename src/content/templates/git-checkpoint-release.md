@@ -3,12 +3,7 @@ title: Git 存檔與發布檢查
 summary: 把 Git 當存檔點、GitHub 當共享與發布位置，先看變更、再存檔、推送，最後從公開網址確認。
 order: 60
 category: 版本控制
-slideRefs:
-  - 17
-  - 23
-  - 24
-  - 25
-  - 32
+applicableTasks: [experiment, publish, automate]
 relatedTools:
   - git-github
   - codex

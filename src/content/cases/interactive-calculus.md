@@ -4,10 +4,8 @@ summary: 從 3D 曲面到導數反例，讓 Agent 寫互動頁，研究者專心
 order: 10
 part: 實作
 difficulty: 入門
-slideRefs:
-  - 19
-  - 20
-  - 27
+category: 公開成果
+reproducible: false
 relatedTools:
   - codex
   - claude-code
@@ -25,7 +23,7 @@ coverImage: /graduate-ai-research-workbench/images/cases/interactive-calculus.we
 
 ## 成果先看
 
-[3D 曲面互動教材](https://phonchi.github.io/nsysu-calculus2/static_files/presentations/surfaces_3d.html#sec-surfaces)可以直接旋轉曲面、改變視角；[導數概念頁](https://phonchi.github.io/nsysu-calculus2/static_files/presentations/derivatives.html)則把「哪些推論成立、哪些會被反例推翻」放在同一張圖上。投影片中的重點不是炫技，而是分工：老師決定怎麼教，Agent 負責繁重的前端實作。
+[3D 曲面互動教材](https://phonchi.github.io/nsysu-calculus2/static_files/presentations/surfaces_3d.html#sec-surfaces)可以直接旋轉曲面、改變視角；[導數概念頁](https://phonchi.github.io/nsysu-calculus2/static_files/presentations/derivatives.html)則把「哪些推論成立、哪些會被反例推翻」放在同一張圖上。作者決定概念、條件與判讀方式，Agent 協助實作和跨裝置測試。
 
 ## 當時怎麼交辦
 
@@ -35,11 +33,12 @@ coverImage: /graduate-ai-research-workbench/images/cases/interactive-calculus.we
 
 Agent 能處理版面與互動；曲面範圍、公式、條件和反例是否真的成立，仍由作者逐一驗算。
 
-## 研究生可以怎麼轉用
+## 輸入、動作、輸出與驗證
 
-- 把論文中的參數變化、三維結構或最佳化路徑做成可操作圖，先拿來檢查自己的理解，再用於組會說明。
-- 把「方法在什麼條件下成立」與最小失敗案例並排，作為研究設計或口試準備的概念驗證頁。
-- 用合成資料做 prototype，確認互動與敘事有效後，再決定是否接入真實研究資料。
+- **輸入**：曲面公式、參數範圍、成立條件、最小反例與跨裝置需求。
+- **動作**：先用合成值建立互動 prototype，再逐項加入旋轉、參數控制、說明與錯誤狀態。
+- **輸出**：可操作的概念頁，以及在互動不可用時仍能閱讀的公式與文字。
+- **驗證**：作者驗算公式和反例；測試零值、極端值、鍵盤與手機操作，確認畫面狀態與數學敘述一致。
 
 ## 踩坑提醒
 

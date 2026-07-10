@@ -1,0 +1,16 @@
+{
+  "statistics": {
+    "count": 5,
+    "mean": 12.4,
+    "min": 10.2,
+    "max": 14
+  },
+  "manifest": {
+    "inputSha256": "9f4aef160dfd7db588335987236ed602b46439fd64d74548d6cf1fe44df79483",
+    "configSha256": "937f5aa02c7ef143cf8302c450deed99091b591ed3350ce53d925b6cbe3629ae",
+    "command": "node analyze.mjs",
+    "nodeVersion": "$NODE_VERSION",
+    "seed": 20260710,
+    "timestamp": "2026-07-10T00:00:00.000Z"
+  }
+}
