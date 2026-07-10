@@ -1,5 +1,5 @@
-import { createHash } from 'node:crypto';
-import { readFile, realpath, stat, writeFile } from 'node:fs/promises';
+import { createHash, randomUUID } from 'node:crypto';
+import { open, readFile, realpath, rename, rm, stat } from 'node:fs/promises';
 import { dirname, isAbsolute, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -59,11 +59,34 @@ export async function buildEntries(sources) {
   return entries.sort((left, right) => left.id < right.id ? -1 : left.id > right.id ? 1 : 0);
 }
 
+export async function replaceIndexAtomically(content, beforeRename) {
+  const tempPath = resolve(CORPUS_DIR, `.index.json.${process.pid}.${randomUUID()}.tmp`);
+  let handle;
+  try {
+    handle = await open(tempPath, 'wx');
+    await handle.writeFile(content, 'utf8');
+    await handle.sync();
+    await handle.close();
+    handle = undefined;
+    if (beforeRename) await beforeRename();
+    await rename(tempPath, INDEX_PATH);
+  } finally {
+    if (handle) {
+      try {
+        await handle.close();
+      } catch {
+        // Preserve the original write error; rm below still verifies cleanup.
+      }
+    }
+    await rm(tempPath, { force: true });
+  }
+}
+
 export async function buildIndex() {
   const manifest = JSON.parse(await readFile(MANIFEST_PATH, 'utf8'));
   if (manifest.schemaVersion !== 1) throw new Error('Unsupported source manifest schema');
   const entries = await buildEntries(manifest.sources);
-  await writeFile(INDEX_PATH, `${JSON.stringify(entries, null, 2)}\n`, 'utf8');
+  await replaceIndexAtomically(`${JSON.stringify(entries, null, 2)}\n`);
   return entries.length;
 }
 

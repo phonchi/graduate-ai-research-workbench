@@ -34,13 +34,13 @@ coverImage: /graduate-ai-research-workbench/images/cases/document-cache.webp
 ## 輸入、動作、輸出與驗證
 
 - **輸入**：`source-manifest.json` 與四份 repo-local 合成來源。Manifest 明列 stable ID、path、kind、license、quick note 與來源 SHA-256。
-- **動作**：在 `examples/synthetic-corpus` 執行 `node build-index.mjs`。程式先確認來源存在且沒有逃出 corpus，再核對 bytes；全部通過後才排序並寫入固定的 `index.json`。
+- **動作**：在 `examples/synthetic-corpus` 執行 `node build-index.mjs`。程式先確認來源存在且沒有逃出 corpus，再核對 bytes；全部通過後才排序，完整寫入同目錄 unique temp，最後以 rename 原子替換固定的 `index.json`。
 - **輸出**：deterministic `index.json`、`expected-index.json` 與 `failure-log.md`。Builder 不接受其他 output path，也不覆寫 raw source。
-- **驗證**：執行 `cmp index.json expected-index.json`，再於 repo 根目錄執行 `npm test -- src/lib/document-cache-reproducibility.test.ts`；測試會重建兩次、逐筆重算 hash，並確認原始來源 bytes 不變。
+- **驗證**：執行 `cmp index.json expected-index.json`，再於 repo 根目錄執行 `npm test -- src/lib/document-cache-reproducibility.test.ts`；測試只在複製到暫存 sandbox 的 corpus 重建，會逐筆重算 hash、模擬 rename 前中斷，並確認 tracked index 的 bytes 與 mtime 不變。
 
 ## Expected 與失敗紀錄
 
-成功時，重建的 `index.json` 必須與 committed `expected-index.json` byte-for-byte 相同。來源 hash 不符、路徑越界或傳入額外 output 參數時，命令必須非零結束，且不得改動上一版 index 或任何來源；可重現的失敗案例與錯誤文字記在 `failure-log.md`。
+成功時，重建的 `index.json` 必須與 committed `expected-index.json` byte-for-byte 相同。來源 hash 不符、路徑越界、傳入額外 output 參數，或 temp 寫完後中斷時，都不得改動上一版 index 或任何來源，也不能留下 temp；可重現的失敗案例與錯誤文字記在 `failure-log.md`。
 
 ## 踩坑提醒
 
