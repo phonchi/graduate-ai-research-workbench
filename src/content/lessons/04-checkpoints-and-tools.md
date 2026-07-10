@@ -1,19 +1,42 @@
 ---
-title: 先存檔再放手：守則、Git 與安全更新
-summary: 把 AGENTS.md／CLAUDE.md 當工作守則，用 Git 建存檔點，再透過 GitHub 留下可協作、可追溯與可回復的修改歷史。
+title: 研究工作環境：規則、存檔點、進度與權限
+summary: 逐步建立讓 Agent 能安全接手的研究工作區：長期規則、Git checkpoint、進度紀錄、最小權限與可執行驗證。
 order: 4
 part: 實作
 difficulty: 實作
-estimatedMinutes: 25
-slideRefs: [8, 9, 17, 23, 24, 25, 32]
+estimatedMinutes: 28
+learningOutcomes:
+  - 將長期研究慣例與單次任務規格放在不同位置，避免規則互相污染。
+  - 在 Agent 動手前建立 Git checkpoint，並用狀態與差異檢查保護既有工作。
+  - 以進度紀錄、最小權限與可執行命令定義可接續、可驗證的工作環境。
+prerequisites:
+  - 能辨認原始資料、衍生結果與可公開檔案。
+  - 已在副本或測試專案中使用過檔案型 Agent。
+references:
+  - title: "Custom Instructions with AGENTS.md"
+    url: https://learn.chatgpt.com/docs/agent-configuration/agents-md
+    type: official
+    note: 說明 Codex 如何依全域與專案層級發現及合併 AGENTS.md 指令。
+  - title: "How Claude Remembers Your Project"
+    url: https://code.claude.com/docs/en/memory
+    type: official
+    note: 說明 CLAUDE.md、匯入與不同作用域的專案指令及記憶方式。
+  - title: "Claude Code Settings"
+    url: https://code.claude.com/docs/en/settings
+    type: official
+    note: 提供權限、設定作用域與專案設定的官方參考。
+  - title: "Git Tutorial"
+    url: https://git-scm.com/docs/gittutorial
+    type: official
+    note: 說明 Git 的變更追蹤、提交與版本歷史基本工作方式。
 keyTerms:
+  - research workspace
   - AGENTS.md
   - CLAUDE.md
-  - Git
-  - GitHub
-  - commit
-  - push
-  - 存檔點
+  - Git checkpoint
+  - progress log
+  - permission
+  - verification command
 relatedTools:
   - codex
   - claude-code
@@ -29,61 +52,130 @@ draft: false
 featured: true
 ---
 
-## 研究生日常
+## Walkthrough：把一個研究資料夾變成可安全接手的工作區
 
-口試前兩天，你請 Agent 更新研究網站和簡報。它確實改快了，但一次動了 20 個檔案；同門也剛更新資料說明；最後誰覆蓋了誰、公開站現在是哪一版，全都說不清楚。
-
-讓 Agent 動手之前，先準備兩樣東西：一張工作守則，以及一個能回去的存檔點。前者告訴它怎麼做，後者讓你在做錯時能救回來。
-
-## 投影片的核心比喻
-
-**AGENTS.md／CLAUDE.md 像新助理的入職須知**：寫一次，之後每個任務沿用。內容不是程式語法，而是你的研究慣例，例如只改副本、數字需回到來源、動多個檔案前先報告範圍。
-
-**Git 像遊戲存檔點與時光機**：每完成一段就留下版本，改壞時能回到先前狀態。**GitHub 像共享的版本歷史與發布入口**：把本機存檔推上去，合作者能在同一條歷史接力，網站也能依設定自動更新。
-
-## 正式工具名詞
-
-- **AGENTS.md**：Codex 等 Agent 可讀取的工作區指令檔，通常放在專案或上層資料夾。
-- **CLAUDE.md**：Claude Code 使用的專案指令檔，目的同樣是保存長期慣例與邊界。
-- **Git**：在本機記錄檔案版本。一次有意義的存檔稱為 **commit**。
-- **GitHub**：託管 Git 儲存庫與協作流程的平台。把本機提交送到遠端稱為 **push**。
-
-Git 與 GitHub 不是同一個東西；沒有上網也能先用 Git 存版本。也別把「推送成功」當成「公開成果正確」，部署後仍要打開真正網址檢查。
-
-## 直接試一次
-
-先請 Agent 讀狀態，不要立刻發布：
+假設你有一個分析專案，包含原始資料、程式、衍生結果與論文草稿。Agent 能不能可靠工作，不只取決於模型，而取決於它進入時看見哪些規則、是否有可回復版本、做到哪裡如何記錄，以及哪些動作真的被授權。
 
 ```text
-請先讀取 AGENTS.md 或 CLAUDE.md，並檢查目前 Git 狀態。
-先回報：
-1. 哪些是我原本尚未提交的修改；
-2. 這次任務預計修改哪些檔案；
-3. 會執行哪些檢查。
-不要覆蓋既有修改，也不要推送。等我確認後再動工。
+research-project/
+├── AGENTS.md 或 CLAUDE.md
+├── README.md
+├── data/raw/          # 原始資料，不由 Agent 改寫
+├── data/derived/      # 可重建的衍生資料
+├── src/               # 分析程式
+├── results/           # 圖表與輸出
+├── tests/             # 可執行檢查
+└── progress.md        # 目前狀態與下一步
 ```
 
-完成一個小段落後，再給清楚的發布指令：
+這只是示例，不必為了配合工具重排既有專案。重點是每一類材料有清楚角色，Agent 能知道哪裡是權威來源、哪裡可以重建、哪裡不能覆寫。
+
+## 第一步：把長期規則與單次任務分開
+
+不同產品使用不同規則檔名與讀取順序。Codex 支援分層的 `AGENTS.md`，Claude Code 使用 `CLAUDE.md` 與相關設定。通用概念是「工作區指令」：保存跨任務都成立、從程式碼不容易看出的慣例。
+
+```markdown
+# 研究工作規則
+
+## 資料邊界
+- data/raw/ 是權威原始資料，只讀，不覆寫。
+- 衍生資料寫入 data/derived/，並保留產生命令。
+
+## 驗證
+- 修改分析程式後執行既有測試。
+- 影響結果時重建小型測試輸出，核對欄位與筆數。
+
+## 人工決策
+- 新增資料來源、改變納入條件、公開結果前必須詢問。
+```
+
+不要把本週進度、臨時檔名、密鑰或整篇研究背景永久塞進規則檔。單次目標與範圍留在本次任務；做到哪裡則交給 progress log。
+
+## 第二步：動工前建立 checkpoint
+
+先用唯讀命令理解現況：
+
+```bash
+git status
+git diff
+```
+
+如果工作區已有修改，先分清楚哪些是研究者尚未提交的工作。不要要求 Agent 自動收進同一個 commit，也不要覆蓋它們。
+
+在確認目前狀態可回復後，再建立一個有意義的 checkpoint。提交應對應一個清楚階段，例如「加入基準分析與測試資料」，而不是把所有變動一次打包。
+
+```bash
+git add <這次確認過的檔案>
+git commit -m "record baseline analysis"
+```
+
+Git 是版本歷史，不是內容正確性保證，也不是敏感資料備份。密鑰、受試者資料、受限制文件與大型原始資料需要其他合適的儲存與治理方式。
+
+## 第三步：用 progress log 保存可接續狀態
+
+規則說「每次都怎麼做」，progress log 說「這次做到哪裡」。一份短紀錄即可：
+
+```markdown
+# Current progress
+
+## 目標
+重建 baseline 並核對主要表格。
+
+## 已完成
+- [x] 確認原始資料 checksum。
+- [x] 建立小型測試設定。
+
+## 下一步
+- [ ] 執行 baseline 設定並保存 log。
+- [ ] 比對表格欄位與樣本數。
+
+## 阻塞與決策
+- 尚未確認缺失值處理方式；不得自行選擇。
+
+## 最近驗證
+- 命令：...
+- 結果：...
+```
+
+每次結束前更新事實狀態，不要把未驗證推測寫成已完成。新的對話或另一位協作者讀完規則、任務規格與 progress log，就能知道從哪裡接續。
+
+## 第四步：權限從最小範圍開始
+
+權限應依任務逐步開放：
+
+1. 先允許讀取指定專案。
+2. 再允許修改明確的來源或文件路徑。
+3. 命令執行只開放必要工具與測試。
+4. 網路、安裝套件、刪除、發布與憑證存取分開確認。
+
+規則文字是合作約定；permission 與 sandbox 才是技術邊界。高風險操作不要只寫一句「請小心」，而要讓環境實際要求確認或阻擋。
+
+## 第五步：把完成條件寫成命令與觀察
+
+好的驗證命令應來自專案本身，而不是 Agent 臨時發明。依專案可能包括：
 
 ```text
-請檢視這次差異，只提交與「更新方法頁」有關的檔案。
-提交前執行既有建置與連結檢查；若失敗就停止並回報。
-提交訊息要說清楚改了什麼。推送後等待部署完成，
-最後打開公開網址抽查方法頁、導覽與圖片。
+- 執行單元測試或資料驗證測試。
+- 用固定小型設定重跑分析。
+- 比較產出欄位、筆數、checksum 或已知答案。
+- 建置網站後檢查正式路徑與連結。
+- 對文件抽查數字、引用與圖表來源。
 ```
 
-第一次練習請用不含未公開資料的小專案，或建立副本。密鑰、受試者資料、審稿文件與未公開結果不要放進公開儲存庫。
+交辦時要求回報實際證據：執行了什麼、exit status、哪些檢查通過、哪些沒有執行，以及剩餘不確定處。不要只接受「已測試」「看起來正常」。
 
-## 真實案例怎麼看
+## 一次完整交接
 
-[從課程網站到研究專案發布](/graduate-ai-research-workbench/cases/course-site-pages/)完整呈現存檔、推送、自動部署與公開網址抽查的接力；[程式化簡報](/graduate-ai-research-workbench/cases/programmatic-slides/)則示範把簡報來源也納入版本歷史，避免手工複製出現多個真相版本。
+```text
+先讀工作區規則、README 與 progress.md，再檢查 Git 狀態。
+不要覆蓋既有修改，也不要讀取 data/raw/ 以外未授權路徑。
 
-## 先避開三個坑
+本次只完成 progress.md 的下一個未完成項目。
+動工前回報預計修改檔案與驗證命令；
+若缺失值策略仍未決定，停下來問我。
 
-1. **看到工作區有修改就全部提交**：先分清楚哪些是使用者原本的工作。
-2. **把 Git 當雲端備份按鈕**：commit 要小而有意義，訊息要能說明這一版完成什麼。
-3. **部署綠燈就收工**：從公開網址再查頁面、資產與子路徑。
+完成後更新 progress.md，列出實際 diff、命令結果與未確認事項。
+不要自行發布或推送。
+```
 
-## 一句帶走
-
-**工作守則讓 Agent 知道界線，Git 讓每一步能回頭，GitHub 讓團隊安全接力與發布。**
+這套工作環境的目的不是讓 Agent 永遠不犯錯，而是讓錯誤較容易被限制、看見、回復與追查。

@@ -1,25 +1,46 @@
 ---
-title: 別搬整座圖書館：Context、索引與新對話
-summary: 理解 lost in the middle，學會用 quick notes、索引與全文文字快取三層資料，以及 NotebookLM 和新對話控制 Context。
+title: 先定位再細讀：Context、索引與來源版本
+summary: 用 quick notes、索引與全文建立三層研究資料入口，按需取回原文，並辨認 preprint、正式版本、勘誤與撤稿狀態。
 order: 3
 part: Context
 difficulty: 實作
-estimatedMinutes: 24
-slideRefs: [4, 5, 10, 14, 15, 16, 17, 26]
+estimatedMinutes: 28
+learningOutcomes:
+  - 用 quick notes、索引與全文建立三層研究資料入口。
+  - 區分 preprint、正式出版版本、勘誤與撤稿狀態。
+  - 從 AI 回答回查到原文段落並標記尚未確認的主張。
+prerequisites:
+  - 能辨認研究資料夾中的原始來源與衍生筆記。
+references:
+  - title: "Lost in the Middle: How Language Models Use Long Contexts"
+    url: https://arxiv.org/abs/2307.03172
+    type: paper
+    note: 說明在其評估任務中，相關資訊的位置會影響長 context 模型的取用表現。
+  - title: "Google NotebookLM"
+    url: https://notebooklm.google/
+    type: official
+    note: 官方入口說明 NotebookLM 可針對使用者提供的來源回答，並以引用連回來源內容。
+  - title: "PRISMA 2020 Statement"
+    url: https://www.prisma-statement.org/prisma-2020-statement
+    type: standard
+    note: 提供系統性回顧的紀錄、篩選與流程圖報告框架，可借鏡建立可追蹤的來源清單。
+  - title: "Crossmark"
+    url: https://www.crossref.org/services/crossmark/
+    type: standard
+    note: 說明如何查看研究輸出的更正、撤稿或其他出版後更新狀態。
 keyTerms:
   - Context
   - lost in the middle
   - quick notes
   - 索引
   - 全文文字快取
+  - source version
   - NotebookLM
-  - 新對話
 relatedTools:
   - chatgpt
   - notebooklm
   - codex
   - claude-code
-  - subagent
 relatedCases:
   - document-cache
   - anonymous-manuscript-review
@@ -28,68 +49,92 @@ draft: false
 featured: true
 ---
 
-## 研究生日常
+## 為什麼不能只把資料全部塞進對話
 
-你把 30 篇 PDF、兩版論文與一整串實驗日誌丟進同一段對話，期待 AI 全部記住。剛開始還正常，後來它漏掉中間那篇關鍵論文，把舊版數字當新版，甚至忘記你原本只要處理方法章。
+Context 是模型這一輪可見的指令、對話與資料，不是可靠的永久記憶。Liu 等人的研究在多文件問答與 key-value retrieval 任務中發現：只改變相關資訊在長輸入中的位置，就可能明顯改變表現；資訊位於中間時常比位於開頭或結尾更難取用。這項結果不代表所有新模型都有相同比例，但足以否定「放得進去就一定用得到」的假設。
 
-資料很多不等於 Context 用得好。研究工作真正需要的是：先知道哪裡有什麼，再把當下需要的少量原文拿進來。
+研究工作需要的不是一次載入所有全文，而是建立一條可追蹤路徑：**先知道有哪些來源，再定位候選位置，最後才讀原文並核對版本。**
 
-## 投影片的核心比喻
+## Tutorial：建立三層研究資料入口
 
-別把整座圖書館搬上桌，先給助理書目和書架位置。長內容放在 Context 中間時較容易被忽略，這個現象常稱為 **lost in the middle**。
+以下流程可用一般檔案與搜尋工具完成，不需要先建複雜資料庫。
 
-投影片提供三層做法：
+### 1. 盤點原始來源
 
-1. **摘要（quick notes）**：每份資料一句話，快速判斷是否相關。
-2. **索引**：檔名、標題、關鍵字與位置，用來定位候選來源。
-3. **全文文字快取**：把原始文件抽成可搜尋文字，保留來源檔與頁碼或段落位置；真的要引用、核對公式或細讀方法時才開這層，最後仍回原始文件確認。
+先為每份來源配置穩定 ID，不要用「最新版」「那篇藍色封面」等暫時名稱。
 
-另一個比喻是「存檔重來」。一個階段結束就開新對話，帶上目標、目前進度、下一步和必要來源，不必把整段歷史一起拖過去。
-
-## 正式工具名詞
-
-**Context** 是模型在當次工作中可見的指令、對話與資料，不等於永久記憶。Context 越長，也不保證每一段都被同等注意。
-
-**NotebookLM** 適合把 PDF、簡報、網址等放成一組來源，再進行有來源定位的閱讀、問答與整理。它的強項是「讀與答」；要改本機檔案、跑程式或部署網站，仍需要 Agent。
-
-在 Context 管理上，**subagent** 的作用是把大批閱讀過程留在獨立 Context，只把結論、來源位置與未確定事項帶回主對話，避免主線被全文與搜尋紀錄塞滿。它與 Skill、MCP 的完整差異留到第六單元。
-
-## 直接試一次
-
-先請 Agent 為一個資料夾做最小索引，不要一開始就摘要所有內容：
-
-```text
-請先盤點 papers/，不要修改原始檔。
-輸出三層閱讀快取：
-1. quick notes：每份文件一句話；
-2. index：檔名、主題、關鍵字、年份與可定位位置；
-3. full text cache：每份原始文件抽成可搜尋文字，
-   存入 cache/fulltext/，並保留來源檔、頁碼或段落位置。
-
-先用索引回答「哪些資料談到 domain shift？」；
-需要引用時才開候選原文，並標明來源位置。
+```markdown
+| ID | 檔名／DOI | 類型 | 版本日期 | 狀態 | 存取限制 |
+|---|---|---|---|---|---|
+| D01 | ... | preprint | ... | 待查正式版 | 公開 |
 ```
 
-階段完成後，用這張接力便條開新對話：
+「狀態」至少能表示 preprint、accepted manuscript、version of record、correction、retraction notice 或無法確認。不要覆蓋舊版本；版本差異本身可能影響研究判讀。
 
-```text
-目標：比較三篇 domain shift 方法。
-已完成：papers/index.md 已定位 A、B、C 三篇。
-本輪只讀：A 與 B 的方法、限制段落。
-下一步：先列共同假設與差異；引用前回到全文核對。
-不要沿用先前對話中未出現在來源裡的數字。
+### 2. 寫 quick notes
+
+每份文件只寫一至三句：它是什麼、與哪個問題最相關、目前有哪些不確定處。Quick note 是路標，不是可直接引用的權威文字。
+
+```markdown
+- D01：提出某種 domain adaptation 方法；可能與資料偏移假設相關。
+  尚未核對正式出版版本與限制段落。
 ```
 
-## 真實案例怎麼看
+### 3. 建可搜尋索引
 
-[合成文件快取知識庫](/graduate-ai-research-workbench/cases/document-cache/)示範 quick notes、索引與全文文字快取如何分層；[匿名 Manuscript Review Skill](/graduate-ai-research-workbench/cases/anonymous-manuscript-review/)則提醒：即使 Context 管得好，受保密義務約束的稿件仍要先確認能不能交給該工具。
+索引記錄「哪個主題可能在哪裡」，並保留穩定定位資訊：來源 ID、章節、頁面或段落標記、擷取狀態與版本。
 
-## 先避開三個坑
+```markdown
+| 主題 | 來源 ID | 位置 | 擷取狀態 | 備註 |
+|---|---|---|---|---|
+| domain shift 假設 | D01 | Methods / Assumptions | 已擷取 | 需回原文 |
+```
 
-1. **索引寫得很漂亮卻找不到原文**：每筆都保留穩定檔名或路徑。
-2. **來源更新但快取沒更新**：索引標記日期或版本，引用前確認不是舊稿。
-3. **新對話只貼「接著做」**：重貼目標、進度、下一步與必要來源，別靠它猜前情。
+### 4. 產生全文文字快取
 
-## 一句帶走
+只有在需要程式搜尋時才抽取全文。快取應保留來源 ID、原始路徑、擷取工具、日期與失敗紀錄。掃描檔、公式、表格、圖說與腳註容易擷取錯誤，所以「有文字檔」不等於「擷取正確」。
 
-**先看 quick notes，再查索引，最後才開全文文字快取並回原始文件核對；一個階段結束，就用乾淨的新對話接力。**
+原始檔是權威來源，全文快取只是可搜尋衍生物。原始檔更新時，舊快取要能被辨認並重建。
+
+### 5. 按需取回並回查
+
+回答問題時先搜尋 quick notes 與索引，選出少量候選段落，再打開原文。回報時區分：
+
+- **已核對**：已回到指定版本的原文位置。
+- **待核**：只在摘要、快取或 AI 回答中出現。
+- **版本衝突**：preprint 與正式版本不同，或另有 correction。
+- **無法定位**：目前材料不足，不應補猜。
+
+## 來源版本檢查清單
+
+引用前逐項檢查：
+
+- [ ] 標題、作者與 DOI 是否一致，還是同名的不同稿？
+- [ ] 目前拿到的是 preprint、accepted manuscript，還是 version of record？
+- [ ] 正式版是否改動方法、樣本數、表格、限制或結論？
+- [ ] 出版者頁面或 Crossmark 是否列出 correction、expression of concern、withdrawal 或 retraction？
+- [ ] 本地快取是否記錄版本日期與原始檔位置？
+- [ ] AI 提供的引用是否真的指向支持該主張的原文，而不只是相關文件？
+
+Crossmark 能提高出版後更新的可見性，但其存在本身不是內容正確的保證；沒有 Crossmark 也不代表沒有更新。仍需查看出版者頁面與正式通知。
+
+## NotebookLM 與本地索引怎麼選
+
+NotebookLM 適合把一組邊界清楚、允許上傳的來源放入筆記本，先做來源式問答並沿引用回看內容。引用是定位入口，不是研究者免除核對責任的證明。
+
+本地索引適合受限制資料、需要版本控制、批次擷取或要與程式流程整合的情境。兩者可以接力：先用少量公開來源熟悉問題，再於受控工作區建立可重跑索引。
+
+## 階段結束時建立 checkpoint
+
+長對話累積舊假設後，另開乾淨對話並帶入短 checkpoint：
+
+```text
+研究問題：比較 A、B、C 三種方法的共同假設。
+權威來源：index.md 中 D01、D03、D07 的指定版本。
+本輪範圍：只核對 Methods 與 Limitations。
+已確認：D01 有正式版；D03 只有 preprint。
+待確認：D07 是否有 correction。
+輸出：每項主張附來源 ID 與原文位置；無法核對就標記待核。
+```
+
+這張便條保存的是任務狀態與來源邊界，不是要求模型重現完整推理歷史。
