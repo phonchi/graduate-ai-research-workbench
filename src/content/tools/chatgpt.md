@@ -6,7 +6,7 @@ kind: 網頁
 level: 零門檻
 aliases: [ChatGPT 網頁版, OpenAI ChatGPT]
 capabilities:
-  localFiles: depends
+  localFiles: no
   commands: depends
   sourceCitations: depends
   webAccess: depends

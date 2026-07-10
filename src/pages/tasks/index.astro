@@ -7,6 +7,15 @@ import { buildSitePath } from '../../lib/site';
 const base = import.meta.env.BASE_URL;
 const toolEntries = await getCollection('tools', ({ data }) => !data.draft);
 const toolById = new Map(toolEntries.map((tool) => [tool.id, tool]));
+const capabilityLabels = {
+  localFiles: '本機檔案',
+  commands: '命令執行',
+  sourceCitations: '固定來源引用',
+  webAccess: '網路存取',
+  backgroundTasks: '背景任務',
+} as const;
+const capabilityEntries = Object.entries(capabilityLabels) as Array<[keyof typeof capabilityLabels, string]>;
+const accessLabels = { yes: '支援', depends: '視設定', no: '不支援' } as const;
 const tasks = [
   { id: 'read', title: '閱讀與整理來源', description: '建立可回查的來源集合、quick notes 與索引，再決定是否需要固定來源引用。', lesson: '03-context-and-indexes', tools: ['notebooklm', 'chatgpt', 'codex', 'claude-code'], icon: BookOpen },
   { id: 'write', title: '撰寫與修改文件', description: '先界定讀者、來源與不可改動範圍，再用差異與引用驗收。', lesson: '02-ask-before-action', tools: ['chatgpt', 'codex', 'claude-code', 'gemini-cli'], icon: FilePenLine },
@@ -32,15 +41,21 @@ const tasks = [
       <label>資料含敏感資訊嗎？<select data-sensitive><option value="no">否</option><option value="yes">是或不確定</option></select></label>
     </form>
 
-    <div class="sensitive-warning" data-sensitive-warning hidden><ShieldAlert size={22} aria-hidden="true" /><div><strong>先停在資料邊界</strong><p>不要上傳、外傳或擴大存取範圍；先確認授權、去識別與允許使用的環境。</p><a href={buildSitePath(base, '/safety/')}>先看安全指南 <ArrowRight size={16} aria-hidden="true" /></a></div></div>
+    <div class="no-js-task-note"><strong>未啟用 JavaScript，以下保留全部任務與候選工具。</strong><p>互動篩選目前無法使用；處理研究資料前，請先確認資料邊界並閱讀<a href={buildSitePath(base, '/safety/')}>研究安全指南</a>。</p></div>
 
-    <div class="task-route-results">
+    <div class="sensitive-warning" data-sensitive-warning role="alert" hidden><ShieldAlert size={22} aria-hidden="true" /><div><strong>先停在資料邊界</strong><p>不要上傳、外傳或擴大存取範圍；先確認授權、去識別與允許使用的環境。</p><a href={buildSitePath(base, '/safety/')}>先看安全指南 <ArrowRight size={16} aria-hidden="true" /></a></div></div>
+
+    <p class="task-result-status" role="status" aria-live="polite" data-task-result-status></p>
+    <div class="task-route-results" aria-live="polite" aria-atomic="false">
       {tasks.map((task, index) => <article data-task-panel={task.id}>
         <span class="task-number">{String(index + 1).padStart(2, '0')}</span><task.icon aria-hidden="true" />
         <div><h2>{task.title}</h2><p>{task.description}</p><ul class="task-tool-list">{task.tools.map((toolId) => {
           const tool = toolById.get(toolId);
           if (!tool) return null;
-          return <li data-task-tool data-local-files={tool.data.capabilities.localFiles} data-commands={tool.data.capabilities.commands} data-source-citations={tool.data.capabilities.sourceCitations} data-web-access={tool.data.capabilities.webAccess} data-background-tasks={tool.data.capabilities.backgroundTasks}><a href={buildSitePath(base, `/tools/${tool.id}/`)}><strong>{tool.data.title}</strong><span>{tool.data.summary}</span></a></li>;
+          return <li data-task-tool data-local-files={tool.data.capabilities.localFiles} data-commands={tool.data.capabilities.commands} data-source-citations={tool.data.capabilities.sourceCitations} data-web-access={tool.data.capabilities.webAccess} data-background-tasks={tool.data.capabilities.backgroundTasks}><a href={buildSitePath(base, `/tools/${tool.id}/`)}><strong>{tool.data.title}</strong><span>{tool.data.summary}</span></a><ul class="task-selected-capabilities" aria-label="所選能力狀態">{capabilityEntries.map(([capability, label]) => {
+            const access = tool.data.capabilities[capability];
+            return <li data-task-capability-status={capability} hidden><span>{label}</span><strong data-task-status-access={access}>{accessLabels[access]}</strong></li>;
+          })}</ul></li>;
         })}</ul><p class="task-empty" data-task-empty hidden>目前沒有直接符合全部條件的條目，請到能力詞典比較依設定支援的選項。</p></div>
         <div class="task-links"><a href={buildSitePath(base, `/learn/${task.lesson}/`)}>推薦課程 <ArrowRight size={16} aria-hidden="true" /></a><a href={buildSitePath(base, '/tools/')}>比較完整能力詞典 <ArrowRight size={16} aria-hidden="true" /></a></div>
       </article>)}
@@ -54,6 +69,7 @@ const tasks = [
     const capabilityInputs = Array.from(root.querySelectorAll<HTMLInputElement>('[data-task-capability]'));
     const sensitive = root.querySelector<HTMLSelectElement>('[data-sensitive]');
     const warning = root.querySelector<HTMLElement>('[data-sensitive-warning]');
+    const resultStatus = root.querySelector<HTMLElement>('[data-task-result-status]');
     const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-task-panel]'));
 
     const update = () => {
@@ -66,10 +82,17 @@ const tasks = [
         panel.querySelectorAll<HTMLElement>('[data-task-tool]').forEach((tool) => {
           const matches = requiredCapabilities.every((capability) => tool.dataset[capability] !== 'no');
           tool.hidden = !matches;
+          tool.querySelectorAll<HTMLElement>('[data-task-capability-status]').forEach((status) => {
+            status.hidden = !requiredCapabilities.includes(status.dataset.taskCapabilityStatus ?? '');
+          });
           if (matches) visibleTools += 1;
         });
         const empty = panel.querySelector<HTMLElement>('[data-task-empty]');
         if (empty) empty.hidden = visibleTools !== 0;
+        if (resultStatus) {
+          const taskTitle = taskSelect?.selectedOptions[0]?.textContent?.trim() ?? '目前任務';
+          resultStatus.textContent = `${taskTitle}：顯示 ${visibleTools} 個候選工具。`;
+        }
       });
       if (warning) warning.hidden = sensitive?.value !== 'yes';
     };
