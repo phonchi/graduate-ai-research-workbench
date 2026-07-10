@@ -52,7 +52,7 @@ describe('content contract', () => {
       expect((metadata.match(/^ {4}url: https?:\/\/.+$/gm) ?? []).length, `${file} needs one URL per reference`).toBe(referenceCount);
       expect((metadata.match(/^ {4}type: (paper|official|standard|policy|case)$/gm) ?? []).length, `${file} needs one valid type per reference`).toBe(referenceCount);
       expect((metadata.match(/^ {4}note: .+$/gm) ?? []).length, `${file} needs one note per reference`).toBe(referenceCount);
-      expect(frontmatterList(content, 'keyTerms').length, `${file} needs tool or concept terms`).toBeGreaterThan(0);
+      expect(frontmatterList(metadata, 'keyTerms').length, `${file} needs tool or concept terms`).toBeGreaterThan(0);
       for (const phrase of bannedPublicPhrases) expect(content).not.toContain(phrase);
     }
   });
