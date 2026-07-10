@@ -15,7 +15,11 @@ const pagefindBase = `${base}pagefind/`;
     const section = document.querySelector('[data-fulltext-section]');
     const script = document.createElement('script');
     script.src = `${section.dataset.pagefindBase}pagefind-ui.js`;
-    script.onload = () => { new window.PagefindUI({ element: '#pagefind-search', showSubResults: true, translations: { placeholder: '搜尋 Agent、NotebookLM、Git、Skill…', zero_results: '找不到「[SEARCH_TERM]」', clear_search: '清除' } }); };
+    script.onload = () => {
+      const pagefind = new window.PagefindUI({ element: '#pagefind-search', showSubResults: true, translations: { placeholder: '搜尋 Agent、NotebookLM、Git、Skill…', zero_results: '找不到「[SEARCH_TERM]」', clear_search: '清除' } });
+      const initialQuery = new URLSearchParams(window.location.search).get('q')?.trim();
+      if (initialQuery) pagefind.triggerSearch(initialQuery);
+    };
     script.onerror = () => { section?.setAttribute('hidden', ''); };
     document.head.append(script);
   </script>

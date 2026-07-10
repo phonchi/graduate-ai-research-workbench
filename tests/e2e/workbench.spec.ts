@@ -289,6 +289,22 @@ test('lesson pages teach presentation concepts through named tools and a usable 
   await expect(lesson.locator('pre').filter({ hasText: '動工前' }).first()).toBeVisible();
 });
 
+test('homepage search carries its query into Pagefind and returns a relevant result', async ({ page, baseURL }) => {
+  const query = 'AskUserQuestion';
+  await page.goto('./');
+  await page.getByRole('searchbox', { name: '搜尋研究技能與任務' }).fill(query);
+  await page.getByRole('button', { name: '搜尋', exact: true }).click();
+
+  await expect(page).toHaveURL(new URL(`search/?q=${encodeURIComponent(query)}`, baseURL).href);
+  const fullText = page.locator('.pagefind-ui__search-input');
+  await expect(fullText).toHaveValue(query);
+  const expectedPath = '/graduate-ai-research-workbench/tools/ask-user-question/';
+  const result = page.locator('.pagefind-ui__result').filter({
+    has: page.locator(`.pagefind-ui__result-link[href="${expectedPath}"]`),
+  });
+  await expect(result).toContainText(query);
+});
+
 test('Pagefind returns the AskUserQuestion tool result and follows its destination', async ({ page, baseURL }) => {
   await page.goto('./search/');
   const fullText = page.locator('.pagefind-ui__search-input');
