@@ -5,7 +5,13 @@ order: 11
 kind: 工作方式
 level: 進階
 aliases: [Agent Skill, SKILL.md, 工作手冊, 實驗室手冊]
-canEditFiles: depends
+capabilities:
+  localFiles: depends
+  commands: depends
+  sourceCitations: depends
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [重複任務流程, 固定 QA 清單, 保存踩坑與模板]
 avoidFor: [第一次做的任務, 所有專案都適用的通用規矩, 連接外部服務]
 firstStep: 先把同類任務跑順兩三次，再請主 agent 根據實際摩擦整理草稿。
@@ -22,7 +28,7 @@ Skill 是給 agent 的「可重複工作手冊」。它記錄某類任務的標�
 
 ## 什麼時候用
 
-同一流程已做過兩三次，例如論文文字審查、互動投影片轉 PDF、文件快取索引，而且每次都有固定步驟與檢查點時，再整理成 Skill。
+同一流程已做過兩三次，例如論文文字審查、互動教材轉成可發布 PDF、文件快取索引，而且每次都有固定步驟與檢查點時，再整理成 Skill。
 
 ## 不要拿它做什麼
 

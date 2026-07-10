@@ -5,7 +5,13 @@ order: 12
 kind: 協定
 level: 進階
 aliases: [Model Context Protocol, MCP server, MCP client]
-canEditFiles: depends
+capabilities:
+  localFiles: depends
+  commands: depends
+  sourceCitations: depends
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [連接固定資料源, 使用外部服務工具, 減少重複搬運資料]
 avoidFor: [單次短問答, 尚未跑順的流程, 不明來源或過度授權的 server]
 firstStep: 先說清楚要接哪個服務與只讀需求，請 agent 評估最小權限和測試方法。

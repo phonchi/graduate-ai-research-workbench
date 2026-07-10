@@ -5,7 +5,13 @@ order: 10
 kind: 功能
 level: 入門
 aliases: [insights command, 使用回顧, 交辦習慣回顧]
-canEditFiles: no
+capabilities:
+  localFiles: no
+  commands: no
+  sourceCitations: no
+  webAccess: no
+  backgroundTasks: no
+  humanApproval: no
 bestFor: [回顧常見模糊點, 找出重複摩擦, 決定哪些習慣值得固定]
 avoidFor: [驗證研究結論, 取代本次成果檢查, 未審核就自動改寫工作守則]
 firstStep: 先在目前工具確認是否支援；不支援就改用等價回顧 prompt。
@@ -18,7 +24,7 @@ draft: false
 
 ## 白話是什麼
 
-`/insights` 是 Claude Code 的指令名稱，不是每個 AI 都支援。投影片真正強調的是「精進迴圈」：回顧自己怎麼交辦、哪裡讓工具一直猜，再把有效習慣留到下一次。
+`/insights` 是 Claude Code 的指令名稱，不是每個 AI 都支援。真正值得保留的是「精進迴圈」：回顧自己怎麼交辦、哪裡讓工具一直猜，再把有效習慣留到下一次。
 
 ## 什麼時候用
 

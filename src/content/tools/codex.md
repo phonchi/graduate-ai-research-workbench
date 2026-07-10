@@ -6,7 +6,13 @@ kind: 桌面 App
 interfaces: [CLI]
 level: 入門
 aliases: [Codex app, Codex CLI, OpenAI Codex]
-canEditFiles: yes
+capabilities:
+  localFiles: yes
+  commands: yes
+  sourceCitations: depends
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [跨檔案修改, 執行測試與建置, 檢查研究程式或網站]
 avoidFor: [未建立存檔點就大改, 未授權的公開發布, 只需一句定義的問題]
 firstStep: 選一個有 Git 存檔點的測試資料夾，先要求只讀盤點，不要修改。

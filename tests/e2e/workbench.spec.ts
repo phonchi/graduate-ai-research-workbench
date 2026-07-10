@@ -48,6 +48,33 @@ test('tool glossary includes multi-interface agents in type and level filters', 
   await expect(visibleTools.getByRole('heading', { name: 'Git 與 GitHub' })).toBeVisible();
 });
 
+test('capability filters surface agents and source-grounded tools', async ({ page }) => {
+  await page.goto('./tools/');
+
+  await page.getByLabel('本機檔案').selectOption('yes');
+  await page.getByLabel('命令執行').selectOption('yes');
+
+  const visibleTools = page.locator('[data-catalog-item]:visible');
+  await expect(visibleTools.getByRole('heading', { name: 'Codex' })).toBeVisible();
+  await expect(visibleTools.getByRole('heading', { name: 'Claude Code' })).toBeVisible();
+  await expect(visibleTools.getByRole('heading', { name: 'Gemini CLI' })).toBeVisible();
+
+  await page.getByLabel('本機檔案').selectOption('');
+  await page.getByLabel('命令執行').selectOption('');
+  await page.getByLabel('固定來源引用').selectOption('yes');
+  await expect(visibleTools.getByRole('heading', { name: 'NotebookLM' })).toBeVisible();
+});
+
+test('capability-first task routing offers choices and protects sensitive data', async ({ page }) => {
+  await page.goto('./tasks/');
+
+  await page.getByLabel('執行程式').check();
+  expect(await page.locator('[data-task-tool]:visible').count()).toBeGreaterThan(1);
+
+  await page.getByLabel('資料含敏感資訊嗎？').selectOption('yes');
+  await expect(page.getByRole('link', { name: '先看安全指南' })).toBeVisible();
+});
+
 test('lesson pages teach presentation concepts through named tools and a usable prompt', async ({ page }) => {
   await page.goto('./learn/02-ask-before-action/');
 

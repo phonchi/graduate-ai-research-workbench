@@ -5,7 +5,13 @@ order: 9
 kind: 功能
 level: 入門
 aliases: [Ask User Question, 開工前反問, 澄清問題]
-canEditFiles: no
+capabilities:
+  localFiles: no
+  commands: no
+  sourceCitations: no
+  webAccess: no
+  backgroundTasks: no
+  humanApproval: yes
 bestFor: [補齊模糊規格, 讓使用者選擇方案, 高影響決策前確認]
 avoidFor: [可從檔案自行查明的問題, 每一步都停下來問, 用提問逃避合理判斷]
 firstStep: 在 prompt 最後加上「動工前先問我最多三個會影響結果的問題」。
@@ -26,7 +32,7 @@ draft: false
 
 ## 不要拿它做什麼
 
-不要詢問 agent 能從 repo、投影片或既有規則查到的事，也不要每改一行就反問。太多低影響問題會中斷工作，反而把責任全丟回使用者。
+不要詢問 agent 能從 repo、既有文件或工作區規則查到的事，也不要每改一行就反問。太多低影響問題會中斷工作，反而把責任全丟回使用者。
 
 ## 第一次怎麼開始
 

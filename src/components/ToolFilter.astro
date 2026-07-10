@@ -1,11 +1,20 @@
 ---
+type Access = 'yes' | 'no' | 'depends';
+interface ToolCapabilities {
+  localFiles: Access;
+  commands: Access;
+  sourceCitations: Access;
+  webAccess: Access;
+  backgroundTasks: Access;
+  humanApproval: Access;
+}
 interface ToolItem {
   title: string;
   summary: string;
   kinds: string[];
   level: string;
   aliases: string[];
-  canEditFiles: 'yes' | 'no' | 'depends';
+  capabilities: ToolCapabilities;
   href: string;
 }
 
@@ -13,6 +22,16 @@ interface Props { items: ToolItem[] }
 const { items } = Astro.props;
 const kinds = [...new Set(items.flatMap((item) => item.kinds))];
 const levels = [...new Set(items.map((item) => item.level))];
+const capabilityLabels: Record<keyof ToolCapabilities, string> = {
+  localFiles: '本機檔案',
+  commands: '命令執行',
+  sourceCitations: '固定來源引用',
+  webAccess: '網路存取',
+  backgroundTasks: '背景任務',
+  humanApproval: '人工確認',
+};
+const capabilityOrder = Object.keys(capabilityLabels) as Array<keyof ToolCapabilities>;
+const accessLabels: Record<Access, string> = { yes: '支援', no: '不支援', depends: '視設定' };
 ---
 
 <section class="tool-catalog" data-tool-filter>
@@ -20,11 +39,13 @@ const levels = [...new Set(items.map((item) => item.level))];
     <div class="filter-search"><label for="tool-query">工具或概念</label><input id="tool-query" type="search" placeholder="例如：NotebookLM、AskUserQuestion、Skill" aria-label="篩選工具詞典" data-filter="query" /></div>
     <label>類型<select data-filter="kind"><option value="">全部</option>{kinds.map((kind) => <option>{kind}</option>)}</select></label>
     <label>門檻<select data-filter="level"><option value="">全部</option>{levels.map((level) => <option>{level}</option>)}</select></label>
-    <label>能否改檔<select data-filter="edits"><option value="">全部</option><option value="yes">可以</option><option value="no">不直接改檔</option><option value="depends">視宿主或權限而定</option></select></label>
+    <label>本機檔案<select data-filter="localFiles"><option value="">全部</option><option value="yes">支援</option><option value="no">不支援</option><option value="depends">視介面或權限</option></select></label>
+    <label>命令執行<select data-filter="commands"><option value="">全部</option><option value="yes">支援</option><option value="no">不支援</option><option value="depends">視介面或權限</option></select></label>
+    <label>固定來源引用<select data-filter="sourceCitations"><option value="">全部</option><option value="yes">支援</option><option value="no">不支援</option><option value="depends">視介面或設定</option></select></label>
   </form>
   <div class="catalog-status" aria-live="polite"><strong data-result-count>{items.length}</strong> 個工具與概念</div>
   <div class="catalog-grid tool-grid">
-    {items.map((item) => <article data-catalog-item data-search={[item.title, item.summary, ...item.aliases].join(' ').toLocaleLowerCase('zh-Hant')} data-kinds={item.kinds.join('|')} data-level={item.level} data-edits={item.canEditFiles}><div class="card-topline"><span>{item.kinds.join(' / ')}</span><span>{item.level}</span></div><h2><a href={item.href}>{item.title}</a></h2><p>{item.summary}</p><ul class="tag-list">{item.aliases.slice(0, 3).map((alias) => <li>{alias}</li>)}</ul></article>)}
+    {items.map((item) => <article data-catalog-item data-search={[item.title, item.summary, ...item.aliases].join(' ').toLocaleLowerCase('zh-Hant')} data-kinds={item.kinds.join('|')} data-level={item.level} data-local-files={item.capabilities.localFiles} data-commands={item.capabilities.commands} data-source-citations={item.capabilities.sourceCitations}><div class="card-topline"><span>{item.kinds.join(' / ')}</span><span>{item.level}</span></div><h2><a href={item.href}>{item.title}</a></h2><p>{item.summary}</p><ul class="capability-list" aria-label="能力摘要">{capabilityOrder.map((capability) => <li><span>{capabilityLabels[capability]}</span><strong data-access={item.capabilities[capability]}>{accessLabels[item.capabilities[capability]]}</strong></li>)}</ul><ul class="tag-list">{item.aliases.slice(0, 3).map((alias) => <li>{alias}</li>)}</ul></article>)}
   </div>
   <div class="empty-state" data-empty hidden><strong>沒有符合條件的工具</strong><p>換個名稱，或清除篩選查看全部工具與概念。</p><button type="button" class="button secondary" data-reset>清除篩選</button></div>
 </section>
@@ -44,7 +65,9 @@ const levels = [...new Set(items.map((item) => item.level))];
         const matches = (!values.query || item.dataset.search?.includes(values.query))
           && (!values.kind || item.dataset.kinds?.toLocaleLowerCase('zh-Hant').split('|').includes(values.kind))
           && (!values.level || item.dataset.level?.toLocaleLowerCase('zh-Hant') === values.level)
-          && (!values.edits || item.dataset.edits === values.edits);
+          && (!values.localFiles || item.dataset.localFiles === values.localFiles)
+          && (!values.commands || item.dataset.commands === values.commands)
+          && (!values.sourceCitations || item.dataset.sourceCitations === values.sourceCitations);
         item.hidden = !matches;
         if (matches) visible += 1;
       });

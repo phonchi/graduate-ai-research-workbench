@@ -5,7 +5,13 @@ order: 2
 kind: 網頁
 level: 零門檻
 aliases: [Google NotebookLM, NotebookLM 筆記本]
-canEditFiles: no
+capabilities:
+  localFiles: no
+  commands: no
+  sourceCitations: yes
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: no
 bestFor: [多份來源問答, 課程與研究資料整理, 帶引用的初步查找]
 avoidFor: [修改本機檔案, 執行研究程式, 取代人工核對原文]
 firstStep: 為一個研究主題建立筆記本，先放少量可分享的來源並測試引用。
@@ -18,7 +24,7 @@ draft: false
 
 ## 白話是什麼
 
-NotebookLM 是投影片裡「給目錄，不要搬整座圖書館」的現成版。你把講義、論文或網址加入同一個筆記本，再針對這些來源發問，並沿回答中的引用回到原文。
+NotebookLM 把「先建立來源目錄，再按需查找」做成現成介面。你把講義、論文或網址加入同一個筆記本，再針對這些來源發問，並沿回答中的引用回到原文。
 
 ## 什麼時候用
 

@@ -5,7 +5,13 @@ order: 5
 kind: CLI
 level: 進階
 aliases: [Google Gemini CLI, Gemini command line]
-canEditFiles: yes
+capabilities:
+  localFiles: yes
+  commands: yes
+  sourceCitations: depends
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [終端機研究流程, 程式與文件修改, Google 生態使用者的 agent 工作]
 avoidFor: [不熟 terminal 的第一次體驗, 未確認權限的工具操作, 單純來源問答]
 firstStep: 先依官方文件完成安裝登入，再在測試 repo 中執行只讀任務。

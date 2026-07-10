@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { ArrowLeft, ExternalLink, PencilLine, SearchCheck } from 'lucide-astro';
+import { ArrowLeft, ExternalLink } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { buildSitePath } from '../../lib/site';
 
@@ -12,19 +12,23 @@ const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 const base = import.meta.env.BASE_URL;
 const toolKinds = [...new Set([entry.data.kind, ...entry.data.interfaces])];
-const fileAccess = {
-  yes: { label: '可在授權環境中修改檔案', icon: PencilLine },
-  no: { label: '不直接修改本機檔案', icon: SearchCheck },
-  depends: { label: '能否改檔取決於宿主與權限', icon: SearchCheck },
-}[entry.data.canEditFiles];
-const FileAccessIcon = fileAccess.icon;
+const capabilityLabels = {
+  localFiles: '本機檔案',
+  commands: '命令執行',
+  sourceCitations: '固定來源引用',
+  webAccess: '網路存取',
+  backgroundTasks: '背景任務',
+  humanApproval: '人工確認',
+} as const;
+const accessLabels = { yes: '支援', no: '不支援', depends: '視介面、權限或設定' } as const;
+const capabilityEntries = Object.entries(entry.data.capabilities) as Array<[keyof typeof capabilityLabels, keyof typeof accessLabels]>;
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.summary}>
   <div class="article-shell tool-article-shell">
     <aside class="article-context"><a class="back-link" href={buildSitePath(base, '/tools/')}><ArrowLeft size={16} aria-hidden="true" />工具詞典</a><div class="context-label">常見名稱</div><ul>{entry.data.aliases.map((alias) => <li>{alias}</li>)}</ul></aside>
     <article class="lesson-article" data-pagefind-body>
-      <header class="article-header"><span class="section-kicker">{toolKinds.join(' / ')} · {entry.data.level}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p><div class="capability-strip"><span><FileAccessIcon aria-hidden="true" />{fileAccess.label}</span><span>第一步：{entry.data.firstStep}</span></div>{entry.data.officialUrl && <a class="source-link" href={entry.data.officialUrl}>查看官方入口 <ExternalLink size={16} aria-hidden="true" /></a>}</header>
+      <header class="article-header"><span class="section-kicker">{toolKinds.join(' / ')} · {entry.data.level}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p><div class="capability-strip"><strong>能力摘要</strong><dl>{capabilityEntries.map(([capability, access]) => <div><dt>{capabilityLabels[capability]}</dt><dd data-access={access}>{accessLabels[access]}</dd></div>)}</dl><span>第一步：{entry.data.firstStep}</span></div>{entry.data.officialUrl && <a class="source-link" href={entry.data.officialUrl}>查看官方入口 <ExternalLink size={16} aria-hidden="true" /></a>}</header>
       <div class="prose"><Content /></div>
     </article>
     <aside class="toc" aria-label="頁內目錄"><strong>快速查找</strong><ol>{headings.filter((h) => h.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></aside>

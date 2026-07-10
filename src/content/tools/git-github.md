@@ -6,7 +6,13 @@ kind: CLI
 interfaces: [桌面 App, 網頁]
 level: 入門
 aliases: [Git, GitHub, GitHub Desktop, 版本控制]
-canEditFiles: depends
+capabilities:
+  localFiles: depends
+  commands: depends
+  sourceCitations: no
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [建立修改存檔點, 比較版本差異, 協作與部署前追蹤]
 avoidFor: [取代內容審查, 把密鑰與個資提交上線, 不理解後果的歷史重寫]
 firstStep: 用 GitHub Desktop 或 git status 確認狀態，先建立一個乾淨存檔點。

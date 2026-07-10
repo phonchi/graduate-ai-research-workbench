@@ -1,19 +1,82 @@
 ---
-import { ArrowRight, BookOpen, ChartNoAxesCombined, Code2, FilePenLine, MonitorUp, Presentation } from 'lucide-astro';
+import { getCollection } from 'astro:content';
+import { ArrowRight, BookOpen, ChartNoAxesCombined, Code2, FilePenLine, MonitorUp, Presentation, ShieldAlert } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { buildSitePath } from '../../lib/site';
+
 const base = import.meta.env.BASE_URL;
+const toolEntries = await getCollection('tools', ({ data }) => !data.draft);
+const toolById = new Map(toolEntries.map((tool) => [tool.id, tool]));
 const tasks = [
-  { id: 'read', title: '我要讀很多 PDF 與資料', description: '先做 quick notes 與索引；來源固定時可用 NotebookLM 問答。', lesson: '03-context-and-indexes', tool: 'notebooklm', icon: BookOpen },
-  { id: 'write', title: '我要修改論文或報告', description: '先交代讀者、範圍與不可改動之處，再要求另一個視角挑錯。', lesson: '02-ask-before-action', tool: 'claude-code', icon: FilePenLine },
-  { id: 'code', title: '我要跑程式、分析或實驗', description: '用能讀寫工作區的 Agent；動手前先存 Git checkpoint。', lesson: '04-checkpoints-and-tools', tool: 'codex', icon: Code2 },
-  { id: 'slides', title: '我要做 seminar 或口試簡報', description: '把內容規格、範例與檢查尺寸說清楚，再用實際輸出驗收。', lesson: '02-ask-before-action', case: 'programmatic-slides', icon: Presentation },
-  { id: 'site', title: '我要做研究或實驗室網站', description: '先在副本完成、測試與截圖，確認後才 commit、push 與部署。', lesson: '04-checkpoints-and-tools', case: 'course-site-pages', icon: MonitorUp },
-  { id: 'automate', title: '我要把重複流程固定下來', description: '已經跑順的工作寫成 Skill；大量搜尋或獨立審查才考慮 subagent。', lesson: '06-build-your-toolbox', tool: 'skill', icon: ChartNoAxesCombined },
+  { id: 'read', title: '閱讀與整理來源', description: '建立可回查的來源集合、quick notes 與索引，再決定是否需要固定來源引用。', lesson: '03-context-and-indexes', tools: ['notebooklm', 'chatgpt', 'codex', 'claude-code'], icon: BookOpen },
+  { id: 'write', title: '撰寫與修改文件', description: '先界定讀者、來源與不可改動範圍，再用差異與引用驗收。', lesson: '02-ask-before-action', tools: ['chatgpt', 'codex', 'claude-code', 'gemini-cli'], icon: FilePenLine },
+  { id: 'experiment', title: '執行程式與實驗', description: '選擇能存取工作區並執行命令的工具，先保留 checkpoint 與驗證命令。', lesson: '07-reproducible-research', tools: ['codex', 'claude-code', 'gemini-cli', 'git-github'], icon: Code2 },
+  { id: 'present', title: '製作研究簡報', description: '把內容規格、來源與視覺驗收分開，使用實際輸出檢查。', lesson: '02-ask-before-action', tools: ['chatgpt', 'codex', 'claude-code', 'gemini-cli'], icon: Presentation },
+  { id: 'publish', title: '發布研究成果', description: '先完成內容、權限與隱私檢查，再使用可追蹤的版本和發布流程。', lesson: '04-checkpoints-and-tools', tools: ['git-github', 'codex', 'claude-code'], icon: MonitorUp },
+  { id: 'automate', title: '固定重複流程', description: '流程穩定且驗收方式清楚後，再選擇 Skill、subagent、MCP 或背景任務。', lesson: '06-build-your-toolbox', tools: ['skill', 'subagent', 'mcp', 'codex', 'claude-code', 'gemini-cli'], icon: ChartNoAxesCombined },
 ];
 ---
 
-<BaseLayout title="研究任務" description="從手上的論文、程式、簡報或網站任務，快速找到適合的概念與工具。">
-  <header class="page-header"><div><span class="section-kicker">START FROM YOUR WORK</span><h1>你現在卡在哪一種研究工作？</h1><p>這裡只負責帶路，不把同一套內容再講一次。</p></div></header>
-  <section class="page-band"><div class="task-detail-list practical-task-list">{tasks.map((task, index) => <article id={task.id}><span class="task-number">{String(index + 1).padStart(2, '0')}</span><task.icon aria-hidden="true" /><div><h2>{task.title}</h2><p>{task.description}</p></div><div class="task-links"><a href={buildSitePath(base, `/learn/${task.lesson}/`)}>先看合作習慣 <ArrowRight size={16} aria-hidden="true" /></a>{task.tool && <a href={buildSitePath(base, `/tools/${task.tool}/`)}>查工具名詞 <ArrowRight size={16} aria-hidden="true" /></a>}{task.case && <a href={buildSitePath(base, `/cases/${task.case}/`)}>看真實案例 <ArrowRight size={16} aria-hidden="true" /></a>}</div></article>)}</div></section>
+<BaseLayout title="研究任務" description="先確認需要的能力與資料敏感度，再比較多個適合的研究工具與課程。">
+  <header class="page-header"><div><span class="section-kicker">START FROM YOUR WORK</span><h1>先說要做什麼，再決定用哪個工具</h1><p>工具名稱會變；資料邊界、必要能力與驗收方式應先決定。</p></div></header>
+  <section class="page-band task-router" data-task-router>
+    <form class="task-router-form" aria-label="研究任務條件" onsubmit="return false">
+      <label>研究任務<select data-task-select>{tasks.map((task) => <option value={task.id}>{task.title}</option>)}</select></label>
+      <fieldset><legend>需要哪些能力</legend><div class="task-capability-options">
+        <label><input type="checkbox" data-task-capability="localFiles" />讀寫本機檔案</label>
+        <label><input type="checkbox" data-task-capability="commands" />執行程式</label>
+        <label><input type="checkbox" data-task-capability="sourceCitations" />固定來源引用</label>
+        <label><input type="checkbox" data-task-capability="webAccess" />存取網路</label>
+        <label><input type="checkbox" data-task-capability="backgroundTasks" />背景執行</label>
+      </div></fieldset>
+      <label>資料含敏感資訊嗎？<select data-sensitive><option value="no">否</option><option value="yes">是或不確定</option></select></label>
+    </form>
+
+    <div class="sensitive-warning" data-sensitive-warning hidden><ShieldAlert size={22} aria-hidden="true" /><div><strong>先停在資料邊界</strong><p>不要上傳、外傳或擴大存取範圍；先確認授權、去識別與允許使用的環境。</p><a href={buildSitePath(base, '/safety/')}>先看安全指南 <ArrowRight size={16} aria-hidden="true" /></a></div></div>
+
+    <div class="task-route-results">
+      {tasks.map((task, index) => <article data-task-panel={task.id}>
+        <span class="task-number">{String(index + 1).padStart(2, '0')}</span><task.icon aria-hidden="true" />
+        <div><h2>{task.title}</h2><p>{task.description}</p><ul class="task-tool-list">{task.tools.map((toolId) => {
+          const tool = toolById.get(toolId);
+          if (!tool) return null;
+          return <li data-task-tool data-local-files={tool.data.capabilities.localFiles} data-commands={tool.data.capabilities.commands} data-source-citations={tool.data.capabilities.sourceCitations} data-web-access={tool.data.capabilities.webAccess} data-background-tasks={tool.data.capabilities.backgroundTasks}><a href={buildSitePath(base, `/tools/${tool.id}/`)}><strong>{tool.data.title}</strong><span>{tool.data.summary}</span></a></li>;
+        })}</ul><p class="task-empty" data-task-empty hidden>目前沒有直接符合全部條件的條目，請到能力詞典比較依設定支援的選項。</p></div>
+        <div class="task-links"><a href={buildSitePath(base, `/learn/${task.lesson}/`)}>推薦課程 <ArrowRight size={16} aria-hidden="true" /></a><a href={buildSitePath(base, '/tools/')}>比較完整能力詞典 <ArrowRight size={16} aria-hidden="true" /></a></div>
+      </article>)}
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-task-router]').forEach((root) => {
+    const taskSelect = root.querySelector<HTMLSelectElement>('[data-task-select]');
+    const capabilityInputs = Array.from(root.querySelectorAll<HTMLInputElement>('[data-task-capability]'));
+    const sensitive = root.querySelector<HTMLSelectElement>('[data-sensitive]');
+    const warning = root.querySelector<HTMLElement>('[data-sensitive-warning]');
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-task-panel]'));
+
+    const update = () => {
+      const selectedTask = taskSelect?.value ?? 'read';
+      const requiredCapabilities = capabilityInputs.filter((input) => input.checked).map((input) => input.dataset.taskCapability).filter(Boolean) as string[];
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.taskPanel !== selectedTask;
+        if (panel.hidden) return;
+        let visibleTools = 0;
+        panel.querySelectorAll<HTMLElement>('[data-task-tool]').forEach((tool) => {
+          const matches = requiredCapabilities.every((capability) => tool.dataset[capability] !== 'no');
+          tool.hidden = !matches;
+          if (matches) visibleTools += 1;
+        });
+        const empty = panel.querySelector<HTMLElement>('[data-task-empty]');
+        if (empty) empty.hidden = visibleTools !== 0;
+      });
+      if (warning) warning.hidden = sensitive?.value !== 'yes';
+    };
+
+    taskSelect?.addEventListener('change', update);
+    sensitive?.addEventListener('change', update);
+    capabilityInputs.forEach((input) => input.addEventListener('change', update));
+    update();
+  });
+</script>

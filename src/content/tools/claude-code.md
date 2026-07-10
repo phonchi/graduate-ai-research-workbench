@@ -6,7 +6,13 @@ kind: 桌面 App
 interfaces: [CLI]
 level: 入門
 aliases: [Claude Code desktop, Claude Code CLI]
-canEditFiles: yes
+capabilities:
+  localFiles: yes
+  commands: yes
+  sourceCitations: depends
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [長文件與專案修改, 執行檢查, 使用 Skill 或 subagent 拆解工作]
 avoidFor: [未確認差異就發布, 把長期規矩只留在對話裡, 高風險資料的無界線操作]
 firstStep: 在副本或 Git repo 中先做只讀盤點，確認工具看到的範圍。

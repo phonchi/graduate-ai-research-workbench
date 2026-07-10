@@ -5,7 +5,13 @@ order: 7
 kind: 檔案
 level: 入門
 aliases: [AGENTS file, Codex 工作守則, agent instructions]
-canEditFiles: no
+capabilities:
+  localFiles: no
+  commands: no
+  sourceCitations: no
+  webAccess: no
+  backgroundTasks: no
+  humanApproval: depends
 bestFor: [固定專案慣例, 設定工作紅線, 告訴 agent 如何驗證]
 avoidFor: [放單次任務細節, 保存密鑰與個資, 取代 Skill 的完整專門流程]
 firstStep: 先合作幾次，再請主 agent 根據重複出現的偏好草擬內容供你確認。

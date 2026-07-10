@@ -5,7 +5,13 @@ order: 1
 kind: 網頁
 level: 零門檻
 aliases: [ChatGPT 網頁版, OpenAI ChatGPT]
-canEditFiles: no
+capabilities:
+  localFiles: depends
+  commands: depends
+  sourceCitations: depends
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [一次性問答, 改寫與摘要, 釐清研究任務]
 avoidFor: [直接修改本機研究資料夾, 未經查證的關鍵結論, 長時間累積未整理的對話]
 firstStep: 先貼一個小任務，補上目標、範圍與希望的輸出格式。

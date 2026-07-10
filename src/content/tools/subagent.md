@@ -5,7 +5,13 @@ order: 13
 kind: 工作方式
 level: 進階
 aliases: [sub-agent, 分身, 獨立 context, agent delegation]
-canEditFiles: depends
+capabilities:
+  localFiles: depends
+  commands: depends
+  sourceCitations: depends
+  webAccess: depends
+  backgroundTasks: depends
+  humanApproval: depends
 bestFor: [大範圍搜尋, 獨立審查, 多份材料平行比較]
 avoidFor: [需要即時共同決策, 背景沒有寫清楚的任務, 很小且不可切分的工作]
 firstStep: 對主 agent 說明想要獨立審查或大量搜尋，要求最後只整合結論回來。

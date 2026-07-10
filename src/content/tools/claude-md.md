@@ -5,7 +5,13 @@ order: 8
 kind: 檔案
 level: 入門
 aliases: [Claude memory file, Claude Code 工作守則]
-canEditFiles: no
+capabilities:
+  localFiles: no
+  commands: no
+  sourceCitations: no
+  webAccess: no
+  backgroundTasks: no
+  humanApproval: depends
 bestFor: [固定 Claude Code 專案規矩, 保存驗證方式, 降低重複交代]
 avoidFor: [放一次性需求, 保存敏感資訊, 直接當成 AGENTS.md 的通用別名]
 firstStep: 做過幾次小任務後，請 Claude Code 先整理一份短草稿，再由你確認。
