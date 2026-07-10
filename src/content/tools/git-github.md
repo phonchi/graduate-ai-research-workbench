@@ -35,9 +35,9 @@ Git 是研究檔案的「存檔點與時光機」；GitHub 是把這份歷史放
 
 Git 不會判斷論文內容正不正確，也不會自動保護你免於錯誤操作。不要提交 API key、學生個資或不可公開材料；不熟悉時不要自行改寫共享歷史。
 
-## 第一次怎麼開始
+## 小型練習
 
-新手可用 GitHub Desktop 建 repo、做第一個 commit，再故意改一行文字觀察 Changes。熟悉 terminal 後，再學 `git status`、`git diff`、`git add`、`git commit` 與 `git push`。
+建立測試 repo 與第一個 commit，再故意改一行文字，分別用 GitHub Desktop 的 Changes 或 `git diff` 觀察差異。確認看得懂後再還原或建立下一個 commit。
 
 ## 和其他工具的關係
 
