@@ -1,9 +1,12 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const root = resolve(process.cwd(), 'src/content');
-const files = (collection: string) => readdirSync(resolve(root, collection)).filter((file) => file.endsWith('.md'));
+const files = (collection: string) => {
+  const directory = resolve(root, collection);
+  return existsSync(directory) ? readdirSync(directory).filter((file) => file.endsWith('.md')) : [];
+};
 const read = (collection: string, file: string) => readFileSync(resolve(root, collection, file), 'utf8');
 const frontmatterList = (content: string, key: string) => {
   const match = content.match(new RegExp(`^${key}:\\n((?:  - .+\\n)+)`, 'm'));
@@ -11,18 +14,37 @@ const frontmatterList = (content: string, key: string) => {
 };
 
 describe('content contract', () => {
-  it('ships the planned collection sizes', () => {
-    expect(files('lessons')).toHaveLength(7);
+  it('ships the slide-aligned learning path and reference collections', () => {
+    expect(files('lessons')).toHaveLength(6);
     expect(files('cases')).toHaveLength(6);
-    expect(files('skills').length).toBeGreaterThanOrEqual(12);
-    expect(files('templates')).toHaveLength(8);
+    expect(files('tools')).toHaveLength(13);
+    expect(files('templates')).toHaveLength(7);
   });
 
-  it('keeps every lesson task-oriented and independently verifiable', () => {
-    const headings = ['為什麼需要', '任務', '做法', '工具配方', '人工檢查點', '常見失敗', '驗收清單', '延伸挑戰'];
+  it('ties every lesson to the presentation without repeating the old eight-part template', () => {
+    const legacyHeadings = ['為什麼需要', '任務', '做法', '工具配方', '人工檢查點', '常見失敗', '驗收清單', '延伸挑戰'];
     for (const file of files('lessons')) {
       const content = read('lessons', file);
-      for (const heading of headings) expect(content, `${file} is missing ${heading}`).toContain(`## ${heading}`);
+      expect(frontmatterList(content, 'slideRefs').length, `${file} needs slide references`).toBeGreaterThan(0);
+      expect(frontmatterList(content, 'keyTerms').length, `${file} needs tool or concept terms`).toBeGreaterThan(0);
+      const repeated = legacyHeadings.filter((heading) => content.includes(`## ${heading}`));
+      expect(repeated, `${file} still uses the old repeated lesson template`).toHaveLength(0);
+    }
+  });
+
+  it('removes evidence-matrix framing that is not part of the presentation', () => {
+    for (const collection of ['lessons', 'tools', 'cases', 'templates']) {
+      for (const file of files(collection)) {
+        expect(read(collection, file), `${collection}/${file} reintroduces evidence-matrix framing`).not.toContain('證據矩陣');
+      }
+    }
+  });
+
+  it('documents each named tool as a practical lookup entry', () => {
+    const required = ['kind', 'level', 'aliases', 'bestFor', 'avoidFor', 'firstStep', 'lastVerified'];
+    for (const file of files('tools')) {
+      const content = read('tools', file);
+      for (const key of required) expect(content, `${file} is missing ${key}`).toMatch(new RegExp(`^${key}:`, 'm'));
     }
   });
 
@@ -31,18 +53,23 @@ describe('content contract', () => {
       const content = read('cases', file);
       expect(content).toContain('privacyReview:');
       expect(content).toContain('sourceLicense:');
-      expect(content).toContain('## 隱私與授權');
+      expect(frontmatterList(content, 'slideRefs').length, `${file} needs slide references`).toBeGreaterThan(0);
+      expect(frontmatterList(content, 'graduateTransfer').length, `${file} needs a graduate-student transfer`).toBeGreaterThan(0);
     }
   });
 
-  it('uses the skill index as the canonical skill taxonomy', () => {
-    const skillTitles = new Set(files('skills').map((file) => read('skills', file).match(/^title:\s*["']?(.+?)["']?$/m)?.[1] ?? ''));
-    for (const collection of ['lessons', 'cases', 'templates']) {
-      for (const file of files(collection)) {
-        for (const skill of frontmatterList(read(collection, file), 'skills')) {
-          expect(skillTitles, `${collection}/${file} references unknown skill: ${skill}`).toContain(skill);
-        }
-      }
+  it('ships only the seven presentation-backed copyable templates', () => {
+    expect(files('templates').sort()).toEqual([
+      'ask-before-action.md',
+      'context-cache-index.md',
+      'git-checkpoint-release.md',
+      'independent-review.md',
+      'six-part-brief.md',
+      'usage-review.md',
+      'workspace-rules.md',
+    ]);
+    for (const file of files('templates')) {
+      expect(read('templates', file)).toMatch(/^slideRefs:\n(?:  - \d+\n)+/m);
     }
   });
 
