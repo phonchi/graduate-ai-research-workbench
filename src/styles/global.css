@@ -292,8 +292,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .header-search { justify-self: end; }
   .home-intro-inner { grid-template-columns: 1fr 380px; gap: 42px; }
   .intro-copy h1 { font-size: 3.8rem; }
-  .article-shell { grid-template-columns: minmax(0, var(--reading)) 190px; }
-  .article-context { display: none; }
+  .article-shell { grid-template-columns: minmax(0, var(--reading)) 190px; grid-template-areas: "context toc" "article toc"; }
+  .article-context { position: static; grid-area: context; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+  .lesson-article { grid-area: article; }
+  .toc { grid-area: toc; }
   .filter-bar { grid-template-columns: repeat(3, 1fr); }
   .agent-intro .home-intro-inner { grid-template-columns: 1fr 370px; }
   .agent-intro .intro-copy h1 { font-size: 3.65rem; }
