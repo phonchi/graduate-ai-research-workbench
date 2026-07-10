@@ -1,16 +1,19 @@
 ---
-import { ArrowRight } from 'lucide-astro';
+import { ArrowRight, BookOpen, ChartNoAxesCombined, Code2, FilePenLine, MonitorUp, Presentation } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { researchTasks } from '../../data/researchTasks';
 import { buildSitePath } from '../../lib/site';
 const base = import.meta.env.BASE_URL;
-const taskDetails = [
-  ['literature', '讀懂與比較文獻', '把五篇來源整理成能回到原文位置的比較表。', '02-literature-evidence', '文獻證據矩陣'],
-  ['claims', '查核引用與論述', '逐句分開論文主張、證據、推論與尚待確認之處。', '06-verification-review', 'Claim-citation audit'],
-  ['organize', '整理研究材料', '建立命名、來源、索引與按需讀取規則。', '03-context-knowledge-base', '工作區規則'],
-  ['reproduce', '重現分析與實驗', '保存資料版本、環境、參數、結果與驗證命令。', '05-reproducibility-git', '可重現性清單'],
-  ['communicate', '修訂論文與簡報', '從目標讀者與證據開始，而不是只做語句美化。', '04-research-outputs', '簡報與網站 QA'],
-  ['automate', '封裝重複工作流', '先跑順並記錄失敗，再決定模板、Skill 或 MCP。', '07-workflow-automation', '研究進度紀錄'],
+const tasks = [
+  { id: 'read', title: '我要讀很多 PDF 與資料', description: '先做 quick notes 與索引；來源固定時可用 NotebookLM 問答。', lesson: '03-context-and-indexes', tool: 'notebooklm', icon: BookOpen },
+  { id: 'write', title: '我要修改論文或報告', description: '先交代讀者、範圍與不可改動之處，再要求另一個視角挑錯。', lesson: '02-ask-before-action', tool: 'claude-code', icon: FilePenLine },
+  { id: 'code', title: '我要跑程式、分析或實驗', description: '用能讀寫工作區的 Agent；動手前先存 Git checkpoint。', lesson: '04-checkpoints-and-tools', tool: 'codex', icon: Code2 },
+  { id: 'slides', title: '我要做 seminar 或口試簡報', description: '把內容規格、範例與檢查尺寸說清楚，再用實際輸出驗收。', lesson: '02-ask-before-action', case: 'programmatic-slides', icon: Presentation },
+  { id: 'site', title: '我要做研究或實驗室網站', description: '先在副本完成、測試與截圖，確認後才 commit、push 與部署。', lesson: '04-checkpoints-and-tools', case: 'course-site-pages', icon: MonitorUp },
+  { id: 'automate', title: '我要把重複流程固定下來', description: '已經跑順的工作寫成 Skill；大量搜尋或獨立審查才考慮 subagent。', lesson: '06-build-your-toolbox', tool: 'skill', icon: ChartNoAxesCombined },
 ];
 ---
-<BaseLayout title="研究任務"><header class="page-header"><div><span class="section-kicker">START FROM THE JOB</span><h1>從眼前的研究任務開始</h1><p>每條路線都連到一個核心單元與一份可立即使用的模板。</p></div></header><section class="page-band"><div class="task-detail-list">{taskDetails.map(([id, title, description, lesson, output], index) => <article id={id}><span class="task-number">{String(index + 1).padStart(2, '0')}</span><div><h2>{title}</h2><p>{description}</p><ul class="tag-list">{researchTasks[index].skills.map((skill) => <li>{skill}</li>)}</ul></div><div class="task-links"><a href={buildSitePath(base, `/learn/${lesson}/`)}>進入單元 <ArrowRight size={16} /></a><span>產出：{output}</span></div></article>)}</div></section></BaseLayout>
+
+<BaseLayout title="研究任務" description="從手上的論文、程式、簡報或網站任務，快速找到適合的概念與工具。">
+  <header class="page-header"><div><span class="section-kicker">START FROM YOUR WORK</span><h1>你現在卡在哪一種研究工作？</h1><p>這裡只負責帶路，不把同一套內容再講一次。</p></div></header>
+  <section class="page-band"><div class="task-detail-list practical-task-list">{tasks.map((task, index) => <article id={task.id}><span class="task-number">{String(index + 1).padStart(2, '0')}</span><task.icon aria-hidden="true" /><div><h2>{task.title}</h2><p>{task.description}</p></div><div class="task-links"><a href={buildSitePath(base, `/learn/${task.lesson}/`)}>先看合作習慣 <ArrowRight size={16} aria-hidden="true" /></a>{task.tool && <a href={buildSitePath(base, `/tools/${task.tool}/`)}>查工具名詞 <ArrowRight size={16} aria-hidden="true" /></a>}{task.case && <a href={buildSitePath(base, `/cases/${task.case}/`)}>看真實案例 <ArrowRight size={16} aria-hidden="true" /></a>}</div></article>)}</div></section>
+</BaseLayout>

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-for (const route of ['./', './search/', './cases/interactive-calculus/']) {
+for (const route of ['./', './tools/', './learn/02-ask-before-action/', './search/', './cases/interactive-calculus/']) {
   test(`${route} fits the viewport and renders its visual assets`, async ({ page }, testInfo) => {
     await page.goto(route);
     await page.waitForLoadState('networkidle');

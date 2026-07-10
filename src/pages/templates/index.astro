@@ -5,5 +5,7 @@ import CollectionCard from '../../components/CollectionCard.astro';
 import { buildSitePath } from '../../lib/site';
 const base = import.meta.env.BASE_URL;
 const items = (await getCollection('templates', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
+const tools = await getCollection('tools', ({ data }) => !data.draft);
+const toolTitles = new Map(tools.map((tool) => [tool.id, tool.data.title]));
 ---
-<BaseLayout title="研究模板"><header class="page-header"><div><span class="section-kicker">READY-TO-USE TEMPLATES</span><h1>把好方法帶回你的研究</h1><p>模板不是萬用答案；它把必要背景、證據與驗收欄位先留出來，避免研究交辦只剩一句願望。</p></div></header><section class="page-band"><div class="card-grid three">{items.map((item) => <CollectionCard href={buildSitePath(base, `/templates/${item.id}/`)} eyebrow={item.data.category} title={item.data.title} summary={item.data.summary} tags={item.data.skills} />)}</div></section></BaseLayout>
+<BaseLayout title="直接拿來用"><header class="page-header"><div><span class="section-kicker">COPY, TRY, ADJUST</span><h1>不用從空白 prompt 開始</h1><p>七份短模板只處理投影片裡真正會反覆出現的習慣：反問、索引、規矩、存檔、挑錯與回顧。</p></div></header><section class="page-band"><h2 class="sr-only">七份可直接使用的模板</h2><div class="card-grid three">{items.map((item) => <CollectionCard href={buildSitePath(base, `/templates/${item.id}/`)} eyebrow={item.data.category} title={item.data.title} summary={item.data.summary} tags={item.data.relatedTools.slice(0, 3).map((tool) => toolTitles.get(tool) ?? tool)} />)}</div></section></BaseLayout>

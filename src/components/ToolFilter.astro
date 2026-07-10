@@ -1,0 +1,58 @@
+---
+interface ToolItem {
+  title: string;
+  summary: string;
+  kinds: string[];
+  level: string;
+  aliases: string[];
+  canEditFiles: 'yes' | 'no' | 'depends';
+  href: string;
+}
+
+interface Props { items: ToolItem[] }
+const { items } = Astro.props;
+const kinds = [...new Set(items.flatMap((item) => item.kinds))];
+const levels = [...new Set(items.map((item) => item.level))];
+---
+
+<section class="tool-catalog" data-tool-filter>
+  <form class="filter-bar tool-filter-bar" aria-label="工具詞典篩選" onsubmit="return false">
+    <div class="filter-search"><label for="tool-query">工具或概念</label><input id="tool-query" type="search" placeholder="例如：NotebookLM、AskUserQuestion、Skill" aria-label="篩選工具詞典" data-filter="query" /></div>
+    <label>類型<select data-filter="kind"><option value="">全部</option>{kinds.map((kind) => <option>{kind}</option>)}</select></label>
+    <label>門檻<select data-filter="level"><option value="">全部</option>{levels.map((level) => <option>{level}</option>)}</select></label>
+    <label>能否改檔<select data-filter="edits"><option value="">全部</option><option value="yes">可以</option><option value="no">不直接改檔</option><option value="depends">視宿主或權限而定</option></select></label>
+  </form>
+  <div class="catalog-status" aria-live="polite"><strong data-result-count>{items.length}</strong> 個工具與概念</div>
+  <div class="catalog-grid tool-grid">
+    {items.map((item) => <article data-catalog-item data-search={[item.title, item.summary, ...item.aliases].join(' ').toLocaleLowerCase('zh-Hant')} data-kinds={item.kinds.join('|')} data-level={item.level} data-edits={item.canEditFiles}><div class="card-topline"><span>{item.kinds.join(' / ')}</span><span>{item.level}</span></div><h2><a href={item.href}>{item.title}</a></h2><p>{item.summary}</p><ul class="tag-list">{item.aliases.slice(0, 3).map((alias) => <li>{alias}</li>)}</ul></article>)}
+  </div>
+  <div class="empty-state" data-empty hidden><strong>沒有符合條件的工具</strong><p>換個名稱，或清除篩選查看全部工具與概念。</p><button type="button" class="button secondary" data-reset>清除篩選</button></div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tool-filter]').forEach((root) => {
+    const controls = Array.from(root.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-filter]'));
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-catalog-item]'));
+    const count = root.querySelector<HTMLElement>('[data-result-count]');
+    const empty = root.querySelector<HTMLElement>('[data-empty]');
+    const initialQuery = new URLSearchParams(window.location.search).get('q');
+    if (initialQuery && controls[0] instanceof HTMLInputElement) controls[0].value = initialQuery;
+    const filter = () => {
+      const values = Object.fromEntries(controls.map((control) => [control.dataset.filter, control.value.trim().toLocaleLowerCase('zh-Hant')]));
+      let visible = 0;
+      items.forEach((item) => {
+        const matches = (!values.query || item.dataset.search?.includes(values.query))
+          && (!values.kind || item.dataset.kinds?.toLocaleLowerCase('zh-Hant').split('|').includes(values.kind))
+          && (!values.level || item.dataset.level?.toLocaleLowerCase('zh-Hant') === values.level)
+          && (!values.edits || item.dataset.edits === values.edits);
+        item.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      if (count) count.textContent = String(visible);
+      if (empty) empty.hidden = visible !== 0;
+    };
+    controls.forEach((control) => control.addEventListener(control instanceof HTMLInputElement ? 'input' : 'change', filter));
+    root.querySelector('[data-reset]')?.addEventListener('click', () => { controls.forEach((control) => { control.value = ''; }); filter(); controls[0]?.focus(); });
+    filter();
+  });
+</script>

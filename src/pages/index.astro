@@ -1,92 +1,80 @@
 ---
-import { ArrowRight, BadgeCheck, Blocks, FolderTree, Library, Presentation, RefreshCw } from 'lucide-astro';
+import { ArrowRight, Brain, FolderSearch, MessageSquareMore, ScrollText, Wrench } from 'lucide-astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SearchBox from '../components/SearchBox.astro';
 import CollectionCard from '../components/CollectionCard.astro';
-import { researchTasks } from '../data/researchTasks';
 import { buildSitePath } from '../lib/site';
 
 const base = import.meta.env.BASE_URL;
 const lessons = (await getCollection('lessons', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
 const cases = (await getCollection('cases', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
-const icons = { library: Library, 'badge-check': BadgeCheck, 'folder-tree': FolderTree, 'refresh-cw': RefreshCw, presentation: Presentation, blocks: Blocks };
+const tools = (await getCollection('tools', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
+const toolTitles = new Map(tools.map((tool) => [tool.id, tool.data.title]));
+const featuredTools = ['notebooklm', 'codex', 'claude-code', 'git-github', 'skill', 'subagent']
+  .map((id) => tools.find((tool) => tool.id === id))
+  .filter(Boolean);
 ---
 
 <BaseLayout>
-  <section class="home-intro">
+  <section class="home-intro agent-intro">
     <div class="home-intro-inner">
       <div class="intro-copy">
-        <p class="eyebrow">FOR GRADUATE RESEARCHERS</p>
+        <p class="eyebrow">AI AGENT FIELD GUIDE</p>
         <h1>研究生 AI 研究工作台</h1>
-        <p class="intro-lead">從問題、證據到可重現產出。先學會界定任務與驗證結果，再選擇適合的 AI 工具。</p>
-        <SearchBox />
-        <div class="intro-actions">
-          <a class="button primary" href={buildSitePath(base, '/learn/')}>開始學習 <ArrowRight size={18} aria-hidden="true" /></a>
-          <a class="text-link" href={buildSitePath(base, '/templates/')}>直接找研究模板</a>
+        <p class="intro-lead">把 AI 從聊天工具變成會做事的研究助手</p>
+        <p class="intro-note">不用先學會所有模型。先練習怎麼交辦、怎麼給資料、怎麼存檔與挑錯，再挑適合你的工具。</p>
+        <div class="entry-actions" aria-label="選擇開始方式">
+          <a class="entry-link primary-entry" href={buildSitePath(base, '/learn/')}><MessageSquareMore aria-hidden="true" /><span><strong>第一次用 Agent</strong><small>從 Chat 與 Agent 的差別開始</small></span><ArrowRight aria-hidden="true" /></a>
+          <a class="entry-link" href={buildSitePath(base, '/tools/')}><Wrench aria-hidden="true" /><span><strong>查工具名詞</strong><small>NotebookLM、Codex、Skill 到 MCP</small></span><ArrowRight aria-hidden="true" /></a>
+          <a class="entry-link" href={buildSitePath(base, '/tasks/')}><FolderSearch aria-hidden="true" /><span><strong>我有研究任務</strong><small>從論文、程式、簡報或網站進入</small></span><ArrowRight aria-hidden="true" /></a>
         </div>
       </div>
-      <div class="workflow-visual" aria-label="研究工作流程：問題、證據、執行、驗證">
-        <div class="workflow-label">RESEARCH LOOP</div>
-        <ol>
-          <li><span>01</span><strong>定義問題</strong><small>目標與驗收</small></li>
-          <li><span>02</span><strong>整理證據</strong><small>來源可回查</small></li>
-          <li><span>03</span><strong>執行產出</strong><small>保留過程</small></li>
-          <li><span>04</span><strong>獨立驗證</strong><small>反例與人工判斷</small></li>
-        </ol>
-        <div class="workflow-proof"><BadgeCheck size={18} aria-hidden="true" />完成不是「AI 說好了」，而是留下可檢查的證據。</div>
+      <div class="agent-loop" aria-label="Agent 由腦、手、規矩與驗證迴圈組成">
+        <div class="loop-title">會做事的助手</div>
+        <div class="loop-parts">
+          <div><Brain aria-hidden="true" /><strong>腦</strong><span>模型負責理解與判斷</span></div>
+          <div><Wrench aria-hidden="true" /><strong>手</strong><span>工具負責讀檔與動手</span></div>
+          <div><ScrollText aria-hidden="true" /><strong>規矩</strong><span>你決定界線與習慣</span></div>
+        </div>
+        <div class="loop-cycle"><span>觀察</span><ArrowRight aria-hidden="true" /><span>動手</span><ArrowRight aria-hidden="true" /><span>驗證</span><ArrowRight aria-hidden="true" /><span>再調整</span></div>
       </div>
-    </div>
-  </section>
-
-  <section class="page-band task-band" id="tasks">
-    <div class="section-heading">
-      <span class="section-kicker">依研究任務開始</span>
-      <h2>你現在要完成什麼？</h2>
-      <p>不必先記工具名稱。從眼前的研究工作進入，再補需要的技能。</p>
-    </div>
-    <div class="task-grid">
-      {researchTasks.map((task) => {
-        const Icon = icons[task.icon];
-        return (
-          <a class="task-card" href={`${buildSitePath(base, '/tasks/')}#${task.id}`}>
-            <Icon size={22} aria-hidden="true" />
-            <div><strong>{task.label}</strong><p>{task.description}</p></div>
-            <ArrowRight size={18} aria-hidden="true" />
-          </a>
-        );
-      })}
     </div>
   </section>
 
   <section class="page-band learning-preview">
     <div class="section-heading split-heading">
-      <div><span class="section-kicker">循序能力路徑</span><h2>先建立判斷，再增加自動化</h2></div>
-      <a class="text-link" href={buildSitePath(base, '/learn/')}>查看全部 7 個單元 <ArrowRight size={17} aria-hidden="true" /></a>
+      <div><span class="section-kicker">投影片主線</span><h2>先學會怎麼合作，再決定用哪個工具</h2><p>六站都從研究生會遇到的卡點開始，不寫成研究方法考試。</p></div>
+      <a class="text-link" href={buildSitePath(base, '/learn/')}>查看完整路徑 <ArrowRight size={17} aria-hidden="true" /></a>
     </div>
-    <div class="learning-rail">
-      {lessons.slice(0, 4).map((lesson, index) => (
-        <a href={buildSitePath(base, `/learn/${lesson.id}/`)}>
-          <span>{String(index + 1).padStart(2, '0')}</span>
-          <strong>{lesson.data.title}</strong>
-          <small>{lesson.data.estimatedMinutes ?? 25} 分鐘 · {lesson.data.difficulty}</small>
-        </a>
+    <ol class="learning-rail journey-rail">
+      {lessons.map((lesson, index) => (
+        <li><a href={buildSitePath(base, `/learn/${lesson.id}/`)}><span>{String(index + 1).padStart(2, '0')}</span><strong>{lesson.data.title}</strong><small>{lesson.data.part} · {lesson.data.estimatedMinutes} 分鐘</small></a></li>
       ))}
+    </ol>
+  </section>
+
+  <section class="page-band tool-preview">
+    <div class="section-heading split-heading">
+      <div><span class="section-kicker">概念＋實名</span><h2>聽過名字，還要知道它能不能替你動手</h2></div>
+      <a class="text-link" href={buildSitePath(base, '/tools/')}>打開工具詞典 <ArrowRight size={17} aria-hidden="true" /></a>
+    </div>
+    <div class="tool-chip-grid">
+      {featuredTools.map((tool) => tool && <a href={buildSitePath(base, `/tools/${tool.id}/`)}><span>{tool.data.kind}</span><strong>{tool.data.title}</strong><small>{tool.data.summary}</small></a>)}
     </div>
   </section>
 
   <section class="page-band case-preview">
     <div class="section-heading split-heading">
-      <div><span class="section-kicker">從真實成果反推方法</span><h2>案例不是展示，是可拆解的證據</h2></div>
-      <a class="text-link" href={buildSitePath(base, '/cases/')}>查看六個案例 <ArrowRight size={17} aria-hidden="true" /></a>
+      <div><span class="section-kicker">真實成果</span><h2>先看做出了什麼，再把做法搬進研究</h2></div>
+      <a class="text-link" href={buildSitePath(base, '/cases/')}>查看全部案例 <ArrowRight size={17} aria-hidden="true" /></a>
     </div>
     <div class="card-grid three">
-      {cases.map((item) => <CollectionCard href={buildSitePath(base, `/cases/${item.id}/`)} eyebrow={item.data.stage} title={item.data.title} summary={item.data.summary} tags={item.data.skills} />)}
+      {cases.map((item) => <CollectionCard href={buildSitePath(base, `/cases/${item.id}/`)} eyebrow={item.data.part} title={item.data.title} summary={item.data.summary} tags={item.data.relatedTools.slice(0, 3).map((tool) => toolTitles.get(tool) ?? tool)} />)}
     </div>
   </section>
 
-  <section class="closing-band">
-    <div><span class="section-kicker">研究底線</span><h2>任何 AI 產出，都要能回到來源與驗證。</h2></div>
-    <a class="button light" href={buildSitePath(base, '/safety/')}>查看安全與倫理原則 <ArrowRight size={18} aria-hidden="true" /></a>
+  <section class="closing-band practical-closing">
+    <div><span class="section-kicker">第一個習慣</span><h2>別給願望。讓它先反問，再動手。</h2></div>
+    <a class="button light" href={buildSitePath(base, '/templates/ask-before-action/')}>直接拿走這段 prompt <ArrowRight size={18} aria-hidden="true" /></a>
   </section>
 </BaseLayout>

@@ -5,12 +5,7 @@ import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/images/cases');
-const sources = [
-  ['/mnt/c/Windows/Temp/interactive-calculus2.png', 'interactive-calculus.webp'],
-  ['/mnt/c/Windows/Temp/algorithm2.png', 'algorithm-visualization.webp'],
-  ['/mnt/c/Windows/Temp/course-site.png', 'course-site-pages.webp'],
-  ['/home/phonchi/learn_cli/skills/slides/slide-01.jpg', 'programmatic-slides.webp'],
-];
+const rasterSources = [['scripts/previews/programmatic-slides.png', 'programmatic-slides.webp']];
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1200, height: 675 }, deviceScaleFactor: 1 });
@@ -24,8 +19,8 @@ for (const [source, filename] of [
 }
 await browser.close();
 
-for (const [source, filename] of sources) {
-  await sharp(source).resize(1200, 675, { fit: 'cover' }).webp({ quality: 84 }).toFile(resolve(out, filename));
+for (const [source, filename] of rasterSources) {
+  await sharp(resolve(root, source)).resize(1200, 675, { fit: 'cover' }).webp({ quality: 84 }).toFile(resolve(out, filename));
 }
 
-console.log(`Generated ${sources.length + 2} case assets in ${out}`);
+console.log(`Generated ${rasterSources.length + 2} reproducible case assets in ${out}`);

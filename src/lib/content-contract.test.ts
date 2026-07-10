@@ -8,9 +8,12 @@ const files = (collection: string) => {
   return existsSync(directory) ? readdirSync(directory).filter((file) => file.endsWith('.md')) : [];
 };
 const read = (collection: string, file: string) => readFileSync(resolve(root, collection, file), 'utf8');
+const frontmatterValue = (content: string, key: string) => content.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1].trim().replace(/^['"]|['"]$/g, '');
 const frontmatterList = (content: string, key: string) => {
   const match = content.match(new RegExp(`^${key}:\\n((?:  - .+\\n)+)`, 'm'));
-  return match ? match[1].trim().split('\n').map((line) => line.replace(/^\s*-\s*/, '').replace(/^['"]|['"]$/g, '')) : [];
+  if (match) return match[1].trim().split('\n').map((line) => line.replace(/^\s*-\s*/, '').replace(/^['"]|['"]$/g, ''));
+  const inline = content.match(new RegExp(`^${key}:\\s*\\[([^\\]]*)\\]`, 'm'));
+  return inline ? inline[1].split(',').map((value) => value.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean) : [];
 };
 
 describe('content contract', () => {
@@ -49,12 +52,29 @@ describe('content contract', () => {
   });
 
   it('keeps privacy and licensing visible in every case', () => {
+    const toolIds = new Set(files('tools').map((file) => file.replace(/\.md$/, '')));
     for (const file of files('cases')) {
       const content = read('cases', file);
       expect(content).toContain('privacyReview:');
       expect(content).toContain('sourceLicense:');
       expect(frontmatterList(content, 'slideRefs').length, `${file} needs slide references`).toBeGreaterThan(0);
       expect(frontmatterList(content, 'graduateTransfer').length, `${file} needs a graduate-student transfer`).toBeGreaterThan(0);
+      for (const tool of frontmatterList(content, 'relatedTools')) expect(toolIds.has(tool), `${file} references unknown tool ${tool}`).toBe(true);
+      const coverImage = frontmatterValue(content, 'coverImage');
+      expect(coverImage, `${file} needs a cover image`).toBeTruthy();
+      const publicPath = coverImage?.replace(/^\/graduate-ai-research-workbench\//, '') ?? '';
+      expect(existsSync(resolve(process.cwd(), 'public', publicPath)), `${file} cover image does not exist`).toBe(true);
+    }
+  });
+
+  it('keeps all lesson and template tool links inside the glossary', () => {
+    const toolIds = new Set(files('tools').map((file) => file.replace(/\.md$/, '')));
+    for (const collection of ['lessons', 'templates']) {
+      for (const file of files(collection)) {
+        for (const tool of frontmatterList(read(collection, file), 'relatedTools')) {
+          expect(toolIds.has(tool), `${collection}/${file} references unknown tool ${tool}`).toBe(true);
+        }
+      }
     }
   });
 
@@ -69,7 +89,7 @@ describe('content contract', () => {
       'workspace-rules.md',
     ]);
     for (const file of files('templates')) {
-      expect(read('templates', file)).toMatch(/^slideRefs:\n(?:  - \d+\n)+/m);
+      expect(read('templates', file)).toMatch(/^slideRefs:\n(?: {2}- \d+\n)+/m);
     }
   });
 

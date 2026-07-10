@@ -11,19 +11,19 @@ interface Props {
 
 const {
   title = '研究生 AI 研究工作台',
-  description = '面向跨領域研究生的任務式 AI 研究技能教學網站。',
+  description = '給研究生的 AI Agent 實戰手冊：從工具名詞、交辦習慣到可重複的工作流程。',
   image,
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const home = buildSitePath(base, '/');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const nav = [
-  ['學習路徑', '/learn/'],
+  ['概念與習慣', '/learn/'],
   ['研究任務', '/tasks/'],
-  ['案例', '/cases/'],
-  ['技能索引', '/skills/'],
-  ['模板', '/templates/'],
-  ['安全與倫理', '/safety/'],
+  ['工具詞典', '/tools/'],
+  ['真實案例', '/cases/'],
+  ['直接拿來用', '/templates/'],
+  ['安全紅線', '/safety/'],
 ];
 const pageTitle = title === '研究生 AI 研究工作台' ? title : `${title}｜研究生 AI 研究工作台`;
 ---
@@ -68,10 +68,10 @@ const pageTitle = title === '研究生 AI 研究工作台' ? title : `${title}�
       <div class="footer-inner">
         <div>
           <strong>研究生 AI 研究工作台</strong>
-          <p>方法中立、來源可回查、產出可驗證。</p>
+          <p>先學合作習慣，再挑適合的工具。</p>
         </div>
         <div class="footer-links">
-          <a href={buildSitePath(base, '/safety/')}>安全與倫理</a>
+          <a href={buildSitePath(base, '/safety/')}>安全紅線</a>
           <a href="https://github.com/phonchi/graduate-ai-research-workbench">GitHub</a>
           <a href={buildSitePath(base, '/content-license/')}>教材授權</a>
         </div>

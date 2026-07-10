@@ -1,5 +1,15 @@
 ---
-import { Eye, LockKeyhole, Scale, ShieldCheck } from 'lucide-astro';
+import { Eye, LockKeyhole, ShieldCheck, Undo2 } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="安全與倫理"><header class="page-header"><div><span class="section-kicker">RESEARCH BOUNDARIES</span><h1>先保護研究，再追求效率</h1><p>AI 可以協助整理與執行，但資料責任、學術判斷與最終署名仍在人。</p></div></header><section class="page-band safety-grid"><article><LockKeyhole /><h2>資料與權限</h2><p>不把未公開論文、受試者資料、學生個資、金鑰或未授權全文交給未經確認的服務。</p></article><article><Eye /><h2>來源與揭露</h2><p>保存來源、工具、版本與人工修改；依課程、期刊或實驗室規範揭露 AI 使用方式。</p></article><article><ShieldCheck /><h2>人工驗證</h2><p>數字、公式、引用、程式與圖表都要用原始資料或可執行檢查驗證，不以語氣流暢取代證據。</p></article><article><Scale /><h2>責任邊界</h2><p>AI 不承擔作者責任。研究者必須能解釋方法、限制、失敗案例與每項關鍵決策。</p></article></section><section class="page-band prose narrow"><h2>上傳前的四個問題</h2><ol><li>我有權把這份資料交給這個工具嗎？</li><li>內容能否先去識別化或改用合成資料？</li><li>工具會如何保存、訓練或分享資料？</li><li>如果結果外洩或錯誤，我能承擔後果嗎？</li></ol><h2>發布前的四個證據</h2><ol><li>主張能回到原始來源或分析結果。</li><li>圖表、公式與程式經過獨立檢查。</li><li>第三方素材具有可確認的授權。</li><li>所有參與者與敏感欄位已完成隱私審查。</li></ol></section></BaseLayout>
+
+<BaseLayout title="安全紅線" description="把學生個資、未公開研究與破壞性操作留在 Agent 的工作邊界之外。">
+  <header class="page-header"><div><span class="section-kicker">FOUR RED LINES</span><h1>先知道什麼不能交出去</h1><p>安全不用每頁重講。記住四條紅線，其他地方只在需要時連回來。</p></div></header>
+  <section class="page-band safety-grid">
+    <article><LockKeyhole aria-hidden="true" /><h2>不丟敏感資料</h2><p>學生姓名、學號、成績、未匿名化資料、金鑰與未公開研究，不交給未確認的服務。</p></article>
+    <article><Eye aria-hidden="true" /><h2>先看它要動哪裡</h2><p>讓 Agent 先列出會讀、會改、會執行的範圍。看不懂或範圍太大，就先停下來。</p></article>
+    <article><Undo2 aria-hidden="true" /><h2>唯一版本不要直接改</h2><p>先建立副本或 Git checkpoint。覆寫、刪除、發布與大範圍修改都要有人確認。</p></article>
+    <article><ShieldCheck aria-hidden="true" /><h2>重要內容由你把關</h2><p>數字、公式、引用、反例與對外發布內容要回到原始材料或實際輸出檢查。</p></article>
+  </section>
+  <section class="page-band prose narrow safety-questions"><h2>上傳前問自己</h2><ol><li>我有權把這份材料交給這個工具嗎？</li><li>能否先匿名化、刪除不需要的欄位，或改用測試資料？</li><li>這個工具會保存什麼？誰能看見？</li><li>如果它做錯，我有存檔點能回去嗎？</li></ol><blockquote><p>Agent 可以幫你動手，但研究判斷、資料責任與發布決定仍由你負責。</p></blockquote></section>
+</BaseLayout>

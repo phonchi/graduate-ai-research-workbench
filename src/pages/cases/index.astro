@@ -5,5 +5,7 @@ import CollectionCard from '../../components/CollectionCard.astro';
 import { buildSitePath } from '../../lib/site';
 const base = import.meta.env.BASE_URL;
 const items = (await getCollection('cases', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
+const tools = await getCollection('tools', ({ data }) => !data.draft);
+const toolTitles = new Map(tools.map((tool) => [tool.id, tool.data.title]));
 ---
-<BaseLayout title="案例"><header class="page-header"><div><span class="section-kicker">EVIDENCE IN PRACTICE</span><h1>從成果拆解研究工作流</h1><p>每個案例都標出輸入、人工檢查點、驗證證據與不能省略的邊界。</p></div></header><section class="page-band"><div class="card-grid three">{items.map((item) => <CollectionCard href={buildSitePath(base, `/cases/${item.id}/`)} eyebrow={`${item.data.stage} · ${item.data.difficulty}`} title={item.data.title} summary={item.data.summary} tags={item.data.skills} />)}</div></section></BaseLayout>
+<BaseLayout title="真實案例"><header class="page-header"><div><span class="section-kicker">REAL WORK, NOT DEMOS</span><h1>先看真的做出了什麼</h1><p>保留原始教學成果，再把同一套合作方式轉成研究圖、實驗腳本、口試簡報與專案網站。</p></div></header><section class="page-band"><h2 class="sr-only">六個真實工作案例</h2><div class="card-grid three">{items.map((item) => <CollectionCard href={buildSitePath(base, `/cases/${item.id}/`)} eyebrow={`${item.data.part} · ${item.data.difficulty}`} title={item.data.title} summary={item.data.summary} tags={item.data.relatedTools.slice(0, 3).map((tool) => toolTitles.get(tool) ?? tool)} />)}</div></section></BaseLayout>

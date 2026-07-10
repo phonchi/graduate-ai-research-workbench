@@ -1,58 +1,22 @@
 ---
-import { getCollection } from 'astro:content';
+import { ArrowRight, FolderSearch, Wrench } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import CatalogFilter from '../../components/CatalogFilter.astro';
 import { buildSitePath } from '../../lib/site';
-import type { CatalogItem } from '../../lib/catalog';
-
 const base = import.meta.env.BASE_URL;
 const pagefindBase = `${base}pagefind/`;
-const collections = await Promise.all(
-  ['lessons', 'cases', 'skills', 'templates'].map((name) => getCollection(name as 'lessons', ({ data }) => !data.draft)),
-);
-const routes = ['learn', 'cases', 'skills', 'templates'];
-const items: CatalogItem[] = collections.flatMap((collection, index) => collection.map((item) => ({
-  title: item.data.title,
-  summary: item.data.summary,
-  stage: item.data.stage,
-  difficulty: item.data.difficulty,
-  skills: item.data.skills,
-  tools: item.data.tools,
-  outputs: item.data.outputs,
-  href: buildSitePath(base, `/${routes[index]}/${item.id}/`),
-})));
 ---
 
 <BaseLayout title="搜尋">
-  <header class="page-header">
-    <div><span class="section-kicker">SEARCH THE WORKBENCH</span><h1>搜尋研究技能與任務</h1><p>用研究階段、技能、工具與預期產出縮小範圍；完整頁面文字另由 Pagefind 建立索引。</p></div>
-  </header>
-  <section class="page-band">
-    <CatalogFilter items={items} />
-    <section class="fulltext-search" aria-labelledby="fulltext-title" data-fulltext-section data-pagefind-base={pagefindBase}>
-      <div class="section-heading compact"><span class="section-kicker">FULL TEXT</span><h2 id="fulltext-title">搜尋頁面全文</h2></div>
-      <div id="pagefind-search"></div>
-    </section>
-  </section>
+  <header class="page-header"><div><span class="section-kicker">SEARCH THE FIELD GUIDE</span><h1>搜尋概念、工具與真實案例</h1><p>知道工具名就直接查；只有任務描述，也可以先從研究任務分流。</p></div></header>
+  <section class="page-band search-shortcuts"><a href={buildSitePath(base, '/tools/')}><Wrench aria-hidden="true" /><span><strong>工具詞典</strong><small>依類型、門檻與能否改檔篩選</small></span><ArrowRight aria-hidden="true" /></a><a href={buildSitePath(base, '/tasks/')}><FolderSearch aria-hidden="true" /><span><strong>研究任務</strong><small>從 PDF、論文、程式、簡報或網站開始</small></span><ArrowRight aria-hidden="true" /></a></section>
+  <section class="page-band fulltext-search" aria-labelledby="fulltext-title" data-fulltext-section data-pagefind-base={pagefindBase}><div class="section-heading compact"><span class="section-kicker">FULL TEXT</span><h2 id="fulltext-title">搜尋全部頁面</h2></div><div id="pagefind-search"></div></section>
   <link href={`${pagefindBase}pagefind-ui.css`} rel="stylesheet" />
   <script type="module" is:inline>
     const section = document.querySelector('[data-fulltext-section]');
     const script = document.createElement('script');
     script.src = `${section.dataset.pagefindBase}pagefind-ui.js`;
-    script.onload = () => {
-      new window.PagefindUI({
-        element: '#pagefind-search',
-        showSubResults: true,
-        translations: {
-          placeholder: '搜尋全文',
-          zero_results: '找不到「[SEARCH_TERM]」',
-          clear_search: '清除',
-        },
-      });
-    };
-    script.onerror = () => {
-      section?.setAttribute('hidden', '');
-    };
+    script.onload = () => { new window.PagefindUI({ element: '#pagefind-search', showSubResults: true, translations: { placeholder: '搜尋 Agent、NotebookLM、Git、Skill…', zero_results: '找不到「[SEARCH_TERM]」', clear_search: '清除' } }); };
+    script.onerror = () => { section?.setAttribute('hidden', ''); };
     document.head.append(script);
   </script>
 </BaseLayout>
