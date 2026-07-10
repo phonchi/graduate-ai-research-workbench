@@ -1,15 +1,24 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
 
 const experiment = resolve(process.cwd(), 'examples/reproducible-experiment');
 const rawPath = resolve(experiment, 'raw/measurements.csv');
+const configPath = resolve(experiment, 'config.json');
 const analyzePath = resolve(experiment, 'analyze.mjs');
 const derivedPath = resolve(experiment, 'derived/summary.json');
-const expectedPath = resolve(experiment, 'expected/summary.json');
+const expectedPath = resolve(experiment, 'expected/summary-template.json');
 const sha256 = (content: Buffer | string) => createHash('sha256').update(content).digest('hex');
+const runAnalysis = () => spawnSync(process.execPath, [analyzePath], { cwd: experiment, encoding: 'utf8' });
+
+const expectRawUnchanged = (rawBefore: Buffer) => {
+  const rawAfter = readFileSync(rawPath);
+  if (!rawAfter.equals(rawBefore)) writeFileSync(rawPath, rawBefore);
+  expect(sha256(rawAfter)).toBe(sha256(rawBefore));
+  expect(rawAfter.equals(rawBefore)).toBe(true);
+};
 
 describe('reproducible experiment fixture', () => {
   it('recomputes the expected summary without changing raw measurements', () => {
@@ -21,10 +30,7 @@ describe('reproducible experiment fixture', () => {
     const rawHashBefore = sha256(rawBefore);
     rmSync(resolve(experiment, 'derived'), { recursive: true, force: true });
 
-    const result = spawnSync(process.execPath, [analyzePath], {
-      cwd: experiment,
-      encoding: 'utf8',
-    });
+    const result = runAnalysis();
 
     expect(result.status, result.stderr || result.stdout).toBe(0);
     expect(existsSync(derivedPath), 'analysis did not create derived/summary.json').toBe(true);
@@ -40,6 +46,11 @@ describe('reproducible experiment fixture', () => {
   });
 
   it('uses only Node built-in modules and records a complete manifest', () => {
+    rmSync(resolve(experiment, 'derived'), { recursive: true, force: true });
+    const result = runAnalysis();
+    expect(result.status, result.stderr || result.stdout).toBe(0);
+    expect(existsSync(derivedPath), 'analysis did not create derived/summary.json').toBe(true);
+
     const source = readFileSync(analyzePath, 'utf8');
     const imports = [...source.matchAll(/from ['"]([^'"]+)['"]/g)].map((match) => match[1]);
     expect(imports.length).toBeGreaterThan(0);
@@ -57,5 +68,39 @@ describe('reproducible experiment fixture', () => {
     }
     expect(summary.manifest).toHaveProperty('seed');
     expect(summary.manifest).toHaveProperty('timestamp');
+  });
+
+  it('rejects an output path that would overwrite raw measurements', () => {
+    const rawBefore = readFileSync(rawPath);
+    const configBefore = readFileSync(configPath);
+    const config = JSON.parse(configBefore.toString('utf8')) as Record<string, unknown>;
+
+    try {
+      writeFileSync(configPath, `${JSON.stringify({ ...config, output: 'raw/measurements.csv' }, null, 2)}\n`);
+      const result = runAnalysis();
+      expect(result.status, 'analysis unexpectedly accepted raw/ as an output location').not.toBe(0);
+    } finally {
+      writeFileSync(configPath, configBefore);
+      expectRawUnchanged(rawBefore);
+    }
+  });
+
+  it('rejects an output path that escapes the experiment directory', () => {
+    const rawBefore = readFileSync(rawPath);
+    const configBefore = readFileSync(configPath);
+    const outsidePath = resolve(experiment, '../../outside.json');
+    const config = JSON.parse(configBefore.toString('utf8')) as Record<string, unknown>;
+    expect(existsSync(outsidePath), `${outsidePath} must be absent before this test`).toBe(false);
+
+    try {
+      writeFileSync(configPath, `${JSON.stringify({ ...config, output: '../../outside.json' }, null, 2)}\n`);
+      const result = runAnalysis();
+      expect(result.status, 'analysis unexpectedly accepted an escaping output location').not.toBe(0);
+      expect(existsSync(outsidePath), 'analysis wrote outside its derived directory').toBe(false);
+    } finally {
+      writeFileSync(configPath, configBefore);
+      rmSync(outsidePath, { force: true });
+      expectRawUnchanged(rawBefore);
+    }
   });
 });

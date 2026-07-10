@@ -32,7 +32,7 @@ coverImage: /graduate-ai-research-workbench/images/cases/reproducible-experiment
 - `raw/measurements.csv`：唯一原始輸入，分析器只讀。
 - `config.json`：指定輸入、輸出、四捨五入位數、seed 與固定 timestamp。
 - `analyze.mjs`：只使用 Node.js built-ins，沒有套件安裝步驟。
-- `expected/summary.json`：保存 gold output；測試執行時才代入當下 Node 版本。
+- `expected/summary-template.json`：保存預期欄位與統計值；測試執行時將 `$NODE_VERSION` 正規化為當下 runtime 版本，再進行結構比較。
 
 執行環境只要求可使用 Node.js。實際版本會寫入 manifest，不假裝不同 runtime 完全相同。
 
@@ -69,7 +69,7 @@ npm test -- src/lib/reproducible-experiment.test.ts
 測試會先記錄 raw CSV 的內容與 SHA-256，刪除舊 derived output，重新執行分析，再確認：
 
 1. process exit status 為 0。
-2. 新 summary 與 expected fixture 完全一致。
+2. 將 expected template 的 runtime 欄位正規化後，summary 的結構與值相符。
 3. manifest 欄位齊全，兩個 SHA-256 格式正確。
 4. raw CSV 執行前後內容與雜湊不變。
 5. 分析器的 import 全部來自 `node:` built-ins。
