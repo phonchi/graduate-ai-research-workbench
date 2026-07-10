@@ -1,7 +1,93 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { readFile } from 'node:fs/promises';
 
 const presentationFraming = /\bslideRefs\b|對照投影片|投影片主線|投影片的核心比喻|\.pptx\b|第\s*\d+\s*(?:張|頁)\s*投影片|投影片\s*\d+/iu;
+
+const publicContentRoutes = [
+  './',
+  './learn/',
+  ...[
+    '01-from-chat-to-agent',
+    '02-ask-before-action',
+    '03-context-and-indexes',
+    '04-checkpoints-and-tools',
+    '05-challenge-and-review',
+    '06-build-your-toolbox',
+    '07-reproducible-research',
+  ].map((slug) => `./learn/${slug}/`),
+  './tools/',
+  ...[
+    'agents-md',
+    'ask-user-question',
+    'chatgpt',
+    'claude-code',
+    'claude-md',
+    'codex',
+    'gemini-cli',
+    'git-github',
+    'insights',
+    'mcp',
+    'notebooklm',
+    'skill',
+    'subagent',
+  ].map((slug) => `./tools/${slug}/`),
+  './cases/',
+  ...[
+    'algorithm-visualization',
+    'anonymous-manuscript-review',
+    'course-site-pages',
+    'document-cache',
+    'interactive-calculus',
+    'programmatic-slides',
+    'reproducible-experiment',
+  ].map((slug) => `./cases/${slug}/`),
+  './templates/',
+  ...[
+    'ask-before-action',
+    'context-cache-index',
+    'git-checkpoint-release',
+    'independent-review',
+    'six-part-brief',
+    'usage-review',
+    'workspace-rules',
+  ].map((slug) => `./templates/${slug}/`),
+  './tasks/',
+  './safety/',
+  './search/',
+  './content-license/',
+];
+
+const legacyRedirects = [
+  ['./learn/01-task-specification/', './learn/02-ask-before-action/'],
+  ['./learn/02-literature-evidence/', './learn/03-context-and-indexes/'],
+  ['./learn/03-context-knowledge-base/', './learn/03-context-and-indexes/'],
+  ['./learn/04-research-outputs/', './learn/02-ask-before-action/'],
+  ['./learn/05-reproducibility-git/', './learn/04-checkpoints-and-tools/'],
+  ['./learn/06-verification-review/', './learn/05-challenge-and-review/'],
+  ['./learn/07-workflow-automation/', './learn/06-build-your-toolbox/'],
+  ['./skills/', './tools/'],
+  ['./skills/academic-writing/', './tasks/#write'],
+  ['./skills/claim-evidence-mapping/', './learn/05-challenge-and-review/'],
+  ['./skills/context-management/', './learn/03-context-and-indexes/'],
+  ['./skills/counterexample-checking/', './learn/05-challenge-and-review/'],
+  ['./skills/data-provenance/', './learn/04-checkpoints-and-tools/'],
+  ['./skills/git-version-control/', './tools/git-github/'],
+  ['./skills/literature-synthesis/', './learn/03-context-and-indexes/'],
+  ['./skills/reproducible-research/', './learn/04-checkpoints-and-tools/'],
+  ['./skills/skill-design/', './tools/skill/'],
+  ['./skills/source-verification/', './learn/05-challenge-and-review/'],
+  ['./skills/subagent-delegation/', './tools/subagent/'],
+  ['./skills/task-specification/', './learn/02-ask-before-action/'],
+  ['./skills/visual-verification/', './learn/05-challenge-and-review/'],
+  ['./templates/claim-citation-audit/', './templates/independent-review/'],
+  ['./templates/literature-evidence-matrix/', './templates/context-cache-index/'],
+  ['./templates/manuscript-review-checklist/', './templates/independent-review/'],
+  ['./templates/presentation-web-qa/', './templates/git-checkpoint-release/'],
+  ['./templates/reproducibility-checklist/', './templates/git-checkpoint-release/'],
+  ['./templates/research-log/', './templates/usage-review/'],
+  ['./templates/research-task-brief/', './templates/six-part-brief/'],
+] as const;
 
 test('homepage introduces an agent-first learning journey with three clear entry points', async ({ page }) => {
   await page.goto('./');
@@ -14,7 +100,7 @@ test('homepage introduces an agent-first learning journey with three clear entry
   await expect(page.getByRole('heading', { level: 2, name: '先學會怎麼合作，再決定用哪個工具' })).toBeVisible();
 });
 
-test('the standalone learning path ships seven lessons without presentation framing', async ({ page }) => {
+test('the standalone learning path ships seven lessons', async ({ page }) => {
   await page.goto('./learn/');
 
   const lessons = page.locator('.lesson-list > li');
@@ -22,8 +108,15 @@ test('the standalone learning path ships seven lessons without presentation fram
   await expect(lessons.first()).toContainText('學完可以：');
   await expect(lessons.last().getByRole('link', { name: /可重現研究工作流/ })).toBeVisible();
 
-  for (const route of ['./', './learn/', './learn/07-reproducible-research/', './cases/', './cases/reproducible-experiment/', './templates/', './templates/six-part-brief/']) {
-    await page.goto(route);
+});
+
+test('all public content is independent from presentation framing', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Content invariant only needs one browser project');
+
+  for (const route of publicContentRoutes) {
+    const response = await page.goto(route);
+    expect(response, `${route} did not return a document response`).not.toBeNull();
+    expect(response?.ok(), `${route} returned ${response?.status()}`).toBe(true);
     expect(await page.locator('body').innerText(), `${route} exposes presentation-dependent framing`).not.toMatch(presentationFraming);
   }
 });
@@ -196,30 +289,31 @@ test('lesson pages teach presentation concepts through named tools and a usable 
   await expect(lesson.locator('pre').filter({ hasText: '動工前' }).first()).toBeVisible();
 });
 
-test('Pagefind searches lesson body text in the production build', async ({ page }) => {
+test('Pagefind returns the AskUserQuestion tool result and follows its destination', async ({ page, baseURL }) => {
   await page.goto('./search/');
   const fullText = page.locator('.pagefind-ui__search-input');
   await expect(fullText).toBeVisible();
   await fullText.fill('AskUserQuestion');
-  const result = page.locator('.pagefind-ui__result-link').first();
-  await expect(result).toBeVisible();
-  await expect(result).toHaveAttribute('href', /graduate-ai-research-workbench/);
-  await result.click();
-  await expect(page).toHaveURL(/graduate-ai-research-workbench\//);
+  const expectedPath = '/graduate-ai-research-workbench/tools/ask-user-question/';
+  const result = page.locator('.pagefind-ui__result').filter({
+    has: page.locator(`.pagefind-ui__result-link[href="${expectedPath}"]`),
+  });
+  await expect(result).toContainText('AskUserQuestion');
+  const resultLink = result.locator('.pagefind-ui__result-link');
+  await expect(resultLink).toHaveAttribute('href', expectedPath);
+  await resultLink.click();
+  await expect(page).toHaveURL(new URL(expectedPath, baseURL).href);
+  await expect(page.getByRole('heading', { level: 1, name: 'AskUserQuestion' })).toBeVisible();
 });
 
-test('legacy lesson and skill URLs redirect inside the deployed project base', async ({ page }) => {
-  await page.goto('./learn/01-task-specification/');
-  await expect(page).toHaveURL(/graduate-ai-research-workbench\/learn\/02-ask-before-action\/$/);
-  await expect(page.getByRole('heading', { level: 1, name: /別給願望/ })).toBeVisible();
+test('every legacy URL redirects to its configured project-local destination', async ({ page, baseURL }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Redirect behavior is viewport-independent');
+  expect(legacyRedirects).toHaveLength(28);
 
-  await page.goto('./skills/git-version-control/');
-  await expect(page).toHaveURL(/graduate-ai-research-workbench\/tools\/git-github\/$/);
-  await expect(page.getByRole('heading', { level: 1, name: 'Git 與 GitHub' })).toBeVisible();
-
-  await page.goto('./templates/research-task-brief/');
-  await expect(page).toHaveURL(/graduate-ai-research-workbench\/templates\/six-part-brief\/$/);
-  await expect(page.getByRole('heading', { level: 1, name: '六要素交辦單' })).toBeVisible();
+  for (const [source, destination] of legacyRedirects) {
+    await page.goto(source);
+    await expect(page, `${source} should redirect to ${destination}`).toHaveURL(new URL(destination, baseURL).href);
+  }
 });
 
 test('templates can be copied and downloaded as Markdown', async ({ page, context }) => {
@@ -229,9 +323,13 @@ test('templates can be copied and downloaded as Markdown', async ({ page, contex
   await expect(page.getByText('已複製模板')).toBeVisible();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('## 目標');
 
-  const download = page.waitForEvent('download');
+  const downloadEvent = page.waitForEvent('download');
   await page.getByRole('button', { name: '下載 Markdown' }).click();
-  expect((await download).suggestedFilename()).toBe('six-part-brief.md');
+  const download = await downloadEvent;
+  expect(download.suggestedFilename()).toBe('six-part-brief.md');
+  const downloadPath = await download.path();
+  expect(downloadPath).not.toBeNull();
+  expect(await readFile(downloadPath as string, 'utf8')).toContain('## 目標');
 });
 
 test('mobile navigation opens without covering the menu control', async ({ page }, testInfo) => {
@@ -261,6 +359,24 @@ for (const route of ['./learn/02-ask-before-action/', './tools/notebooklm/', './
   });
 }
 
+test('/tools/ has no automatically detectable accessibility violations', async ({ page }) => {
+  await page.goto('./tools/');
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+
+test('/tasks/ has no automatically detectable accessibility violations after interaction', async ({ page }) => {
+  await page.goto('./tasks/');
+  await page.getByLabel('研究任務').selectOption('experiment');
+  await page.getByLabel('讀寫本機檔案').check();
+  await page.getByLabel('執行程式').check();
+  await page.getByLabel('資料含敏感資訊嗎？').selectOption('yes');
+  await expect(page.locator('[data-sensitive-warning]')).toBeVisible();
+
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
@@ -276,7 +392,7 @@ test.describe('without JavaScript', () => {
     expect(await page.locator('.reference-list li').count()).toBeGreaterThanOrEqual(2);
   });
 
-  test('task routing falls back to readable static guidance and all task choices', async ({ page }) => {
+  test('task routing falls back to readable static guidance and valid local candidate links', async ({ page, request, baseURL }) => {
     await page.goto('./tasks/');
 
     await expect(page.locator('.task-router-form')).toBeHidden();
@@ -286,9 +402,22 @@ test.describe('without JavaScript', () => {
 
     const taskPanels = page.locator('[data-task-panel]');
     await expect(taskPanels).toHaveCount(6);
+    const candidateHrefs = new Set<string>();
     for (const panel of await taskPanels.all()) {
       await expect(panel).toBeVisible();
-      expect(await panel.locator('[data-task-tool] a').count()).toBeGreaterThan(0);
+      const candidateLinks = panel.locator('[data-task-tool] > a');
+      expect(await candidateLinks.count()).toBeGreaterThan(0);
+      for (const link of await candidateLinks.all()) {
+        await expect(link).toBeVisible();
+        const href = await link.getAttribute('href');
+        expect(href).toMatch(/^\/graduate-ai-research-workbench\/tools\/[a-z0-9-]+\/$/);
+        candidateHrefs.add(href as string);
+      }
+    }
+
+    for (const href of candidateHrefs) {
+      const response = await request.get(new URL(href, baseURL).href);
+      expect(response.ok(), `${href} should resolve inside the project`).toBe(true);
     }
   });
 });
