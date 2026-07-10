@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
@@ -101,6 +102,38 @@ describe('reproducible experiment fixture', () => {
       writeFileSync(configPath, configBefore);
       rmSync(outsidePath, { force: true });
       expectRawUnchanged(rawBefore);
+    }
+  });
+
+  it.skipIf(process.platform !== 'linux')('rejects an output path whose existing ancestor is a symbolic link', () => {
+    const rawBefore = readFileSync(rawPath);
+    const configBefore = readFileSync(configPath);
+    const derivedBefore = existsSync(derivedPath) ? readFileSync(derivedPath) : undefined;
+    const outside = mkdtempSync(resolve(tmpdir(), 'reproducible-experiment-'));
+    const outsideOutput = resolve(outside, 'summary.json');
+    const linkedDirectory = resolve(experiment, 'derived/outside-link');
+    const config = JSON.parse(configBefore.toString('utf8')) as Record<string, unknown>;
+
+    try {
+      rmSync(resolve(experiment, 'derived'), { recursive: true, force: true });
+      mkdirSync(resolve(experiment, 'derived'), { recursive: true });
+      symlinkSync(outside, linkedDirectory, 'dir');
+      writeFileSync(configPath, `${JSON.stringify({ ...config, output: 'derived/outside-link/summary.json' }, null, 2)}\n`);
+
+      const result = runAnalysis();
+
+      expect(result.status, 'analysis unexpectedly followed a symbolic-link output ancestor').not.toBe(0);
+      expect(existsSync(outsideOutput), 'analysis wrote through the symbolic link').toBe(false);
+    } finally {
+      writeFileSync(configPath, configBefore);
+      rmSync(resolve(experiment, 'derived'), { recursive: true, force: true });
+      if (derivedBefore) {
+        mkdirSync(resolve(experiment, 'derived'), { recursive: true });
+        writeFileSync(derivedPath, derivedBefore);
+      }
+      rmSync(outside, { recursive: true, force: true });
+      expectRawUnchanged(rawBefore);
+      expect(readFileSync(configPath).equals(configBefore)).toBe(true);
     }
   });
 });

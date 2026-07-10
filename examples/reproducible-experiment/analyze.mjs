@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -24,13 +24,36 @@ const isContainedFile = (directory, path) => {
   const child = relative(directory, path);
   return child !== '' && child !== '..' && !child.startsWith(`..${sep}`) && !isAbsolute(child);
 };
+const assertNoSymbolicLinkSegments = async (path, label) => {
+  const child = relative(root, path);
+  if (child === '..' || child.startsWith(`..${sep}`) || isAbsolute(child)) {
+    throw new Error(`${label} must stay within the experiment directory`);
+  }
+
+  let current = root;
+  for (const segment of ['', ...child.split(sep)]) {
+    if (segment) current = resolve(current, segment);
+    try {
+      const metadata = await lstat(current);
+      if (metadata.isSymbolicLink()) throw new Error(`${label} must not contain symbolic links`);
+    } catch (error) {
+      if (error && error.code === 'ENOENT') return;
+      throw error;
+    }
+  }
+};
+const assertOutputBoundary = async () => {
+  if (!isContainedFile(derivedRoot, outputPath)) {
+    throw new Error('output must be a file contained within derived/');
+  }
+  await assertNoSymbolicLinkSegments(outputPath, 'output');
+};
 
 if (!isContainedFile(rawRoot, inputPath)) {
   throw new Error('input must be a file contained within raw/');
 }
-if (!isContainedFile(derivedRoot, outputPath)) {
-  throw new Error('output must be a file contained within derived/');
-}
+await assertNoSymbolicLinkSegments(inputPath, 'input');
+await assertOutputBoundary();
 
 const inputBytes = await readFile(inputPath);
 const lines = inputBytes.toString('utf8').trim().split(/\r?\n/);
@@ -70,5 +93,6 @@ const summary = {
 };
 
 await mkdir(dirname(outputPath), { recursive: true });
+await assertOutputBoundary();
 await writeFile(outputPath, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
 console.log(`Wrote ${config.output}`);
