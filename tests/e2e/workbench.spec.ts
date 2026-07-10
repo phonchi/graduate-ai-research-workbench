@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFile } from 'node:fs/promises';
 
-const presentationFraming = /\bslideRefs\b|對照投影片|投影片主線|投影片的核心比喻|\.pptx\b|第\s*\d+\s*(?:張|頁)\s*投影片|投影片\s*\d+/iu;
+const presentationFraming = /\bslideRefs\b|對照投影片|投影片主線|投影片的核心比喻|\.pptx?\b|第\s*\d+\s*(?:張|頁)\s*投影片|投影片\s*\d+/iu;
 
 const publicContentRoutes = [
   './',
@@ -107,17 +107,17 @@ test('the standalone learning path ships seven lessons', async ({ page }) => {
   await expect(lessons).toHaveCount(7);
   await expect(lessons.first()).toContainText('學完可以：');
   await expect(lessons.last().getByRole('link', { name: /可重現研究工作流/ })).toBeVisible();
-
 });
 
-test('all public content is independent from presentation framing', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Content invariant only needs one browser project');
-
+test.describe('public content presentation independence', () => {
   for (const route of publicContentRoutes) {
-    const response = await page.goto(route);
-    expect(response, `${route} did not return a document response`).not.toBeNull();
-    expect(response?.ok(), `${route} returned ${response?.status()}`).toBe(true);
-    expect(await page.locator('body').innerText(), `${route} exposes presentation-dependent framing`).not.toMatch(presentationFraming);
+    test(`${route} has no presentation-dependent framing`, async ({ page }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Content invariant only needs one browser project');
+      const response = await page.goto(route);
+      expect(response, `${route} did not return a document response`).not.toBeNull();
+      expect(response?.ok(), `${route} returned ${response?.status()}`).toBe(true);
+      expect(await page.locator('body').innerText()).not.toMatch(presentationFraming);
+    });
   }
 });
 
@@ -306,13 +306,19 @@ test('Pagefind returns the AskUserQuestion tool result and follows its destinati
   await expect(page.getByRole('heading', { level: 1, name: 'AskUserQuestion' })).toBeVisible();
 });
 
-test('every legacy URL redirects to its configured project-local destination', async ({ page, baseURL }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Redirect behavior is viewport-independent');
-  expect(legacyRedirects).toHaveLength(28);
-
+test.describe('legacy redirects', () => {
   for (const [source, destination] of legacyRedirects) {
-    await page.goto(source);
-    await expect(page, `${source} should redirect to ${destination}`).toHaveURL(new URL(destination, baseURL).href);
+    test(`${source} redirects to ${destination}`, async ({ page, baseURL }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Redirect behavior is viewport-independent');
+      await page.goto(source);
+      await expect(page).toHaveURL(new URL(destination, baseURL).href);
+
+      if (source === './skills/academic-writing/') {
+        await expect(page.locator('[data-task-select]')).toHaveValue('write');
+        await expect(page.locator('[data-task-panel="write"]')).toBeVisible();
+        await expect(page.locator('[data-task-panel="read"]')).toBeHidden();
+      }
+    });
   }
 });
 
