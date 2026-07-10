@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "paper-01-method",
+      "path": "paper-01-method.md",
+      "kind": "synthetic-paper",
+      "license": "CC-BY-4.0",
+      "sha256": "3d20468d0de33432b1c0aa03742cde98f7f65698ef732b0ec06141807aca18ce",
+      "quickNote": "Synthetic method note for source-first evidence mapping."
+    },
+    {
+      "id": "paper-02-baseline",
+      "path": "paper-02-baseline.md",
+      "kind": "synthetic-paper",
+      "license": "CC-BY-4.0",
+      "sha256": "315655cbd42da07ed2174a8c4fa4385b1ead8a29545af673eac20839ac721fb6",
+      "quickNote": "Synthetic baseline note without source anchors."
+    },
+    {
+      "id": "notes-assumptions",
+      "path": "notes-assumptions.md",
+      "kind": "research-note",
+      "license": "CC-BY-4.0",
+      "sha256": "b6f5f511a2e5541a5ceca1c4c36b46acf0ea92e2490beb8bcadb3465dbc37ed8",
+      "quickNote": "Synthetic assumptions for querying and source tracing."
+    },
+    {
+      "id": "dataset-card",
+      "path": "dataset-card.html",
+      "kind": "dataset-card",
+      "license": "CC-BY-4.0",
+      "sha256": "798d338cee83d45c840eef777dab7121b0f84aaa5c4ce73ea6f476015eae84a5",
+      "quickNote": "Synthetic dataset card describing intended use and privacy."
+    }
+  ]
+}

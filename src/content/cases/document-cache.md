@@ -1,6 +1,6 @@
 ---
 title: 先給目錄，再讀真正需要的文件
-summary: 把論文、研究簡報與技術文件做成摘要、索引、全文三層快取，避免每次把整座資料庫塞進對話。
+summary: 用明確 source manifest、可驗證 hash 與 deterministic index 建立可回查、可重建的本地文件快取。
 order: 50
 part: 封裝
 difficulty: 實作
@@ -23,20 +23,24 @@ coverImage: /graduate-ai-research-workbench/images/cases/document-cache.webp
 
 ## 成果先看
 
-[`examples/synthetic-corpus`](https://github.com/phonchi/graduate-ai-research-workbench/tree/main/examples/synthetic-corpus) 收錄四份合成來源與可程式解析的 `index.json`。Quick notes 先說每份文件是什麼，索引幫你定位關鍵字，真的要引用時才開全文並回查原始來源。
+[`examples/synthetic-corpus`](https://github.com/phonchi/graduate-ai-research-workbench/tree/main/examples/synthetic-corpus) 收錄四份合成來源、含 SHA-256 的 `source-manifest.json`、零相依 builder 與 committed expected fixture。Quick notes 放在結構化 manifest；重建時不靠檔名猜測或脆弱的 HTML regex，真的要引用時仍回查原始來源。
 
 ## 當時怎麼交辦
 
-> 先盤點這個資料夾的 PDF、DOCX 與研究簡報，為每份文件建立一句 quick note 和可搜尋索引。平常只查摘要與索引；需要回答或引用時，再打開少數相關全文。擷取失敗要列出來，不要默默略過。動工前先問我哪些資料可處理、哪些只能留在本機。
+> 只處理 `source-manifest.json` 明列的來源；先驗證路徑與 SHA-256，再依 stable ID 產生 deterministic `index.json`。不要掃描未列入的檔案、覆寫 raw source 或把輸出寫到 corpus 外。失敗要保留上一版 index 並記錄原因。
 
 不想先建本地流程時，也可以一門研究主題建立一個 NotebookLM 筆記本，讓它根據上傳來源回答；要批次改檔、生成成果或部署網站，再交給 Agent。
 
 ## 輸入、動作、輸出與驗證
 
-- **輸入**：四份 repo-local 合成來源；不需要真實論文、審稿文件或個資。
-- **動作**：為每份來源建立 quick note，抽取可搜尋文字並產生含穩定路徑的索引。
-- **輸出**：來源清單、`index.json`、全文快取與擷取失敗紀錄。
-- **驗證**：確認索引中的每條路徑存在；抽查查詢結果能回到來源；來源更新後重建並比較索引差異。
+- **輸入**：`source-manifest.json` 與四份 repo-local 合成來源。Manifest 明列 stable ID、path、kind、license、quick note 與來源 SHA-256。
+- **動作**：在 `examples/synthetic-corpus` 執行 `node build-index.mjs`。程式先確認來源存在且沒有逃出 corpus，再核對 bytes；全部通過後才排序並寫入固定的 `index.json`。
+- **輸出**：deterministic `index.json`、`expected-index.json` 與 `failure-log.md`。Builder 不接受其他 output path，也不覆寫 raw source。
+- **驗證**：執行 `cmp index.json expected-index.json`，再於 repo 根目錄執行 `npm test -- src/lib/document-cache-reproducibility.test.ts`；測試會重建兩次、逐筆重算 hash，並確認原始來源 bytes 不變。
+
+## Expected 與失敗紀錄
+
+成功時，重建的 `index.json` 必須與 committed `expected-index.json` byte-for-byte 相同。來源 hash 不符、路徑越界或傳入額外 output 參數時，命令必須非零結束，且不得改動上一版 index 或任何來源；可重現的失敗案例與錯誤文字記在 `failure-log.md`。
 
 ## 踩坑提醒
 
