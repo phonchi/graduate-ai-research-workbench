@@ -47,7 +47,7 @@ const tasks = [
 
     <p class="task-result-status" role="status" aria-live="polite" data-task-result-status></p>
     <div class="task-route-results">
-      {tasks.map((task, index) => <article data-task-panel={task.id}>
+      {tasks.map((task, index) => <article id={task.id} data-task-panel={task.id}>
         <span class="task-number">{String(index + 1).padStart(2, '0')}</span><task.icon aria-hidden="true" />
         <div><h2>{task.title}</h2><p>{task.description}</p><ul class="task-tool-list">{task.tools.map((toolId) => {
           const tool = toolById.get(toolId);
@@ -71,6 +71,14 @@ const tasks = [
     const warning = root.querySelector<HTMLElement>('[data-sensitive-warning]');
     const resultStatus = root.querySelector<HTMLElement>('[data-task-result-status]');
     const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-task-panel]'));
+    const taskIds = new Set(['read', 'write', 'experiment', 'present', 'publish', 'automate']);
+    const defaultTask = taskSelect?.value ?? 'read';
+
+    const applyTaskFragment = () => {
+      if (!taskSelect) return;
+      const fragment = window.location.hash.slice(1);
+      taskSelect.value = taskIds.has(fragment) ? fragment : defaultTask;
+    };
 
     const update = () => {
       const selectedTask = taskSelect?.value ?? 'read';
@@ -100,6 +108,11 @@ const tasks = [
     taskSelect?.addEventListener('change', update);
     sensitive?.addEventListener('change', update);
     capabilityInputs.forEach((input) => input.addEventListener('change', update));
+    window.addEventListener('hashchange', () => {
+      applyTaskFragment();
+      update();
+    });
+    applyTaskFragment();
     update();
   });
 </script>

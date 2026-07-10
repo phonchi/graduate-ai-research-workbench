@@ -63,4 +63,16 @@ describe('capability-first task routing presentation', () => {
     const styles = read('src/styles/global.css');
     expect(styles).toMatch(/@media \(max-width: 900px\)[\s\S]*?\.task-router-form \{ grid-template-columns: 1fr; \}/);
   });
+
+  it('honors known task fragments without changing the default for invalid hashes', () => {
+    const page = read('src/pages/tasks/index.astro');
+    expect(page).toContain("new Set(['read', 'write', 'experiment', 'present', 'publish', 'automate'])");
+    expect(page).toContain('id={task.id}');
+    expect(page).toContain('window.location.hash.slice(1)');
+    expect(page).toContain('taskIds.has(fragment)');
+    expect(page).toContain("const defaultTask = taskSelect?.value ?? 'read'");
+    expect(page).toContain('taskSelect.value = taskIds.has(fragment) ? fragment : defaultTask');
+    expect(page).toContain("window.addEventListener('hashchange'");
+    expect(page).toMatch(/applyTaskFragment\(\);\s*update\(\);/);
+  });
 });
