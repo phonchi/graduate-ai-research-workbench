@@ -291,6 +291,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .task-router-form fieldset { padding: 0; border: 0; }
 .task-router-form select { min-height: 44px; padding: 8px 10px; border: 1px solid #aab7b0; border-radius: 3px; background: #fff; color: var(--ink); font-size: .9rem; }
 .no-js .task-router-form { display: none; }
+.no-js .no-js-task-note { display: block; }
 .js .no-js-task-note { display: none; }
 .no-js-task-note { margin-top: 14px; padding: 16px 18px; border: 1px solid var(--line); background: #fff8e7; }
 .no-js-task-note p { margin: 5px 0 0; color: var(--muted); }

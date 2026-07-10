@@ -46,7 +46,7 @@ const tasks = [
     <div class="sensitive-warning" data-sensitive-warning role="alert" hidden><ShieldAlert size={22} aria-hidden="true" /><div><strong>先停在資料邊界</strong><p>不要上傳、外傳或擴大存取範圍；先確認授權、去識別與允許使用的環境。</p><a href={buildSitePath(base, '/safety/')}>先看安全指南 <ArrowRight size={16} aria-hidden="true" /></a></div></div>
 
     <p class="task-result-status" role="status" aria-live="polite" data-task-result-status></p>
-    <div class="task-route-results" aria-live="polite" aria-atomic="false">
+    <div class="task-route-results">
       {tasks.map((task, index) => <article data-task-panel={task.id}>
         <span class="task-number">{String(index + 1).padStart(2, '0')}</span><task.icon aria-hidden="true" />
         <div><h2>{task.title}</h2><p>{task.description}</p><ul class="task-tool-list">{task.tools.map((toolId) => {
