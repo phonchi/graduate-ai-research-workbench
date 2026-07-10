@@ -3,11 +3,18 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const root = resolve(process.cwd(), 'src/content');
-const files = (collection: string) => {
-  const directory = resolve(root, collection);
-  return existsSync(directory) ? readdirSync(directory).filter((file) => file.endsWith('.md')) : [];
+const pagesRoot = resolve(process.cwd(), 'src/pages');
+const recursiveFiles = (directory: string, extensions: string[]): string[] => {
+  if (!existsSync(directory)) return [];
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) return recursiveFiles(path, extensions).map((file) => `${entry.name}/${file}`);
+    return extensions.some((extension) => entry.name.endsWith(extension)) ? [entry.name] : [];
+  });
 };
+const files = (collection: string) => recursiveFiles(resolve(root, collection), ['.md', '.mdx']);
 const read = (collection: string, file: string) => readFileSync(resolve(root, collection, file), 'utf8');
+const readPage = (file: string) => readFileSync(resolve(pagesRoot, file), 'utf8');
 const frontmatter = (content: string) => content.match(/^---\n([\s\S]*?)\n---/m)?.[1] ?? '';
 const frontmatterValue = (content: string, key: string) => content.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1].trim().replace(/^['"]|['"]$/g, '');
 const frontmatterList = (content: string, key: string) => {
@@ -16,6 +23,13 @@ const frontmatterList = (content: string, key: string) => {
   const inline = content.match(new RegExp(`^${key}:\\s*\\[([^\\]]*)\\]`, 'm'));
   return inline ? inline[1].split(',').map((value) => value.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean) : [];
 };
+const contentId = (file: string) => file.replace(/\.mdx?$/, '');
+const bannedPublicPhrases = ['對照投影片', '投影片主線', '投影片的核心比喻'];
+const bannedPublicPatterns: Array<{ label: string; pattern: RegExp }> = [
+  { label: 'presentation filename', pattern: /\.(?:ppt|pptx)\b/i },
+  { label: 'numbered presentation page', pattern: /第\s*\d+\s*(?:張|頁)\s*投影片/u },
+  { label: 'numeric slide reference', pattern: /投影片\s*\d+(?:\s*[、,，]\s*\d+)*/u },
+];
 
 describe('content contract', () => {
   it('ships the standalone learning path and reference collections', () => {
@@ -26,13 +40,12 @@ describe('content contract', () => {
   });
 
   it('makes every lesson standalone and backed by a small reference set', () => {
-    const bannedPublicPhrases = ['對照投影片', '投影片主線', '投影片的核心比喻'];
     for (const file of files('lessons')) {
       const content = read('lessons', file);
-      expect(content).not.toMatch(/^slideRefs:/m);
-      expect(frontmatterList(content, 'learningOutcomes'), `${file} needs three learning outcomes`).toHaveLength(3);
-      expect(content, `${file} needs prerequisites metadata`).toMatch(/^prerequisites:/m);
       const metadata = frontmatter(content);
+      expect(content).not.toMatch(/^slideRefs:/m);
+      expect(frontmatterList(metadata, 'learningOutcomes'), `${file} needs three learning outcomes`).toHaveLength(3);
+      expect(metadata, `${file} needs prerequisites metadata`).toMatch(/^prerequisites:/m);
       const referenceCount = (metadata.match(/^ {2}- title: .+$/gm) ?? []).length;
       expect(referenceCount, `${file} needs at least two references`).toBeGreaterThanOrEqual(2);
       expect(referenceCount, `${file} needs at most four references`).toBeLessThanOrEqual(4);
@@ -44,15 +57,21 @@ describe('content contract', () => {
     }
   });
 
-  it('removes slide-dependent and evidence-matrix framing from public content', () => {
-    const bannedPublicPhrases = ['對照投影片', '投影片主線', '投影片的核心比喻'];
+  it('removes slide-dependent and evidence-matrix framing from public content and pages', () => {
+    const publicSources: Array<{ path: string; source: string }> = [];
     for (const collection of ['lessons', 'tools', 'cases', 'templates']) {
       for (const file of files(collection)) {
         const content = read(collection, file);
-        expect(content, `${collection}/${file} still has slide metadata`).not.toMatch(/^slideRefs:/m);
-        expect(content, `${collection}/${file} reintroduces evidence-matrix framing`).not.toContain('證據矩陣');
-        for (const phrase of bannedPublicPhrases) expect(content).not.toContain(phrase);
+        publicSources.push({ path: `src/content/${collection}/${file}`, source: content });
       }
+    }
+    for (const file of recursiveFiles(pagesRoot, ['.astro'])) publicSources.push({ path: `src/pages/${file}`, source: readPage(file) });
+
+    for (const { path, source } of publicSources) {
+      expect(source, `${path} still exposes slideRefs`).not.toMatch(/\bslideRefs\b/);
+      expect(source, `${path} reintroduces evidence-matrix framing`).not.toContain('證據矩陣');
+      for (const phrase of bannedPublicPhrases) expect(source, `${path} contains banned phrase ${phrase}`).not.toContain(phrase);
+      for (const { label, pattern } of bannedPublicPatterns) expect(source, `${path} contains ${label}`).not.toMatch(pattern);
     }
   });
 
@@ -61,26 +80,28 @@ describe('content contract', () => {
     const capabilities = ['localFiles', 'commands', 'sourceCitations', 'webAccess', 'backgroundTasks', 'humanApproval'];
     for (const file of files('tools')) {
       const content = read('tools', file);
-      for (const key of required) expect(content, `${file} is missing ${key}`).toMatch(new RegExp(`^${key}:`, 'm'));
-      expect(content, `${file} is missing capabilities`).toMatch(/^capabilities:/m);
-      expect(content, `${file} still uses canEditFiles`).not.toMatch(/^canEditFiles:/m);
+      const metadata = frontmatter(content);
+      for (const key of required) expect(metadata, `${file} is missing ${key}`).toMatch(new RegExp(`^${key}:`, 'm'));
+      expect(metadata, `${file} is missing capabilities`).toMatch(/^capabilities:/m);
+      expect(metadata, `${file} still uses canEditFiles`).not.toMatch(/^canEditFiles:/m);
       for (const capability of capabilities) {
-        expect(content, `${file} is missing capability ${capability}`).toMatch(new RegExp(`^  ${capability}: (yes|no|depends)$`, 'm'));
+        expect(metadata, `${file} is missing capability ${capability}`).toMatch(new RegExp(`^  ${capability}: (yes|no|depends)$`, 'm'));
       }
     }
   });
 
   it('keeps classification, reproducibility, privacy, licensing, and covers visible in every case', () => {
-    const toolIds = new Set(files('tools').map((file) => file.replace(/\.md$/, '')));
+    const toolIds = new Set(files('tools').map(contentId));
     for (const file of files('cases')) {
       const content = read('cases', file);
-      expect(content).toMatch(/^category: (公開成果|可重跑示範|匿名流程重建)$/m);
-      expect(content).toMatch(/^reproducible: (true|false)$/m);
-      expect(content).toContain('privacyReview:');
-      expect(content).toContain('sourceLicense:');
-      expect(frontmatterList(content, 'graduateTransfer').length, `${file} needs a graduate-student transfer`).toBeGreaterThan(0);
-      for (const tool of frontmatterList(content, 'relatedTools')) expect(toolIds.has(tool), `${file} references unknown tool ${tool}`).toBe(true);
-      const coverImage = frontmatterValue(content, 'coverImage');
+      const metadata = frontmatter(content);
+      expect(metadata).toMatch(/^category: (公開成果|可重跑示範|匿名流程重建)$/m);
+      expect(metadata).toMatch(/^reproducible: (true|false)$/m);
+      expect(metadata).toMatch(/^privacyReview:/m);
+      expect(metadata).toMatch(/^sourceLicense:/m);
+      expect(frontmatterList(metadata, 'graduateTransfer').length, `${file} needs a graduate-student transfer`).toBeGreaterThan(0);
+      for (const tool of frontmatterList(metadata, 'relatedTools')) expect(toolIds.has(tool), `${file} references unknown tool ${tool}`).toBe(true);
+      const coverImage = frontmatterValue(metadata, 'coverImage');
       expect(coverImage, `${file} needs a cover image`).toBeTruthy();
       const publicPath = coverImage?.replace(/^\/graduate-ai-research-workbench\//, '') ?? '';
       expect(existsSync(resolve(process.cwd(), 'public', publicPath)), `${file} cover image does not exist`).toBe(true);
@@ -88,22 +109,22 @@ describe('content contract', () => {
   });
 
   it('keeps every related content slug resolvable', () => {
-    const toolIds = new Set(files('tools').map((file) => file.replace(/\.md$/, '')));
-    const lessonIds = new Set(files('lessons').map((file) => file.replace(/\.md$/, '')));
-    const caseIds = new Set(files('cases').map((file) => file.replace(/\.md$/, '')));
+    const toolIds = new Set(files('tools').map(contentId));
+    const lessonIds = new Set(files('lessons').map(contentId));
+    const caseIds = new Set(files('cases').map(contentId));
     for (const file of files('lessons')) {
-      const content = read('lessons', file);
-      for (const tool of frontmatterList(content, 'relatedTools')) expect(toolIds.has(tool), `lessons/${file} references unknown tool ${tool}`).toBe(true);
-      for (const relatedCase of frontmatterList(content, 'relatedCases')) expect(caseIds.has(relatedCase), `lessons/${file} references unknown case ${relatedCase}`).toBe(true);
+      const metadata = frontmatter(read('lessons', file));
+      for (const tool of frontmatterList(metadata, 'relatedTools')) expect(toolIds.has(tool), `lessons/${file} references unknown tool ${tool}`).toBe(true);
+      for (const relatedCase of frontmatterList(metadata, 'relatedCases')) expect(caseIds.has(relatedCase), `lessons/${file} references unknown case ${relatedCase}`).toBe(true);
     }
     for (const file of files('tools')) {
-      for (const lesson of frontmatterList(read('tools', file), 'relatedLessons')) {
+      for (const lesson of frontmatterList(frontmatter(read('tools', file)), 'relatedLessons')) {
         expect(lessonIds.has(lesson), `tools/${file} references unknown lesson ${lesson}`).toBe(true);
       }
     }
     for (const collection of ['cases', 'templates']) {
       for (const file of files(collection)) {
-        for (const tool of frontmatterList(read(collection, file), 'relatedTools')) expect(toolIds.has(tool), `${collection}/${file} references unknown tool ${tool}`).toBe(true);
+        for (const tool of frontmatterList(frontmatter(read(collection, file)), 'relatedTools')) expect(toolIds.has(tool), `${collection}/${file} references unknown tool ${tool}`).toBe(true);
       }
     }
   });
@@ -120,8 +141,8 @@ describe('content contract', () => {
       'workspace-rules.md',
     ]);
     for (const file of files('templates')) {
-      const content = read('templates', file);
-      const applicableTasks = frontmatterList(content, 'applicableTasks');
+      const metadata = frontmatter(read('templates', file));
+      const applicableTasks = frontmatterList(metadata, 'applicableTasks');
       expect(applicableTasks.length, `${file} needs at least one applicable task`).toBeGreaterThan(0);
       for (const task of applicableTasks) expect(taskIds.has(task), `${file} references unknown task ${task}`).toBe(true);
     }
