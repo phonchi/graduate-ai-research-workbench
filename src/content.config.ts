@@ -1,5 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 const stage = z.enum(['起步', '探索', '執行', '驗證', '封裝']);
 const difficulty = z.enum(['基礎', '進階', '技術']);
@@ -30,7 +31,7 @@ const lessons = defineCollection({
 const cases = defineCollection({
   loader: glob({ base: './src/content/cases', pattern: '**/*.{md,mdx}' }),
   schema: common.extend({
-    sourceUrl: z.string().url().optional(),
+    sourceUrl: z.url().optional(),
     sourceLicense: z.string(),
     privacyReview: z.string(),
     coverImage: z.string(),

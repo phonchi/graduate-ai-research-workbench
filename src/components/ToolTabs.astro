@@ -1,0 +1,56 @@
+---
+import { Bot, FileSearch, Library } from 'lucide-astro';
+---
+
+<section class="tool-recipes" aria-labelledby="tool-recipes-title">
+  <div class="section-heading compact">
+    <span class="section-kicker">工具配方</span>
+    <h2 id="tool-recipes-title">同一方法，換工具也能做</h2>
+  </div>
+  <div class="tabs" data-tabs>
+    <div role="tablist" aria-label="工具配方">
+      <button type="button" role="tab" id="tab-web" aria-controls="panel-web" aria-selected="true"><Bot size={17} aria-hidden="true" />網頁 AI</button>
+      <button type="button" role="tab" id="tab-notebook" aria-controls="panel-notebook" aria-selected="false" tabindex="-1"><Library size={17} aria-hidden="true" />NotebookLM</button>
+      <button type="button" role="tab" id="tab-agent" aria-controls="panel-agent" aria-selected="false" tabindex="-1"><FileSearch size={17} aria-hidden="true" />檔案型 Agent</button>
+    </div>
+    <div role="tabpanel" id="panel-web" aria-labelledby="tab-web">
+      <strong>適合先釐清問題與輸出格式。</strong>
+      <p>只提供完成當前判斷所需的材料，要求模型分開列出證據、推論與尚待確認的內容。</p>
+    </div>
+    <div role="tabpanel" id="panel-notebook" aria-labelledby="tab-notebook" hidden>
+      <strong>NotebookLM 適合有固定來源的閱讀與對照。</strong>
+      <p>建立專題筆記本、限定授權來源，產生摘要後回到原文位置核對，不把引用標記當成內容正確的保證。</p>
+    </div>
+    <div role="tabpanel" id="panel-agent" aria-labelledby="tab-agent" hidden>
+      <strong>適合跨檔案整理、產生差異與執行驗證。</strong>
+      <p>先讓 agent 只讀工作區並列計畫，再授權小範圍修改；完成後查看 diff、執行檢查並保存證據。</p>
+    </div>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((tabs) => {
+    const tabList = Array.from(tabs.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const selectTab = (next: HTMLButtonElement) => {
+      tabList.forEach((tab) => {
+        const selected = tab === next;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        const panel = tabs.querySelector<HTMLElement>(`#${tab.getAttribute('aria-controls')}`);
+        if (panel) panel.hidden = !selected;
+      });
+    };
+    tabList.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') selectTab(tab);
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+          event.preventDefault();
+          const offset = event.key === 'ArrowRight' ? 1 : -1;
+          const next = tabList[(index + offset + tabList.length) % tabList.length];
+          selectTab(next);
+          next.focus();
+        }
+      });
+    });
+  });
+</script>

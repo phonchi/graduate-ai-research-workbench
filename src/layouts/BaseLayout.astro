@@ -1,0 +1,91 @@
+---
+import { Menu, Search, X } from 'lucide-astro';
+import '../styles/global.css';
+import { buildSitePath } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = '研究生 AI 研究工作台',
+  description = '面向跨領域研究生的任務式 AI 研究技能教學網站。',
+  image,
+} = Astro.props;
+const base = import.meta.env.BASE_URL;
+const home = buildSitePath(base, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const nav = [
+  ['學習路徑', '/learn/'],
+  ['研究任務', '/tasks/'],
+  ['案例', '/cases/'],
+  ['技能索引', '/skills/'],
+  ['模板', '/templates/'],
+  ['安全與倫理', '/safety/'],
+];
+const pageTitle = title === '研究生 AI 研究工作台' ? title : `${title}｜研究生 AI 研究工作台`;
+---
+
+<!doctype html>
+<html lang="zh-Hant" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f8f5" />
+    <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
+    <link rel="canonical" href={canonical} />
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要內容</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="wordmark" href={home} aria-label="研究生 AI 研究工作台首頁">
+          <span class="wordmark-mark" aria-hidden="true">研</span>
+          <span>AI 研究工作台</span>
+        </a>
+        <button class="mobile-menu" type="button" aria-label="開啟導覽" aria-expanded="false" aria-controls="primary-navigation">
+          <Menu class="menu-open" size={21} aria-hidden="true" />
+          <X class="menu-close" size={21} aria-hidden="true" />
+        </button>
+        <nav id="primary-navigation" class="primary-nav" aria-label="主要導覽">
+          {nav.map(([label, path]) => (
+            <a href={buildSitePath(base, path)} aria-current={Astro.url.pathname.startsWith(buildSitePath(base, path)) ? 'page' : undefined}>{label}</a>
+          ))}
+        </nav>
+        <a class="header-search" href={buildSitePath(base, '/search/')} title="搜尋網站">
+          <Search size={19} aria-hidden="true" />
+          <span>搜尋</span>
+        </a>
+      </div>
+    </header>
+    <main id="main-content" data-pagefind-body><slot /></main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <strong>研究生 AI 研究工作台</strong>
+          <p>方法中立、來源可回查、產出可驗證。</p>
+        </div>
+        <div class="footer-links">
+          <a href={buildSitePath(base, '/safety/')}>安全與倫理</a>
+          <a href="https://github.com/phonchi/graduate-ai-research-workbench">GitHub</a>
+          <a href={buildSitePath(base, '/content-license/')}>教材授權</a>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const menu = document.querySelector<HTMLButtonElement>('.mobile-menu');
+      const nav = document.querySelector<HTMLElement>('#primary-navigation');
+      menu?.addEventListener('click', () => {
+        const open = menu.getAttribute('aria-expanded') !== 'true';
+        menu.setAttribute('aria-expanded', String(open));
+        menu.setAttribute('aria-label', open ? '關閉導覽' : '開啟導覽');
+        nav?.toggleAttribute('data-open', open);
+      });
+    </script>
+  </body>
+</html>

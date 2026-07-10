@@ -1,0 +1,9 @@
+---
+import { getCollection, render } from 'astro:content';
+import { ArrowLeft } from 'lucide-astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { buildSitePath } from '../../lib/site';
+export async function getStaticPaths() { const entries = await getCollection('skills', ({ data }) => !data.draft); return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } })); }
+const { entry } = Astro.props; const { Content } = await render(entry); const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title={entry.data.title} description={entry.data.summary}><article class="single-article" data-pagefind-body><a class="back-link" href={buildSitePath(base, '/skills/')}><ArrowLeft size={16} />技能索引</a><header class="article-header"><span class="section-kicker">{entry.data.stage} · {entry.data.difficulty}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p><ul class="tag-list">{entry.data.aliases.map((alias) => <li>{alias}</li>)}</ul></header><div class="prose"><Content /></div></article></BaseLayout>

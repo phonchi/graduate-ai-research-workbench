@@ -1,0 +1,26 @@
+[
+  {
+    "id": "paper-01-method",
+    "path": "paper-01-method.md",
+    "kind": "synthetic-paper",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "paper-02-baseline",
+    "path": "paper-02-baseline.md",
+    "kind": "synthetic-paper",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "notes-assumptions",
+    "path": "notes-assumptions.md",
+    "kind": "research-note",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "dataset-card",
+    "path": "dataset-card.html",
+    "kind": "dataset-card",
+    "license": "CC-BY-4.0"
+  }
+]

@@ -1,0 +1,16 @@
+---
+import { ArrowRight } from 'lucide-astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { researchTasks } from '../../data/researchTasks';
+import { buildSitePath } from '../../lib/site';
+const base = import.meta.env.BASE_URL;
+const taskDetails = [
+  ['literature', '讀懂與比較文獻', '把五篇來源整理成能回到原文位置的比較表。', '02-literature-evidence', '文獻證據矩陣'],
+  ['claims', '查核引用與論述', '逐句分開論文主張、證據、推論與尚待確認之處。', '06-verification-review', 'Claim-citation audit'],
+  ['organize', '整理研究材料', '建立命名、來源、索引與按需讀取規則。', '03-context-knowledge-base', '工作區規則'],
+  ['reproduce', '重現分析與實驗', '保存資料版本、環境、參數、結果與驗證命令。', '05-reproducibility-git', '可重現性清單'],
+  ['communicate', '修訂論文與簡報', '從目標讀者與證據開始，而不是只做語句美化。', '04-research-outputs', '簡報與網站 QA'],
+  ['automate', '封裝重複工作流', '先跑順並記錄失敗，再決定模板、Skill 或 MCP。', '07-workflow-automation', '研究進度紀錄'],
+];
+---
+<BaseLayout title="研究任務"><header class="page-header"><div><span class="section-kicker">START FROM THE JOB</span><h1>從眼前的研究任務開始</h1><p>每條路線都連到一個核心單元與一份可立即使用的模板。</p></div></header><section class="page-band"><div class="task-detail-list">{taskDetails.map(([id, title, description, lesson, output], index) => <article id={id}><span class="task-number">{String(index + 1).padStart(2, '0')}</span><div><h2>{title}</h2><p>{description}</p><ul class="tag-list">{researchTasks[index].skills.map((skill) => <li>{skill}</li>)}</ul></div><div class="task-links"><a href={buildSitePath(base, `/learn/${lesson}/`)}>進入單元 <ArrowRight size={16} /></a><span>產出：{output}</span></div></article>)}</div></section></BaseLayout>

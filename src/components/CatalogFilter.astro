@@ -1,0 +1,81 @@
+---
+import type { CatalogItem } from '../lib/catalog';
+
+interface Props { items: CatalogItem[] }
+const { items } = Astro.props;
+const values = (key: 'stage' | 'difficulty') => [...new Set(items.map((item) => item[key]))].sort();
+const arrayValues = (key: 'skills' | 'tools' | 'outputs') => [...new Set(items.flatMap((item) => item[key]))].sort();
+---
+
+<section class="catalog-workbench" data-catalog-root>
+  <form class="filter-bar" aria-label="內容篩選" onsubmit="return false">
+    <div class="filter-search">
+      <label for="catalog-query">關鍵字</label>
+      <input id="catalog-query" type="search" placeholder="例如：引用查核、Git、NotebookLM" aria-label="篩選網站內容" data-filter="query" />
+    </div>
+    <label>研究階段<select data-filter="stage"><option value="">全部</option>{values('stage').map((value) => <option>{value}</option>)}</select></label>
+    <label>難度<select data-filter="difficulty"><option value="">全部</option>{values('difficulty').map((value) => <option>{value}</option>)}</select></label>
+    <label>技能<select data-filter="skill"><option value="">全部</option>{arrayValues('skills').map((value) => <option>{value}</option>)}</select></label>
+    <label>工具<select data-filter="tool"><option value="">全部</option>{arrayValues('tools').map((value) => <option>{value}</option>)}</select></label>
+    <label>產出<select data-filter="output"><option value="">全部</option>{arrayValues('outputs').map((value) => <option>{value}</option>)}</select></label>
+  </form>
+  <div class="catalog-status" aria-live="polite"><strong data-result-count>{items.length}</strong> 筆內容</div>
+  <div class="catalog-grid">
+    {items.map((item) => (
+      <article
+        class="catalog-item"
+        data-catalog-item
+        data-search={[item.title, item.summary, ...item.skills, ...item.tools, ...item.outputs].join(' ').toLocaleLowerCase('zh-Hant')}
+        data-stage={item.stage}
+        data-difficulty={item.difficulty}
+        data-skills={item.skills.join('|')}
+        data-tools={item.tools.join('|')}
+        data-outputs={item.outputs.join('|')}
+      >
+        <div class="card-topline"><span>{item.stage} · {item.difficulty}</span></div>
+        <h2><a href={item.href}>{item.title}</a></h2>
+        <p>{item.summary}</p>
+        <ul class="tag-list">{item.skills.slice(0, 3).map((skill) => <li>{skill}</li>)}</ul>
+      </article>
+    ))}
+  </div>
+  <div class="empty-state" data-empty hidden>
+    <strong>沒有符合條件的內容</strong>
+    <p>換一個關鍵字，或清除篩選後查看全部課程、技能、案例與模板。</p>
+    <button type="button" class="button secondary" data-reset>清除篩選</button>
+  </div>
+  <noscript><p class="no-js-notice">目前顯示全部內容。啟用 JavaScript 後可使用即時篩選。</p></noscript>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-catalog-root]').forEach((root) => {
+    const controls = Array.from(root.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-filter]'));
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-catalog-item]'));
+    const count = root.querySelector<HTMLElement>('[data-result-count]');
+    const empty = root.querySelector<HTMLElement>('[data-empty]');
+    const initialQuery = new URLSearchParams(window.location.search).get('q');
+    if (initialQuery && controls[0] instanceof HTMLInputElement) controls[0].value = initialQuery;
+    const filter = () => {
+      const values = Object.fromEntries(controls.map((control) => [control.dataset.filter, control.value.trim().toLocaleLowerCase('zh-Hant')]));
+      let visible = 0;
+      items.forEach((item) => {
+        const matches = (!values.query || item.dataset.search?.includes(values.query))
+          && (!values.stage || item.dataset.stage?.toLocaleLowerCase('zh-Hant') === values.stage)
+          && (!values.difficulty || item.dataset.difficulty?.toLocaleLowerCase('zh-Hant') === values.difficulty)
+          && (!values.skill || item.dataset.skills?.toLocaleLowerCase('zh-Hant').split('|').includes(values.skill))
+          && (!values.tool || item.dataset.tools?.toLocaleLowerCase('zh-Hant').split('|').includes(values.tool))
+          && (!values.output || item.dataset.outputs?.toLocaleLowerCase('zh-Hant').split('|').includes(values.output));
+        item.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      if (count) count.textContent = String(visible);
+      if (empty) empty.hidden = visible !== 0;
+    };
+    controls.forEach((control) => control.addEventListener(control instanceof HTMLInputElement ? 'input' : 'change', filter));
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      controls.forEach((control) => { control.value = ''; });
+      filter();
+      controls[0]?.focus();
+    });
+    filter();
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+import { ArrowUpRight, Clock3 } from 'lucide-astro';
+
+interface Props {
+  href: string;
+  eyebrow: string;
+  title: string;
+  summary: string;
+  meta?: string;
+  tags?: string[];
+}
+
+const { href, eyebrow, title, summary, meta, tags = [] } = Astro.props;
+---
+
+<article class="content-card">
+  <div class="card-topline">
+    <span>{eyebrow}</span>
+    {meta && <span class="card-meta"><Clock3 size={14} aria-hidden="true" />{meta}</span>}
+  </div>
+  <h3><a href={href}>{title}<ArrowUpRight size={17} aria-hidden="true" /></a></h3>
+  <p>{summary}</p>
+  {tags.length > 0 && <ul class="tag-list" aria-label="標籤">{tags.slice(0, 3).map((tag) => <li>{tag}</li>)}</ul>}
+</article>

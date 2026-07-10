@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from 'astro:content';
+import { ArrowLeft, CalendarCheck, Clock3 } from 'lucide-astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolTabs from '../../components/ToolTabs.astro';
+import { buildSitePath } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('lessons', ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title={entry.data.title} description={entry.data.summary}>
+  <div class="article-shell">
+    <aside class="article-context"><a class="back-link" href={buildSitePath(base, '/learn/')}><ArrowLeft size={16} aria-hidden="true" />學習路徑</a><div class="context-label">本單元技能</div><ul>{entry.data.skills.map((skill) => <li>{skill}</li>)}</ul></aside>
+    <article class="lesson-article" data-pagefind-body>
+      <header class="article-header"><span class="section-kicker">{entry.data.stage} · {entry.data.difficulty}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p><div class="article-meta"><span><Clock3 size={16} aria-hidden="true" />{entry.data.estimatedMinutes ?? 25} 分鐘</span><span><CalendarCheck size={16} aria-hidden="true" />查證於 {entry.data.lastVerified.toISOString().slice(0, 10)}</span></div></header>
+      <div class="prose"><Content /></div>
+      <ToolTabs />
+    </article>
+    <aside class="toc" aria-label="頁內目錄"><strong>本頁內容</strong><ol>{headings.filter((h) => h.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></aside>
+  </div>
+</BaseLayout>

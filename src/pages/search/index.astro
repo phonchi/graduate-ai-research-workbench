@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CatalogFilter from '../../components/CatalogFilter.astro';
+import { buildSitePath } from '../../lib/site';
+import type { CatalogItem } from '../../lib/catalog';
+
+const base = import.meta.env.BASE_URL;
+const pagefindBase = `${base}pagefind/`;
+const collections = await Promise.all(
+  ['lessons', 'cases', 'skills', 'templates'].map((name) => getCollection(name as 'lessons', ({ data }) => !data.draft)),
+);
+const routes = ['learn', 'cases', 'skills', 'templates'];
+const items: CatalogItem[] = collections.flatMap((collection, index) => collection.map((item) => ({
+  title: item.data.title,
+  summary: item.data.summary,
+  stage: item.data.stage,
+  difficulty: item.data.difficulty,
+  skills: item.data.skills,
+  tools: item.data.tools,
+  outputs: item.data.outputs,
+  href: buildSitePath(base, `/${routes[index]}/${item.id}/`),
+})));
+---
+
+<BaseLayout title="搜尋">
+  <header class="page-header">
+    <div><span class="section-kicker">SEARCH THE WORKBENCH</span><h1>搜尋研究技能與任務</h1><p>用研究階段、技能、工具與預期產出縮小範圍；完整頁面文字另由 Pagefind 建立索引。</p></div>
+  </header>
+  <section class="page-band">
+    <CatalogFilter items={items} />
+    <section class="fulltext-search" aria-labelledby="fulltext-title" data-fulltext-section data-pagefind-base={pagefindBase}>
+      <div class="section-heading compact"><span class="section-kicker">FULL TEXT</span><h2 id="fulltext-title">搜尋頁面全文</h2></div>
+      <div id="pagefind-search"></div>
+    </section>
+  </section>
+  <link href={`${pagefindBase}pagefind-ui.css`} rel="stylesheet" />
+  <script type="module" is:inline>
+    const section = document.querySelector('[data-fulltext-section]');
+    const script = document.createElement('script');
+    script.src = `${section.dataset.pagefindBase}pagefind-ui.js`;
+    script.onload = () => {
+      new window.PagefindUI({
+        element: '#pagefind-search',
+        showSubResults: true,
+        translations: {
+          placeholder: '搜尋全文',
+          zero_results: '找不到「[SEARCH_TERM]」',
+          clear_search: '清除',
+        },
+      });
+    };
+    script.onerror = () => {
+      section?.setAttribute('hidden', '');
+    };
+    document.head.append(script);
+  </script>
+</BaseLayout>

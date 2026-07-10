@@ -1,0 +1,12 @@
+---
+import { Search } from 'lucide-astro';
+import { buildSitePath } from '../lib/site';
+const action = buildSitePath(import.meta.env.BASE_URL, '/search/');
+---
+
+<form class="hero-search" action={action} role="search">
+  <Search size={22} aria-hidden="true" />
+  <label class="sr-only" for="home-search">搜尋研究技能與任務</label>
+  <input id="home-search" type="search" name="q" placeholder="搜尋文獻整理、引用查核、Git、Skill…" aria-label="搜尋研究技能與任務" />
+  <button type="submit">搜尋</button>
+</form>
