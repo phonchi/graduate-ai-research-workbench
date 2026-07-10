@@ -43,12 +43,19 @@ const featuredTools = ['notebooklm', 'codex', 'claude-code', 'git-github', 'skil
 
   <section class="page-band learning-preview">
     <div class="section-heading split-heading">
-      <div><span class="section-kicker">投影片主線</span><h2>先學會怎麼合作，再決定用哪個工具</h2><p>六站都從研究生會遇到的卡點開始，不寫成研究方法考試。</p></div>
+      <div><span class="section-kicker">核心學習路徑</span><h2>先學會怎麼合作，再決定用哪個工具</h2><p>七站從研究生會遇到的卡點出發，最後把工作流落到可重現研究與評估。</p></div>
       <a class="text-link" href={buildSitePath(base, '/learn/')}>查看完整路徑 <ArrowRight size={17} aria-hidden="true" /></a>
     </div>
     <ol class="learning-rail journey-rail">
       {lessons.map((lesson, index) => (
-        <li><a href={buildSitePath(base, `/learn/${lesson.id}/`)}><span>{String(index + 1).padStart(2, '0')}</span><strong>{lesson.data.title}</strong><small>{lesson.data.part} · {lesson.data.estimatedMinutes} 分鐘</small></a></li>
+        <li>
+          <a href={buildSitePath(base, `/learn/${lesson.id}/`)}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{lesson.data.title}</strong>
+            <small>{lesson.data.part} · {lesson.data.estimatedMinutes} 分鐘</small>
+            <p>{lesson.data.learningOutcomes[0]}</p>
+          </a>
+        </li>
       ))}
     </ol>
   </section>
@@ -69,7 +76,7 @@ const featuredTools = ['notebooklm', 'codex', 'claude-code', 'git-github', 'skil
       <a class="text-link" href={buildSitePath(base, '/cases/')}>查看全部案例 <ArrowRight size={17} aria-hidden="true" /></a>
     </div>
     <div class="card-grid three">
-      {cases.map((item) => <CollectionCard href={buildSitePath(base, `/cases/${item.id}/`)} eyebrow={item.data.part} title={item.data.title} summary={item.data.summary} tags={item.data.relatedTools.slice(0, 3).map((tool) => toolTitles.get(tool) ?? tool)} />)}
+      {cases.map((item) => <CollectionCard href={buildSitePath(base, `/cases/${item.id}/`)} eyebrow={`${item.data.category} · ${item.data.reproducible ? '可重跑' : '流程紀錄'}`} title={item.data.title} summary={item.data.summary} tags={item.data.relatedTools.slice(0, 3).map((tool) => toolTitles.get(tool) ?? tool)} />)}
     </div>
   </section>
 

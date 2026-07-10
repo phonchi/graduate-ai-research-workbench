@@ -1,7 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { ArrowLeft, Clock3, Presentation } from 'lucide-astro';
+import { ArrowLeft, Clock3 } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
 import { buildSitePath } from '../../lib/site';
 
 export async function getStaticPaths() {
@@ -13,13 +14,25 @@ const { Content, headings } = await render(entry);
 const base = import.meta.env.BASE_URL;
 const tools = await getCollection('tools', ({ data }) => !data.draft);
 const toolTitles = new Map(tools.map((tool) => [tool.id, tool.data.title]));
+const lessons = await getCollection('lessons', ({ data }) => !data.draft);
+const lessonTitles = new Map(lessons.map((lesson) => [lesson.id, lesson.data.title]));
 ---
 <BaseLayout title={entry.data.title} description={entry.data.summary}>
   <div class="article-shell">
-    <aside class="article-context"><a class="back-link" href={buildSitePath(base, '/learn/')}><ArrowLeft size={16} aria-hidden="true" />概念與習慣</a><div class="context-label">這頁會用到</div><ul>{entry.data.keyTerms.map((term) => <li>{term}</li>)}</ul>{entry.data.relatedTools.length > 0 && <><div class="context-label">工具詞典</div><ul>{entry.data.relatedTools.map((tool) => <li><a href={buildSitePath(base, `/tools/${tool}/`)}>{toolTitles.get(tool) ?? tool}</a></li>)}</ul></>}</aside>
+    <aside class="article-context">
+      <a class="back-link" href={buildSitePath(base, '/learn/')}><ArrowLeft size={16} aria-hidden="true" />概念與習慣</a>
+      <div class="context-label">學習成果</div>
+      <ul>{entry.data.learningOutcomes.map((outcome) => <li>{outcome}</li>)}</ul>
+      <div class="context-label">先備條件</div>
+      {entry.data.prerequisites.length > 0
+        ? <ul>{entry.data.prerequisites.map((prerequisite) => <li>{lessonTitles.get(prerequisite) ?? prerequisite}</li>)}</ul>
+        : <p class="context-empty">無特定先備條件</p>}
+      {entry.data.relatedTools.length > 0 && <><div class="context-label">相關工具</div><ul>{entry.data.relatedTools.map((tool) => <li><a href={buildSitePath(base, `/tools/${tool}/`)}>{toolTitles.get(tool) ?? tool}</a></li>)}</ul></>}
+    </aside>
     <article class="lesson-article" data-pagefind-body>
-      <header class="article-header"><span class="section-kicker">{entry.data.part} · {entry.data.difficulty}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p><div class="article-meta"><span><Clock3 size={16} aria-hidden="true" />{entry.data.estimatedMinutes} 分鐘</span><span><Presentation size={16} aria-hidden="true" />對照投影片 {entry.data.slideRefs.join('、')}</span></div></header>
+      <header class="article-header"><span class="section-kicker">{entry.data.part} · {entry.data.difficulty}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p><div class="article-meta"><span><Clock3 size={16} aria-hidden="true" />{entry.data.estimatedMinutes} 分鐘</span></div></header>
       <div class="prose"><Content /></div>
+      <ReferenceList references={entry.data.references} />
     </article>
     <aside class="toc" aria-label="頁內目錄"><strong>本頁內容</strong><ol>{headings.filter((h) => h.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></aside>
   </div>

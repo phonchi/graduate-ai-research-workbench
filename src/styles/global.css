@@ -124,6 +124,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .context-label { margin-top: 34px; padding-top: 15px; border-top: 1px solid var(--line); color: var(--muted); font-size: .72rem; font-weight: 800; text-transform: uppercase; }
 .article-context ul, .toc ol { margin: 12px 0 0; padding-left: 18px; color: var(--muted); }
 .article-context li, .toc li { margin-bottom: 8px; }
+.article-context p { margin: 10px 0 0; color: var(--muted); line-height: 1.5; }
+.context-empty { font-style: italic; }
 .toc strong { display: block; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .toc a { color: var(--muted); text-decoration: none; }
 .toc a:hover { color: var(--teal); }
@@ -147,6 +149,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .prose pre { overflow-x: auto; padding: 18px; background: #1c2521; color: #f7f8f5; border-radius: 4px; }
 .prose pre code { padding: 0; color: inherit; background: transparent; }
 .prose.narrow { max-width: var(--reading); }
+
+.reference-list { margin-top: 58px; padding-top: 34px; border-top: 2px solid var(--ink); }
+.reference-list h2 { margin: 0 0 22px; font-family: Georgia, "Noto Serif TC", serif; font-size: 1.75rem; }
+.reference-list ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.reference-list li { padding: 22px 0; border-bottom: 1px solid var(--line); }
+.reference-type { color: var(--coral); font-size: .72rem; font-weight: 800; }
+.reference-list h3 { margin: 5px 0 7px; font-size: 1.05rem; }
+.reference-list h3 a { display: inline-flex; align-items: center; gap: 7px; color: var(--teal-dark); }
+.reference-list h3 svg { flex: 0 0 auto; }
+.reference-list p { margin: 0; color: var(--muted); font-size: .9rem; }
 
 .tool-recipes { margin-top: 56px; padding-top: 42px; border-top: 1px solid var(--line); }
 .tabs [role="tablist"] { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--line); }
@@ -242,6 +254,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .journey-rail li:nth-child(3n) { border-right: 0; }
 .journey-rail li:nth-last-child(-n+3) { border-bottom: 0; }
 .journey-rail a { height: 100%; border: 0; }
+.journey-rail a > p { margin: 10px 0 0; color: var(--muted); font-size: .82rem; line-height: 1.5; }
 .tool-preview { border-top: 1px solid var(--line); }
 .tool-chip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .tool-chip-grid a { min-height: 145px; display: flex; flex-direction: column; padding: 20px; border: 1px solid var(--line); border-radius: 6px; background: #fff; text-decoration: none; }

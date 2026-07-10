@@ -12,8 +12,13 @@ const toolTitles = new Map(tools.map((tool) => [tool.id, tool.data.title]));
 ---
 <BaseLayout title={entry.data.title} description={entry.data.summary} image={entry.data.coverImage}>
   <div class="article-shell case-shell">
-    <aside class="article-context"><a class="back-link" href={buildSitePath(base, '/cases/')}><ArrowLeft size={16} aria-hidden="true" />真實案例</a><div class="context-label">對照投影片</div><p>{entry.data.slideRefs.join('、')}</p><div class="context-label">相關工具</div><ul>{entry.data.relatedTools.map((tool) => <li><a href={buildSitePath(base, `/tools/${tool}/`)}>{toolTitles.get(tool) ?? tool}</a></li>)}</ul></aside>
-    <article class="lesson-article" data-pagefind-body><header class="article-header"><span class="section-kicker">CASE · {entry.data.part}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p>{entry.data.sourceUrl && <a class="source-link" href={entry.data.sourceUrl}>查看公開成果 <ExternalLink size={16} aria-hidden="true" /></a>}</header><figure class="case-figure"><img src={entry.data.coverImage} alt={`${entry.data.title}案例預覽`} width="1200" height="675" loading="eager" /></figure><div class="privacy-note"><ShieldCheck size={21} aria-hidden="true" /><div><strong>公開邊界</strong><p>{entry.data.privacyReview} · {entry.data.sourceLicense}</p></div></div><div class="prose"><Content /></div></article>
+    <aside class="article-context">
+      <a class="back-link" href={buildSitePath(base, '/cases/')}><ArrowLeft size={16} aria-hidden="true" />研究案例</a>
+      <div class="context-label">案例類別</div><p>{entry.data.category}</p>
+      <div class="context-label">可重跑性</div><p>{entry.data.reproducible ? '可依本站輸入與命令重新執行' : '提供成果或流程紀錄，不保證完整重跑'}</p>
+      <div class="context-label">相關工具</div><ul>{entry.data.relatedTools.map((tool) => <li><a href={buildSitePath(base, `/tools/${tool}/`)}>{toolTitles.get(tool) ?? tool}</a></li>)}</ul>
+    </aside>
+    <article class="lesson-article" data-pagefind-body><header class="article-header"><span class="section-kicker">{entry.data.category} · {entry.data.reproducible ? '可重跑' : '流程紀錄'}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p>{entry.data.sourceUrl && <a class="source-link" href={entry.data.sourceUrl} aria-label={`開啟案例來源：${entry.data.title}`}>查看案例來源 <ExternalLink size={16} aria-hidden="true" /></a>}</header><figure class="case-figure"><img src={entry.data.coverImage} alt={`${entry.data.title}案例預覽`} width="1200" height="675" loading="eager" /></figure><div class="privacy-note"><ShieldCheck size={21} aria-hidden="true" /><div><strong>公開邊界</strong><p>{entry.data.privacyReview} · {entry.data.sourceLicense}</p></div></div><div class="prose"><Content /></div></article>
     <aside class="toc" aria-label="頁內目錄"><strong>案例內容</strong><ol>{headings.filter((h) => h.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></aside>
   </div>
 </BaseLayout>

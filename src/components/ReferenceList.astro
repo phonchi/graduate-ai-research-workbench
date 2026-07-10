@@ -1,0 +1,42 @@
+---
+import { ExternalLink } from 'lucide-astro';
+
+interface Reference {
+  title: string;
+  url: string;
+  type: 'paper' | 'official' | 'standard' | 'policy' | 'case' | 'essay';
+  note: string;
+}
+
+interface Props {
+  references: Reference[];
+}
+
+const { references } = Astro.props;
+const typeLabels: Record<Reference['type'], string> = {
+  paper: '研究論文',
+  official: '官方文件',
+  standard: '標準',
+  policy: '政策',
+  case: '公開案例',
+  essay: '作者文章',
+};
+---
+
+<section class="reference-list" aria-labelledby="reference-list-title">
+  <h2 id="reference-list-title">來源與延伸閱讀</h2>
+  <ol>
+    {references.map((reference) => (
+      <li>
+        <span class="reference-type">{typeLabels[reference.type]}</span>
+        <h3>
+          <a href={reference.url} aria-label={`開啟外部來源：${reference.title}`}>
+            {reference.title}
+            <ExternalLink size={16} aria-hidden="true" />
+          </a>
+        </h3>
+        <p>{reference.note}</p>
+      </li>
+    ))}
+  </ol>
+</section>
