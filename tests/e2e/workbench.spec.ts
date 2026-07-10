@@ -1,47 +1,44 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test('homepage starts with real research tasks and exposes the learning path', async ({ page }) => {
+test('homepage introduces an agent-first learning journey with three clear entry points', async ({ page }) => {
   await page.goto('./');
 
   await expect(page.getByRole('heading', { level: 1, name: '研究生 AI 研究工作台' })).toBeVisible();
-  await expect(page.getByRole('searchbox', { name: '搜尋研究技能與任務' })).toBeVisible();
-  await expect(page.getByRole('heading', { level: 2, name: '你現在要完成什麼？' })).toBeVisible();
-  await expect(page.getByRole('link', { name: /讀懂與比較文獻/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: /開始學習/ })).toBeVisible();
+  await expect(page.getByText('把 AI 從聊天工具變成會做事的研究助手')).toBeVisible();
+  await expect(page.getByRole('link', { name: /第一次用 Agent/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /查工具名詞/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /我有研究任務/ })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: '先學會怎麼合作，再決定用哪個工具' })).toBeVisible();
 });
 
-test('catalog filters content and offers a resettable empty state', async ({ page }) => {
-  await page.goto('./search/?q=Git');
+test('tool glossary filters named products and concepts with a resettable empty state', async ({ page }) => {
+  await page.goto('./tools/?q=NotebookLM');
 
-  const search = page.getByRole('searchbox', { name: '篩選網站內容' });
-  await expect(search).toHaveValue('Git');
-  await search.fill('用 Git 與執行紀錄建立可重現的研究歷史');
+  const search = page.getByRole('searchbox', { name: '篩選工具詞典' });
+  await expect(search).toHaveValue('NotebookLM');
+  await search.fill('AskUserQuestion');
   await expect(page.locator('[data-catalog-item]:visible')).toHaveCount(1);
 
-  await search.fill('完全不存在的研究技能');
-  await expect(page.getByText('沒有符合條件的內容')).toBeVisible();
+  await search.fill('完全不存在的工具名詞');
+  await expect(page.getByText('沒有符合條件的工具')).toBeVisible();
   await page.getByRole('button', { name: '清除篩選' }).click();
   expect(await page.locator('[data-catalog-item]:visible').count()).toBeGreaterThan(1);
 });
 
-test('lesson tool recipes behave as keyboard-accessible tabs', async ({ page }) => {
-  await page.goto('./learn/01-task-specification/');
+test('lesson pages teach presentation concepts through named tools and a usable prompt', async ({ page }) => {
+  await page.goto('./learn/02-ask-before-action/');
 
-  const notebookTab = page.getByRole('tab', { name: 'NotebookLM' });
-  await notebookTab.focus();
-  await notebookTab.press('Enter');
-  await expect(notebookTab).toHaveAttribute('aria-selected', 'true');
-  await expect(page.getByRole('tabpanel')).toContainText('NotebookLM');
-  await notebookTab.press('ArrowRight');
-  await expect(page.getByRole('tab', { name: '檔案型 Agent' })).toBeFocused();
+  await expect(page.getByRole('heading', { level: 1, name: /先反問/ })).toBeVisible();
+  await expect(page.getByText('AskUserQuestion', { exact: true }).first()).toBeVisible();
+  await expect(page.locator('pre').filter({ hasText: '動工前' }).first()).toBeVisible();
 });
 
 test('Pagefind searches lesson body text in the production build', async ({ page }) => {
   await page.goto('./search/');
   const fullText = page.locator('.pagefind-ui__search-input');
   await expect(fullText).toBeVisible();
-  await fullText.fill('可重現');
+  await fullText.fill('AskUserQuestion');
   const result = page.locator('.pagefind-ui__result-link').first();
   await expect(result).toBeVisible();
   await expect(result).toHaveAttribute('href', /graduate-ai-research-workbench/);
@@ -51,14 +48,14 @@ test('Pagefind searches lesson body text in the production build', async ({ page
 
 test('templates can be copied and downloaded as Markdown', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.goto('./templates/research-task-brief/');
+  await page.goto('./templates/six-part-brief/');
   await page.getByRole('button', { name: '複製模板' }).click();
   await expect(page.getByText('已複製模板')).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('研究任務');
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('目標：');
 
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: '下載 Markdown' }).click();
-  expect((await download).suggestedFilename()).toBe('research-task-brief.md');
+  expect((await download).suggestedFilename()).toBe('six-part-brief.md');
 });
 
 test('mobile navigation opens without covering the menu control', async ({ page }, testInfo) => {
@@ -70,7 +67,7 @@ test('mobile navigation opens without covering the menu control', async ({ page 
   await expect(button).toHaveAttribute('aria-expanded', 'true');
   await expect(button).toHaveAccessibleName('關閉導覽');
   await expect(page.getByRole('navigation', { name: '主要導覽' })).toBeVisible();
-  await expect(page.getByRole('link', { name: '研究任務' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '工具詞典' })).toBeVisible();
 });
 
 test('homepage has no automatically detectable accessibility violations', async ({ page }) => {
@@ -79,7 +76,7 @@ test('homepage has no automatically detectable accessibility violations', async 
   expect(results.violations).toEqual([]);
 });
 
-for (const route of ['./learn/01-task-specification/', './templates/research-task-brief/', './safety/']) {
+for (const route of ['./learn/02-ask-before-action/', './tools/notebooklm/', './templates/six-part-brief/', './safety/']) {
   test(`${route} has no automatically detectable accessibility violations`, async ({ page }) => {
     await page.goto(route);
     const results = await new AxeBuilder({ page }).analyze();
@@ -90,11 +87,11 @@ for (const route of ['./learn/01-task-specification/', './templates/research-tas
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('navigation and all tool recipes remain readable', async ({ page }) => {
-    await page.goto('./learn/01-task-specification/');
+  test('navigation and lesson content remain readable', async ({ page }) => {
+    await page.goto('./learn/03-context-and-indexes/');
     await expect(page.getByRole('navigation', { name: '主要導覽' })).toBeVisible();
     await expect(page.getByRole('button', { name: '開啟導覽' })).toBeHidden();
-    await expect(page.getByText('NotebookLM 適合有固定來源的閱讀與對照。')).toBeVisible();
-    await expect(page.getByText('適合跨檔案整理、產生差異與執行驗證。')).toBeVisible();
+    await expect(page.getByText(/quick notes/i).first()).toBeVisible();
+    await expect(page.getByText(/NotebookLM/).first()).toBeVisible();
   });
 });
