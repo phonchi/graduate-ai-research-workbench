@@ -11,6 +11,10 @@ learningOutcomes:
   - 說清楚 Agent 可用的工具、工作邊界與人類必須保留的判斷責任。
 prerequisites: []
 references:
+  - title: "The Bitter Lesson"
+    url: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
+    type: essay
+    note: 作者回顧 AI 研究史，主張長期進展多來自能隨計算擴展的搜尋與學習方法；本站只用它提醒不要把更多人工微操當成可靠性的替代。
   - title: "Building Effective Agents"
     url: https://www.anthropic.com/engineering/building-effective-agents
     type: official
@@ -106,4 +110,4 @@ Centaur 與 Cyborg 原本是研究中觀察到的兩種協作實踐，不是產�
 - 需要根據中間結果調整、多次使用工具：才考慮 Agent。
 - 來源、數字、倫理、公開與不可逆操作：一定保留人的決策點。
 
-工具越能自主選擇下一步，工作邊界與驗證就越重要。對研究工作而言，耐用的做法不是追求最複雜的自動化，而是依任務選擇足夠簡單的合作方式，給清楚目標、必要工具、可檢查環境與停止條件，並保留人的最終判斷。
+Sutton 的文章提出的是 AI 研究史的廣泛觀察，不是 Agent 設計配方。這裡只取一個保守提醒：不要把持續增加人工微操當成可靠性的替代。對研究工作而言，仍應依任務選擇足夠簡單的合作方式，給清楚目標、必要工具、可檢查環境與停止條件，並保留人的最終判斷。

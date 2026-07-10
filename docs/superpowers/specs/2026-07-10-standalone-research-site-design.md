@@ -97,7 +97,7 @@ references:
 ```
 
 每篇課程顯示 2 至 4 個精選來源。其餘簡報與本地教材只用於內部交叉整理，不出現在公開頁面。
-`type` 限定為 `paper`、`official`、`standard`、`policy` 或 `case`，以便讀者辨識證據層級。
+`type` 限定為 `paper`、`official`、`standard`、`policy`、`case` 或 `essay`，以便讀者辨識證據層級。`essay` 用於作者本人公開、但未經同儕審查且不屬官方產品文件的論述；它可以支撐有清楚歸屬的觀點，不能冒充研究證據或標準。
 
 來源優先序：
 

@@ -7,7 +7,7 @@ const toolKind = z.enum(['網頁', '桌面 App', 'CLI', '檔案', '功能', '協
 const reference = z.object({
   title: z.string(),
   url: z.url(),
-  type: z.enum(['paper', 'official', 'standard', 'policy', 'case']),
+  type: z.enum(['paper', 'official', 'standard', 'policy', 'case', 'essay']),
   note: z.string(),
 });
 const access = z.enum(['yes', 'no', 'depends']);

@@ -12,7 +12,7 @@
 
 - Public pages must not show slide numbers, presentation filenames, “對照投影片”, “投影片主線”, or “投影片的核心比喻”.
 - Keep seven lessons, thirteen tools, seven cases, and seven templates.
-- Every lesson must show two to four verified references of type `paper`, `official`, `standard`, `policy`, or `case`.
+- Every lesson must show two to four verified references of type `paper`, `official`, `standard`, `policy`, `case`, or `essay`; essays must be attributed viewpoints rather than substitutes for research evidence or standards.
 - Prefer primary research, official documentation, standards, and policy sources; community pages cannot support key factual claims.
 - Do not publish volatile prices, model limits, token ratios, unsupported percentages, or full chain-of-thought guidance.
 - Product-specific claims must have a current official URL and `lastVerified: 2026-07-10` or later.
@@ -63,7 +63,7 @@ In `src/content.config.ts`, define and use:
 const reference = z.object({
   title: z.string(),
   url: z.url(),
-  type: z.enum(['paper', 'official', 'standard', 'policy', 'case']),
+  type: z.enum(['paper', 'official', 'standard', 'policy', 'case', 'essay']),
   note: z.string(),
 });
 const access = z.enum(['yes', 'no', 'depends']);
@@ -112,7 +112,7 @@ git commit -m "test: define standalone research content contract"
 
 Use primary/official pages only. Required anchors:
 
-- Lesson 1: Richard Sutton’s “The Bitter Lesson”; an official agent architecture guide; official Codex or Claude Code overview.
+- Lesson 1: Richard Sutton’s “The Bitter Lesson” using `type: essay`; an official agent architecture guide; official Codex or Claude Code overview.
 - Lesson 2: official Claude Code tools reference for `AskUserQuestion`; official prompting/task guidance from a product represented in the glossary.
 - Lesson 3: Liu et al., “Lost in the Middle” at `https://arxiv.org/abs/2307.03172`; official NotebookLM entry; PRISMA or another primary review-record source.
 - Lesson 4: official Codex `AGENTS.md` guide, Claude Code memory/settings documentation, and Git documentation.

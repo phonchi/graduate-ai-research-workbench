@@ -39,6 +39,13 @@ describe('content contract', () => {
     expect(files('templates')).toHaveLength(7);
   });
 
+  it('keeps The Bitter Lesson as a canonical essay reference in lesson one', () => {
+    const metadata = frontmatter(read('lessons', '01-from-chat-to-agent.md'));
+    expect(metadata).toMatch(
+      / {2}- title: ["']?The Bitter Lesson["']?\n {4}url: http:\/\/www\.incompleteideas\.net\/IncIdeas\/BitterLesson\.html\n {4}type: essay\n/,
+    );
+  });
+
   it('makes every lesson standalone and backed by a small reference set', () => {
     for (const file of files('lessons')) {
       const content = read('lessons', file);
@@ -50,7 +57,7 @@ describe('content contract', () => {
       expect(referenceCount, `${file} needs at least two references`).toBeGreaterThanOrEqual(2);
       expect(referenceCount, `${file} needs at most four references`).toBeLessThanOrEqual(4);
       expect((metadata.match(/^ {4}url: https?:\/\/.+$/gm) ?? []).length, `${file} needs one URL per reference`).toBe(referenceCount);
-      expect((metadata.match(/^ {4}type: (paper|official|standard|policy|case)$/gm) ?? []).length, `${file} needs one valid type per reference`).toBe(referenceCount);
+      expect((metadata.match(/^ {4}type: (paper|official|standard|policy|case|essay)$/gm) ?? []).length, `${file} needs one valid type per reference`).toBe(referenceCount);
       expect((metadata.match(/^ {4}note: .+$/gm) ?? []).length, `${file} needs one note per reference`).toBe(referenceCount);
       expect(frontmatterList(metadata, 'keyTerms').length, `${file} needs tool or concept terms`).toBeGreaterThan(0);
       for (const phrase of bannedPublicPhrases) expect(content).not.toContain(phrase);
