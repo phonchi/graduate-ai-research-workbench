@@ -1,6 +1,6 @@
 ---
 title: 先定位再細讀：Context、索引與來源版本
-summary: 先盤點來源，再用 quick notes 與索引定位，必要時建立全文快取並回到原文核對版本。
+summary: 先用 quick notes 與索引定位，再按需讀原文、核對版本；分清主對話長度、總 token、費用與等待時間，減少無效讀取。
 order: 3
 part: Context
 difficulty: 實作
@@ -8,7 +8,7 @@ estimatedMinutes: 28
 learningOutcomes:
   - 用來源清單、quick notes 與索引建立可按需擴充的研究資料入口。
   - 區分 preprint、正式出版版本、勘誤與撤稿狀態。
-  - 從 AI 回答回查到原文段落並標記尚未確認的主張。
+  - 精準取回原文並標記待核主張，區分主 context、總 token、費用與時間。
 prerequisites:
   - 能辨認研究資料夾中的原始來源與衍生筆記。
 references:
@@ -20,10 +20,10 @@ references:
     url: https://notebooklm.google/
     type: official
     note: 官方入口說明 NotebookLM 可針對使用者提供的來源回答，並以引用連回來源內容。
-  - title: "PRISMA 2020 Statement"
-    url: https://www.prisma-statement.org/prisma-2020-statement
-    type: standard
-    note: 提供系統性回顧的紀錄、篩選與流程圖報告框架，可借鏡建立可追蹤的來源清單。
+  - title: "Effective context engineering for AI agents"
+    url: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+    type: official
+    note: 說明按需取回資料、精簡工具輸出、保存任務筆記與分開 context 的做法及取捨。
   - title: "Crossmark"
     url: https://www.crossref.org/services/crossmark/
     type: standard
@@ -44,7 +44,7 @@ relatedTools:
 relatedCases:
   - document-cache
   - anonymous-manuscript-review
-lastVerified: 2026-07-10
+lastVerified: 2026-09-05
 draft: false
 featured: true
 ---
@@ -103,6 +103,35 @@ Context 是模型這一輪可見的指令、對話與資料，不是可靠的永
 - **版本衝突**：preprint 與正式版本不同，或另有 correction。
 - **無法定位**：目前材料不足，不應補猜。
 
+## 省 token，先減少不必要的讀取
+
+需要查三篇論文的限制時，先讀索引中的來源 ID、版本與章節，再搜尋候選段落。不要每次都把整個資料夾載入對話。Anthropic 的 context 工程指南也採用這種按需取回資料的方式；讀得少的前提，是仍保留足以判斷的上下文。
+
+本地有文字快取時，可以先限定檔案與關鍵詞，再閱讀命中位置的前後文。下例的路徑只是示意：
+
+```bash
+rg -n -i -C 3 'limitation|assumption|domain shift' cache/D01.txt cache/D03.txt
+```
+
+命中句子只是候選證據；指代、否定詞、表格註解與研究條件仍需回到原文確認。文獻整理與寫作查證可以接著看[閱讀技能](../../guides/research-skills/#read)及[寫作技能](../../guides/research-skills/#write)。
+
+工具輸出很長時，完整紀錄留在工作目錄，對話只帶摘要與必要片段。截短後至少保留命令、結束狀態、失敗項目、錯誤訊息、完整紀錄位置，以及「這是節錄」的標示。只留下成功筆數，會讓下一輪誤以為所有文件都已處理。錯誤還沒定位前，也不要只憑最後幾行 log 判斷原因。
+
+### 四種成本分開看
+
+| 想改善什麼 | 應觀察什麼 | 不能直接推論什麼 |
+|---|---|---|
+| 主 context 長度 | 主對話當下需要攜帶的內容 | 子 Agent 回報很短，不代表整項工作少用 token |
+| 總 token | 所有呼叫、子 Agent 與重試累計的輸入輸出用量 | 輸出字少，不代表背景讀取也少 |
+| 費用 | 實際方案、模型、快取與工具使用的計費紀錄 | 少一半 token，不保證少一半費用 |
+| 等待時間 | 從交辦到通過驗收的實際耗時 | 平行執行較快，不保證總用量較低 |
+
+以 Claude Code 為例，官方[成本管理文件](https://code.claude.com/docs/en/costs)分開說明 token、快取、API 用量與訂閱額度，也提醒多 Agent 各自消耗用量。介面上的估算金額不一定就是帳單；比較時要採用相同計費方式，並保留整項任務的紀錄。
+
+本站建議把研究設計、歧義判斷與重要驗證交給在這類任務上表現較好的模型；輸入、格式、完成條件都清楚的工作，再試用較低成本模型。例如先確定抽取欄位與判定標準，才分派各篇文件的欄位抽取，最後回查原文。可重現的計數或格式轉換，優先交給一般程式。
+
+這種分工能否省錢，要連同重試與人工核對成本一起測量。換模型前，用同一組小型評估案例比較通過率、總用量與耗時；若返工變多，就縮小它的任務或換回原模型。不要只按模型名稱認定能力，也不必把會變動的即時價格寫進長期工作守則。
+
 ## 來源版本檢查清單
 
 引用前逐項檢查：
@@ -133,6 +162,10 @@ NotebookLM 適合把一組邊界清楚、允許上傳的來源放入筆記本，
 已確認：D01 有正式版；D03 只有 preprint。
 待確認：D07 是否有 correction。
 輸出：每項主張附來源 ID 與原文位置；無法核對就標記待核。
+已決定事項：只比較共同假設，不排名方法，也不新增來源。
+下一步：查 D07 的出版者頁面，再核對三份來源的限制段落。
+驗收條件：每列均有來源 ID、版本與位置；版本衝突不得省略。
+完整證據位置：原始檔路徑見 index.md；核對紀錄見 evidence/claims.md。
 ```
 
 這張便條保存的是任務狀態與來源邊界，不是要求模型重現完整推理歷史。

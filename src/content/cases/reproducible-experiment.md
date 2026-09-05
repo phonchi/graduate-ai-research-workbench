@@ -18,7 +18,7 @@ draft: false
 sourceUrl: https://github.com/phonchi/graduate-ai-research-workbench/tree/main/examples/reproducible-experiment
 sourceLicense: 實驗資料、分析程式、預期輸出、案例文字與預覽皆為本站原創合成素材，採 CC BY 4.0；網站程式碼另依 MIT License。
 privacyReview: 輸入是五筆人工建立的合成量測，不含受試者、學生、位置、帳號、未公開研究或可識別中繼資料。
-coverImage: /graduate-ai-research-workbench/images/cases/reproducible-experiment.webp
+coverImage: /images/cases/reproducible-experiment.webp
 ---
 
 ## 先看可重跑範圍
@@ -76,7 +76,7 @@ npm test -- src/lib/reproducible-experiment.test.ts
 
 ## 一個刻意記錄的失敗
 
-開發時曾在暫存副本把 CSV 欄名改成 `value`，分析器立即以 `Expected CSV header: sample_id,measurement` 停止。這不是要讓程式猜測另一種格式，而是把輸入契約寫清楚：欄位變更應先更新 config、分析器與 gold output，再由 review 判斷是否仍是同一個實驗。
+開發時曾在暫存副本把 CSV 欄名改成 `value`，分析器立即以 `Expected CSV header: sample_id,measurement` 停止。這不是要讓程式猜測另一種格式，而是把輸入契約寫清楚：欄位變更應先更新 config、分析器與 expected template，再由 review 判斷是否仍是同一個實驗。
 
 失敗紀錄至少要回答：用了哪個輸入、執行哪個命令、錯在哪裡、是否產生不完整輸出，以及下一次修正要改規格還是改程式。
 

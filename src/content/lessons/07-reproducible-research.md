@@ -149,7 +149,7 @@ known_limits:
 - manifest、輸入與關鍵指標互相不符，而且尚未找到第一個偏離點。
 - 下一步需要覆寫 raw data、刪除既有 run、公開未審結果或存取新系統。
 
-停止時保留現場，列出最後成功 checkpoint 與需要誰決定。資料治理、公開與外部系統的更多情境集中在[研究安全與責任](/graduate-ai-research-workbench/safety/)，不必在每份 experiment manifest 重抄。
+停止時保留現場，列出最後成功 checkpoint 與需要誰決定。資料治理、公開與外部系統的更多情境集中在[研究安全與責任](../../safety/)，不必在每份 experiment manifest 重抄。
 
 ## 交接前看三件事
 
@@ -157,7 +157,7 @@ known_limits:
 - derived outputs 能追到輸入、config、commit 與實際命令。
 - 代表案例有結果；被跳過、無法判定或仍需人工 rubric 的項目清楚可見。
 
-需要一份可直接填寫的交接表時，可使用[Git checkpoint 與發布範本](/graduate-ai-research-workbench/templates/git-checkpoint-release/)。Good Enough Practices 強調先採用每位研究者都做得到的資料、程式、協作與專案管理習慣；NIH 的研究軟體分享指引也要求版本控制、metadata、授權與安裝使用資訊。可重現性不是最後一次整理，而是從第一次執行就留下足夠證據。
+需要一份可直接填寫的交接表時，可使用[Git checkpoint 與發布範本](../../templates/git-checkpoint-release/)。Good Enough Practices 強調先採用每位研究者都做得到的資料、程式、協作與專案管理習慣；NIH 的研究軟體分享指引也要求版本控制、metadata、授權與安裝使用資訊。可重現性不是最後一次整理，而是從第一次執行就留下足夠證據。
 
 ## 一句帶走
 

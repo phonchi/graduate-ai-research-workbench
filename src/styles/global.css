@@ -288,7 +288,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .practical-task-list article { grid-template-columns: 54px 32px minmax(0, 1fr) 220px; }
 .practical-task-list article > svg { margin-top: 4px; color: var(--teal); }
 .task-router-form { display: grid; grid-template-columns: minmax(190px, .8fr) minmax(360px, 2fr) minmax(190px, .8fr); gap: 18px; align-items: stretch; padding: 20px; border: 1px solid var(--line); background: #fff; }
-.task-router-form > label, .task-router-form fieldset { display: flex; flex-direction: column; gap: 7px; min-width: 0; margin: 0; color: var(--muted); font-size: .78rem; font-weight: 760; }
+.task-router-form > .task-router-field, .task-router-form fieldset { display: flex; flex-direction: column; gap: 7px; min-width: 0; margin: 0; color: var(--muted); font-size: .78rem; font-weight: 760; }
+.task-router [hidden] { display: none !important; }
 .task-router-form fieldset { padding: 0; border: 0; }
 .task-router-form select { min-height: 44px; padding: 8px 10px; border: 1px solid #aab7b0; border-radius: 3px; background: #fff; color: var(--ink); font-size: .9rem; }
 .no-js .task-router-form { display: none; }

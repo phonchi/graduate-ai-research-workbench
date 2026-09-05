@@ -4,6 +4,6 @@ dist/
 .pagefind/
 playwright-report/
 test-results/
+examples/reproducible-experiment/derived/
 .superpowers/
 .DS_Store
-

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import siteConfig from '../../site.config.json' with { type: 'json' };
 
 test('all discoverable internal links resolve', async ({ page, baseURL }) => {
   const origin = new URL(baseURL ?? 'http://127.0.0.1:4173').origin;
@@ -19,7 +20,7 @@ test('all discoverable internal links resolve', async ({ page, baseURL }) => {
     for (const href of hrefs) {
       const link = new URL(href);
       link.hash = '';
-      if (link.origin === origin && link.pathname.startsWith('/graduate-ai-research-workbench/') && !visited.has(link.href)) pending.push(link.href);
+      if (link.origin === origin && link.pathname.startsWith(`${siteConfig.projectBase}/`) && !visited.has(link.href)) pending.push(link.href);
     }
   }
 

@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const visualRoutes = [
+  { name: 'research-skills', route: './guides/research-skills/', heading: '研究技能選用指南' },
   { name: 'home', route: './', heading: '研究生 AI 研究工作台' },
   { name: 'lesson-7', route: './learn/07-reproducible-research/', heading: /可重現研究工作流/ },
   { name: 'tools', route: './tools/', heading: '名字很多，先看它到底能不能動手' },

@@ -18,7 +18,7 @@ lastVerified: 2026-07-10
 draft: false
 sourceLicense: 本案例文字、合成測試概念與預覽圖為本站原創並採 CC BY 4.0；未重新散布本機 Skill 原始檔或真實投稿內容。
 privacyReview: 所有示例均移除作者、機構、期刊、稿號、致謝、檔案屬性與可識別研究資料；不公開任何真實同儕審查內容。
-coverImage: /graduate-ai-research-workbench/images/cases/anonymous-manuscript-review.webp
+coverImage: /images/cases/anonymous-manuscript-review.webp
 ---
 
 ## 成果先看

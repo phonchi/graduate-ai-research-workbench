@@ -1,6 +1,11 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFile } from 'node:fs/promises';
+import siteConfig from '../../site.config.json' with { type: 'json' };
+
+const projectBase = siteConfig.projectBase;
+const projectBasePattern = projectBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const toolPathPattern = new RegExp(`^${projectBasePattern}/tools/[a-z0-9-]+/$`);
 
 const presentationFraming = /\bslideRefs\b|對照投影片|投影片主線|投影片的核心比喻|\.pptx?\b|第\s*\d+\s*(?:張|頁)\s*投影片|投影片\s*\d+/iu;
 
@@ -298,7 +303,7 @@ test('homepage search carries its query into Pagefind and returns a relevant res
   await expect(page).toHaveURL(new URL(`search/?q=${encodeURIComponent(query)}`, baseURL).href);
   const fullText = page.locator('.pagefind-ui__search-input');
   await expect(fullText).toHaveValue(query);
-  const expectedPath = '/graduate-ai-research-workbench/tools/ask-user-question/';
+  const expectedPath = `${projectBase}/tools/ask-user-question/`;
   const result = page.locator('.pagefind-ui__result').filter({
     has: page.locator(`.pagefind-ui__result-link[href="${expectedPath}"]`),
   });
@@ -310,12 +315,12 @@ test('Pagefind returns the AskUserQuestion tool result and follows its destinati
   const fullText = page.locator('.pagefind-ui__search-input');
   await expect(fullText).toBeVisible();
   await fullText.fill('AskUserQuestion');
-  const expectedPath = '/graduate-ai-research-workbench/tools/ask-user-question/';
+  const expectedPath = `${projectBase}/tools/ask-user-question/`;
   const result = page.locator('.pagefind-ui__result').filter({
     has: page.locator(`.pagefind-ui__result-link[href="${expectedPath}"]`),
   });
   await expect(result).toContainText('AskUserQuestion');
-  const resultLink = result.locator('.pagefind-ui__result-link');
+  const resultLink = result.locator(`.pagefind-ui__result-link[href="${expectedPath}"]`);
   await expect(resultLink).toHaveAttribute('href', expectedPath);
   await resultLink.click();
   await expect(page).toHaveURL(new URL(expectedPath, baseURL).href);
@@ -432,7 +437,7 @@ test.describe('without JavaScript', () => {
       for (const link of await candidateLinks.all()) {
         await expect(link).toBeVisible();
         const href = await link.getAttribute('href');
-        expect(href).toMatch(/^\/graduate-ai-research-workbench\/tools\/[a-z0-9-]+\/$/);
+        expect(href).toMatch(toolPathPattern);
         candidateHrefs.add(href as string);
       }
     }

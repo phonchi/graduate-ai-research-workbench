@@ -16,6 +16,7 @@ const capabilityLabels = {
 } as const;
 const capabilityEntries = Object.entries(capabilityLabels) as Array<[keyof typeof capabilityLabels, string]>;
 const accessLabels = { yes: '支援', depends: '視設定', no: '不支援' } as const;
+const skillSections: Record<string, string> = { read: 'read', write: 'write', experiment: 'experiment', present: 'present', publish: 'write', automate: 'plan' };
 const tasks = [
   { id: 'read', title: '閱讀與整理來源', description: '建立可回查的來源集合、quick notes 與索引，再決定是否需要固定來源引用。', lesson: '03-context-and-indexes', tools: ['notebooklm', 'chatgpt', 'codex', 'claude-code'], icon: BookOpen },
   { id: 'write', title: '撰寫與修改文件', description: '先界定讀者、來源與不可改動範圍，再用差異與引用驗收。', lesson: '02-ask-before-action', tools: ['chatgpt', 'codex', 'claude-code', 'gemini-cli'], icon: FilePenLine },
@@ -29,8 +30,8 @@ const tasks = [
 <BaseLayout title="研究任務" description="先確認需要的能力與資料敏感度，再比較多個適合的研究工具與課程。">
   <header class="page-header"><div><span class="section-kicker">START FROM YOUR WORK</span><h1>先說要做什麼，再決定用哪個工具</h1><p>工具名稱會變；資料邊界、必要能力與驗收方式應先決定。</p></div></header>
   <section class="page-band task-router" data-task-router>
-    <form class="task-router-form" aria-label="研究任務條件" onsubmit="return false">
-      <label>研究任務<select data-task-select>{tasks.map((task) => <option value={task.id}>{task.title}</option>)}</select></label>
+    <form class="task-router-form" aria-label="工具篩選條件" onsubmit="return false">
+      <div class="task-router-field"><label for="research-task">研究任務</label><select id="research-task" data-task-select>{tasks.map((task) => <option value={task.id}>{task.title}</option>)}</select></div>
       <fieldset><legend>需要哪些能力</legend><div class="task-capability-options">
         <label><input type="checkbox" data-task-capability="localFiles" />讀寫本機檔案</label>
         <label><input type="checkbox" data-task-capability="commands" />執行程式</label>
@@ -38,7 +39,7 @@ const tasks = [
         <label><input type="checkbox" data-task-capability="webAccess" />存取網路</label>
         <label><input type="checkbox" data-task-capability="backgroundTasks" />背景執行</label>
       </div></fieldset>
-      <label>資料含敏感資訊嗎？<select data-sensitive><option value="no">否</option><option value="yes">是或不確定</option></select></label>
+      <div class="task-router-field"><label for="sensitive-data">資料含敏感資訊嗎？</label><select id="sensitive-data" data-sensitive><option value="no">否</option><option value="yes">是或不確定</option></select></div>
     </form>
 
     <div class="no-js-task-note"><strong>未啟用 JavaScript，以下保留全部任務與候選工具。</strong><p>互動篩選目前無法使用；處理研究資料前，請先確認資料邊界並閱讀<a href={buildSitePath(base, '/safety/')}>研究安全指南</a>。</p></div>
@@ -57,7 +58,7 @@ const tasks = [
             return <li data-task-capability-status={capability} hidden><span>{label}</span><strong data-task-status-access={access}>{accessLabels[access]}</strong></li>;
           })}</ul></li>;
         })}</ul><p class="task-empty" data-task-empty hidden>目前沒有直接符合全部條件的條目，請到能力詞典比較依設定支援的選項。</p></div>
-        <div class="task-links"><a href={buildSitePath(base, `/learn/${task.lesson}/`)}>推薦課程 <ArrowRight size={16} aria-hidden="true" /></a><a href={buildSitePath(base, '/tools/')}>比較完整能力詞典 <ArrowRight size={16} aria-hidden="true" /></a></div>
+        <div class="task-links"><a href={`${buildSitePath(base, "/guides/research-skills/")}#${skillSections[task.id]}`}>這個任務可用的技能 <ArrowRight size={16} aria-hidden="true" /></a><a href={buildSitePath(base, `/learn/${task.lesson}/`)}>推薦課程 <ArrowRight size={16} aria-hidden="true" /></a><a href={buildSitePath(base, '/tools/')}>比較完整能力詞典 <ArrowRight size={16} aria-hidden="true" /></a></div>
       </article>)}
     </div>
   </section>

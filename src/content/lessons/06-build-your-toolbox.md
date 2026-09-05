@@ -1,12 +1,12 @@
 ---
 title: 從成功一次到穩定重跑：Skill 的生命週期
-summary: 先手動跑順、收集真實失敗，再拆分 instructions、scripts 與 references，經過盲測與版本審查後才成為可複用手冊。
+summary: 先判斷能否選用現成 Skill；需要自行封裝時，再從真實案例整理 instructions、scripts 與 references，用不同輸入測試並持續維護。
 order: 6
 part: 封裝
 difficulty: 進階
 estimatedMinutes: 25
 learningOutcomes:
-  - 判斷一個研究流程是否已成熟到適合封裝成 Skill。
+  - 分清選用現成 Skill 與自行封裝，判斷研究流程何時適合整理成手冊。
   - 將流程拆成 instructions、scripts 與 references，並保留清楚的觸發邊界。
   - 用第二個任務盲測、版本紀錄與定期審查控制 skill rot。
 prerequisites:
@@ -44,14 +44,20 @@ relatedCases:
   - programmatic-slides
   - document-cache
   - anonymous-manuscript-review
-lastVerified: 2026-07-10
+lastVerified: 2026-09-05
 draft: false
 featured: false
 ---
 
-## 先問：這個流程值得封裝嗎？
+## 先選用現成 Skill，還是自己封裝？
 
-Skill 不是一份寫得很長的 prompt，也不是第一次做新任務時的需求清單。它是已經做過、知道會在哪裡失敗，而且下次還會再做的工作手冊。
+**第一次做某個任務，也可以使用適合的現成 Skill。** Skill 是讓 Agent 在特定任務中讀取的操作指引，可以附帶腳本、參考資料與範本。使用前先看它處理什麼、需要哪些輸入、會讀寫哪些資料，以及怎樣判定完成；再用小型材料確認它適合這次工作。
+
+例如剛開始構思研究，可以使用[規劃技能](../../guides/research-skills/#plan)協助釐清問題；已有一批文件可選[閱讀技能](../../guides/research-skills/#read)，稿件修改可看[寫作技能](../../guides/research-skills/#write)。準備程式或研究圖表時，分別查[實驗](../../guides/research-skills/#experiment)與[視覺化](../../guides/research-skills/#visualize)；需要把結果做成簡報，再看[簡報技能](../../guides/research-skills/#present)。每次只選符合任務的項目，不需要整套安裝。
+
+下文的「先跑順、再盲測」指的是**把自己的流程封裝成可重用 Skill**。這是建立手冊的建議，不是禁止新手使用別人已經整理好的手冊，也不是 Agent Skills 格式規格的資格要求。
+
+## 這個流程值得自行封裝嗎？
 
 本站先看這些條件：
 
@@ -101,7 +107,7 @@ name: literature-evidence-audit
 description: Use when checking whether manuscript claims, numbers, and citations can be traced to an approved local source set.
 ```
 
-接著補一段「不要使用」：第一次探索主題、來源集合尚未核准、需要重新判斷研究設計時，不應自動套用這份 Skill。觸發太寬會把不相干任務硬塞進舊流程；觸發太窄則永遠想不起來使用。
+接著補一段「不要使用」：這份 `literature-evidence-audit` 只處理稿件主張與既定來源的對照；尚未有稿件、來源範圍未定，或正在重新設計研究時，不適合自動套用它。這是這份查證 Skill 的邊界；探索研究題目時，仍可以選用另一份適合的規劃 Skill。觸發太寬會把不相干任務硬塞進舊流程；觸發太窄則可能漏掉該使用的情境。
 
 ## 生命週期四：用不同輸入盲測
 
@@ -141,7 +147,7 @@ Skill 會隨資料格式、工具、模型與實驗室慣例變動。每次修�
 | MCP | 如何連接外部資料或工具 |
 | plugin | 如何把一組能力與設定打包、安裝或分發 |
 
-一個流程可以同時用到它們，但不需要為了「完整」全部加入。先從一份能盲測的 Skill 開始；只有固定外部連接需求才評估 MCP，需要獨立搜尋或複核才拆 subagent，需要整包分發時才考慮 plugin。
+一個流程可以同時用到它們。先選一份範圍清楚的 Skill，以小型任務試用；需要連接外部工具時再評估 MCP，需要獨立搜尋或複核時再拆 subagent，需要整包分發時才考慮 plugin。若現成技能不符合研究室慣例，再根據實際使用紀錄修改或自行封裝。
 
 ## 實驗室驗收卡
 
@@ -159,4 +165,4 @@ instructions／scripts／references 分工：
 
 ## 一句帶走
 
-**先跑順一個真實案例並留下證據，再用不同輸入盲測；通過後才把流程當成可複用 Skill，並持續處理 skill rot。**
+**現成 Skill 可以從第一次任務開始試用；自行封裝時，先留下真實案例，再用不同輸入測試，交接後仍要持續維護。**

@@ -18,7 +18,7 @@ draft: false
 sourceUrl: https://phonchi.github.io/nsysu-calculus2/static_files/presentations/surfaces_3d.html#sec-surfaces
 sourceLicense: 本頁截圖由原互動頁作者 phonchi 提供並以 CC BY 4.0 收錄；原頁使用的第三方程式庫與素材仍依各自授權。
 privacyReview: 案例只描述公開頁面與通用製作流程，不包含助教姓名、電子郵件、未公開題目或學生資料。
-coverImage: /graduate-ai-research-workbench/images/cases/interactive-calculus.webp
+coverImage: /images/cases/interactive-calculus.webp
 ---
 
 ## 成果先看

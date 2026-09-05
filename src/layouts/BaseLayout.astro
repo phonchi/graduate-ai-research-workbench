@@ -1,7 +1,7 @@
 ---
 import { Menu, Search, X } from 'lucide-astro';
 import '../styles/global.css';
-import { buildSitePath } from '../lib/site';
+import { buildSiteAssetPath, buildSitePath } from '../lib/site';
 
 interface Props {
   title?: string;
@@ -21,6 +21,7 @@ const {
 const base = import.meta.env.BASE_URL;
 const home = buildSitePath(base, '/');
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = image ? buildSiteAssetPath(base, image) : undefined;
 const nav = [
   ['概念與習慣', '/learn/'],
   ['研究任務', '/tasks/'],
@@ -42,7 +43,7 @@ const pageTitle = title === '研究生 AI 研究工作台' ? title : `${title}�
     {noindex && <meta name="robots" content="noindex" />}
     <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
     <link rel="canonical" href={canonical} />
-    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    {socialImage && <meta property="og:image" content={new URL(socialImage, Astro.site)} />}
     <title>{pageTitle}</title>
   </head>
   <body>

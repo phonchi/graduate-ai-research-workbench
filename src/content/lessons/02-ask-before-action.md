@@ -8,7 +8,7 @@ estimatedMinutes: 20
 learningOutcomes:
   - 把模糊研究願望改寫成可執行、可驗收的規格。
   - 判斷哪些資訊應先由 Agent 查找、哪些高影響歧義必須反問使用者。
-  - 寫出可用實際來源、檔案差異或測試結果驗收的完成條件。
+  - 分清 spec、rules 與 evals，寫出可用來源、檔案差異或測試結果驗收的完成條件。
 prerequisites:
   - 知道 Chat 與 Agent 的工具能力不同。
 references:
@@ -20,12 +20,23 @@ references:
     url: https://code.claude.com/docs/en/best-practices
     type: official
     note: 支持提供具體脈絡、讓工具先探索，以及為較大任務先訪談需求與建立規格的做法。
+  - title: "Matt Pocock Skills"
+    url: https://github.com/mattpocock/skills
+    type: official
+    note: 作者的原始儲存庫，可核對 grill-me、grilling、grill-with-docs、to-spec 與 to-tickets 的現行名稱及行為。
+  - title: "Demystifying evals for AI agents"
+    url: https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
+    type: official
+    note: 區分任務、評分方式與實際結果，說明如何用明確案例檢查 Agent 是否達成要求。
 keyTerms:
   - 任務規格
   - 驗收標準
   - AskUserQuestion
   - 反問
   - 合理預設
+  - spec
+  - rules
+  - evals
 relatedTools:
   - chatgpt
   - codex
@@ -35,7 +46,7 @@ relatedTools:
 relatedCases:
   - programmatic-slides
   - interactive-calculus
-lastVerified: 2026-07-10
+lastVerified: 2026-09-05
 draft: false
 featured: true
 ---
@@ -66,6 +77,30 @@ featured: true
 規格不必很長。本站建議先寫清三件事：**目標與讀者、材料與動作邊界、交付物與驗收方式**。這已足以讓多數小任務開始。
 
 限制、格式範例與參考慣例則按影響補上：選錯會改變研究主張、公開範圍或產出格式時就先寫；只是低風險細節時，可讓工具採合理預設並回報。上面的規格版把這些資訊全部展開，是完整交接的例子，不是每次都必須填滿的固定表格。
+
+## Spec、rules、evals 各自管什麼
+
+把上面的三篇論文任務拆開看，會發現「想做什麼」「工作時遵守什麼」「做完怎麼檢查」需要分別交代。這是本站整理交辦內容的方式，不要求使用特定檔名或平台。
+
+| 項目 | 回答的問題 | 三篇論文的例子 |
+|---|---|---|
+| Spec：這次任務的規格 | 本次要交付什麼，做到哪裡？ | 比較 A、B、C 的假設、資料與限制，交一頁表格，給組會討論使用 |
+| Rules：工作規則 | 執行時要遵守哪些界線？ | 只讀指定版本；不補猜缺值；主張附原文位置；不改原始 PDF |
+| Evals：評估案例與判定方式 | 用什麼證據確認符合要求？ | 用正常、缺值、來源矛盾三種案例，核對欄位、數值、引用與待核標記 |
+
+Spec 讓 Agent 少猜交付物，rules 限定可接受的做法；evals 則把要求變成實際檢查。即使規則寫了「不可編造」，仍要用缺值案例確認工具真的會標記未提供。評估也不只是再問一次「你做對了嗎？」：[第 5 課](../05-challenge-and-review/)會示範如何用原文與判定表驗收。
+
+## 用現成 Skill 把討論留下來
+
+研究計畫還有多個重要決策沒想清楚時，可以選用 Matt Pocock 的規劃技能。以下名稱與行為依 2026-09-05 的原始碼查核；它們是第三方技能，必須先安裝並確認工具支援，並非每個 Agent 都內建這些指令。
+
+1. **`grill-me`：把未定的決策問清楚。** 它呼叫 `grilling`，依決策的前置條件分輪提問，附建議答案並等待回覆。例如先確定比較目的，再問資料範圍與成功條件。現行版本會在同一輪提出所有已可回答的問題，不是固定一次只問一題。
+2. **`to-spec`：把已達成的共識寫成規格。** 它整理問題、解法、實作與測試決策、範圍外事項；不是重新做一輪完整訪談，但會確認測試的介面或層級。研究任務可借用這個結構，寫清來源版本、比較標準與交付物。
+3. **`to-tickets`：拆成可驗收的小工作。** 每項工作要有獨立可檢查的結果與真正的依賴關係。例如先完成一篇論文的抽取與核對，再平行處理另外兩篇，三篇都完成後才做比較表。
+
+需要留下術語表與決策理由時，可選 **`grill-with-docs`**，它結合 `grilling` 與 `domain-modeling`。例如把「受試者人數」與「影像張數」分開定義，避免下一次又混用。技能目錄、適用情境與來源整理在[研究規劃工具箱](../../guides/research-skills/#plan)。
+
+這些技能可以分開用。三篇論文的範圍已經清楚時，直接寫短規格即可；不必為了跑完整流程重問一遍。`to-spec` 與 `to-tickets` 原本會將結果發佈到設定的議題追蹤系統，課堂練習應明講「只產生本地草稿，不發佈」。
 
 ## 反問決策樹
 
@@ -118,6 +153,6 @@ Claude Code 將多選式澄清工具命名為 `AskUserQuestion`。其他 Chat �
 - 哪些動作需要先取得同意，哪些低風險細節可以採合理預設？
 - 完成後能否靠來源、diff、測試或實際輸出驗收？
 
-較正式的交接可再按需檢查格式範例是否真的代表慣例、參考資料是否為權威來源。需要一份可直接填寫的版本時，可從[六要素交辦單](/graduate-ai-research-workbench/templates/six-part-brief/)開始刪減，不必為了填滿欄位增加無關資訊。
+較正式的交接可再按需檢查格式範例是否真的代表慣例、參考資料是否為權威來源。需要一份可直接填寫的版本時，可從[六要素交辦單](../../templates/six-part-brief/)開始刪減，不必為了填滿欄位增加無關資訊。
 
 規格的目的不是控制每一步，而是讓 Agent 在清楚邊界內自行處理低風險細節，把真正需要人判斷的問題留給人。

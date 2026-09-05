@@ -38,12 +38,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <section class="page-band prose narrow">
     <h2>最小權限檢查清單</h2>
     <ul class="task-list">
-      <li><input type="checkbox" disabled />先列出 Agent 會讀、寫、執行與連線的範圍。</li>
-      <li><input type="checkbox" disabled />唯一版本先建立副本或 Git checkpoint。</li>
-      <li><input type="checkbox" disabled />正式資料前先用小型合成輸入試跑。</li>
-      <li><input type="checkbox" disabled />套件安裝、網路、憑證與公開發布需要個別同意。</li>
-      <li><input type="checkbox" disabled />完成後查看 diff、命令結果、衍生檔與公開網址。</li>
-      <li><input type="checkbox" disabled />確認資料保存位置、保留時間與刪除責任。</li>
+      <li><label><input type="checkbox" disabled />先列出 Agent 會讀、寫、執行與連線的範圍。</label></li>
+      <li><label><input type="checkbox" disabled />唯一版本先建立副本或 Git checkpoint。</label></li>
+      <li><label><input type="checkbox" disabled />正式資料前先用小型合成輸入試跑。</label></li>
+      <li><label><input type="checkbox" disabled />套件安裝、網路、憑證與公開發布需要個別同意。</label></li>
+      <li><label><input type="checkbox" disabled />完成後查看 diff、命令結果、衍生檔與公開網址。</label></li>
+      <li><label><input type="checkbox" disabled />確認資料保存位置、保留時間與刪除責任。</label></li>
     </ul>
     <p><a href="https://airc.nist.gov/airmf-resources/airmf/">NIST AI Risk Management Framework <ExternalLink size={15} aria-hidden="true" /></a> 將風險管理整理為 Govern、Map、Measure、Manage。研究專案可把資料責任、影響對象、測試證據與事故處理分別放入這四個問題，而不是只在最後做一次安全勾選。</p>
   </section>

@@ -1,9 +1,10 @@
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, resolve, sep } from 'node:path';
+import siteConfig from '../site.config.json' with { type: 'json' };
 
 const port = 4173;
-const base = '/graduate-ai-research-workbench';
+const base = siteConfig.projectBase;
 const dist = new URL('../dist/', import.meta.url).pathname;
 const distRoot = resolve(dist);
 const mime = {

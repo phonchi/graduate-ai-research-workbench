@@ -18,7 +18,7 @@ lastVerified: 2026-07-10
 draft: false
 sourceLicense: 本站自行建立的四份合成語料、索引與案例預覽採 CC BY 4.0；真實文件仍須由使用者確認研究倫理、契約與著作權授權。
 privacyReview: 範例索引不含真實受試者、未公開論文、審稿文件、帳號資訊或可回推個人的檔名與中繼資料。
-coverImage: /graduate-ai-research-workbench/images/cases/document-cache.webp
+coverImage: /images/cases/document-cache.webp
 ---
 
 ## 成果先看

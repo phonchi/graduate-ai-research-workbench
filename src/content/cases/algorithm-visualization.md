@@ -18,7 +18,7 @@ draft: false
 sourceUrl: https://phonchi.github.io/nsysu-math208/static_files/presentations/searching_sorting.html#selection
 sourceLicense: 本頁截圖由原互動頁作者 phonchi 提供並以 CC BY 4.0 收錄；原頁內容、程式碼與第三方程式庫仍依各自授權。
 privacyReview: 僅使用公開頁面與合成陣列說明流程，不包含人員名單、成績、作業繳交紀錄或未公開教材。
-coverImage: /graduate-ai-research-workbench/images/cases/algorithm-visualization.webp
+coverImage: /images/cases/algorithm-visualization.webp
 ---
 
 ## 成果先看

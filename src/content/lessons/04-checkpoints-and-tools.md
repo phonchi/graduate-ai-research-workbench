@@ -147,7 +147,7 @@ Git 是版本歷史，不是內容正確性保證，也不是敏感資料備份�
 - 刪除、覆寫、公開或推送前，由研究者確認目標與可回復點。
 - 安裝套件、連接外部服務或上傳資料，與本機讀寫分開授權。
 
-其他情境不必在每份交辦重寫一張風險清單；需要處理敏感資料、外部服務或公開成果時，直接查[研究安全與責任](/graduate-ai-research-workbench/safety/)。
+其他情境不必在每份交辦重寫一張風險清單；需要處理敏感資料、外部服務或公開成果時，直接查[研究安全與責任](../../safety/)。
 
 ## 起步三：把完成條件寫成命令與觀察
 
@@ -171,4 +171,4 @@ Git 是版本歷史，不是內容正確性保證，也不是敏感資料備份�
 完成後更新進度，列出實際 diff、命令結果與仍需研究者決定的事項。
 ```
 
-需要建立專案規則時可改用[工作區規則範本](/graduate-ai-research-workbench/templates/workspace-rules/)；準備交接或發布前，再使用[Git checkpoint 與發布範本](/graduate-ai-research-workbench/templates/git-checkpoint-release/)。這套工作環境的目的不是讓 Agent 永遠不犯錯，而是讓協作者看得懂現況、驗證結果並從明確位置接手。
+需要建立專案規則時可改用[工作區規則範本](../../templates/workspace-rules/)；準備交接或發布前，再使用[Git checkpoint 與發布範本](../../templates/git-checkpoint-release/)。這套工作環境的目的不是讓 Agent 永遠不犯錯，而是讓協作者看得懂現況、驗證結果並從明確位置接手。

@@ -11,5 +11,8 @@ const items = tools.map((tool) => ({ title: tool.data.title, summary: tool.data.
 
 <BaseLayout title="工具詞典" description="用白話查清楚 AI 工具、檔案與工作方式的正式名稱。">
   <header class="page-header"><div><span class="section-kicker">TOOL GLOSSARY</span><h1>名字很多，先看它到底能不能動手</h1><p>概念先講清楚，再對照實際產品名稱。功能會變，使用判斷可以留下來。</p></div></header>
-  <section class="page-band"><ToolFilter items={items} /></section>
+  <section class="page-band">
+    <p>已經有要做的工作？到<a href={buildSitePath(base, '/guides/research-skills/')}>研究技能選用指南</a>，比較規劃、文獻、寫作、實驗與簡報會用到的技能和工具。</p>
+    <ToolFilter items={items} />
+  </section>
 </BaseLayout>

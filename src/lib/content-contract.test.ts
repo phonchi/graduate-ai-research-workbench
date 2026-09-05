@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 const root = resolve(process.cwd(), 'src/content');
 const pagesRoot = resolve(process.cwd(), 'src/pages');
+const projectRoot = process.cwd();
 const recursiveFiles = (directory: string, extensions: string[]): string[] => {
   if (!existsSync(directory)) return [];
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -110,7 +111,8 @@ describe('content contract', () => {
       for (const tool of frontmatterList(metadata, 'relatedTools')) expect(toolIds.has(tool), `${file} references unknown tool ${tool}`).toBe(true);
       const coverImage = frontmatterValue(metadata, 'coverImage');
       expect(coverImage, `${file} needs a cover image`).toBeTruthy();
-      const publicPath = coverImage?.replace(/^\/graduate-ai-research-workbench\//, '') ?? '';
+      expect(coverImage, `${file} cover image must be relative to the configured project base`).toMatch(/^\/images\/cases\/[a-z0-9-]+\.webp$/);
+      const publicPath = coverImage?.replace(/^\//, '') ?? '';
       expect(existsSync(resolve(process.cwd(), 'public', publicPath)), `${file} cover image does not exist`).toBe(true);
     }
   });
@@ -160,5 +162,38 @@ describe('content contract', () => {
     const index = JSON.parse(readFileSync(resolve(corpus, 'index.json'), 'utf8')) as Array<{ path: string }>;
     expect(index).toHaveLength(4);
     for (const entry of index) expect(() => readFileSync(resolve(corpus, entry.path))).not.toThrow();
+  });
+
+  it('keeps the project base in one config consumed by build and test infrastructure', () => {
+    const configPath = resolve(projectRoot, 'site.config.json');
+    expect(existsSync(configPath), 'site.config.json must be the single source of the Pages base').toBe(true);
+    if (!existsSync(configPath)) return;
+
+    const config = JSON.parse(readFileSync(configPath, 'utf8')) as { projectBase?: string; site?: string };
+    expect(config).toEqual({ projectBase: '/graduate-ai-research-workbench', site: 'https://phonchi.github.io' });
+
+    for (const consumer of ['astro.config.mjs', 'playwright.config.ts', 'scripts/test-server.mjs']) {
+      expect(readFileSync(resolve(projectRoot, consumer), 'utf8'), `${consumer} must consume site.config.json`).toContain('site.config.json');
+    }
+  });
+
+  it('does not hardcode the project base in runtime sources outside the site config', () => {
+    const configPath = resolve(projectRoot, 'site.config.json');
+    expect(existsSync(configPath), 'site.config.json must define the forbidden duplicate base').toBe(true);
+    if (!existsSync(configPath)) return;
+    const { projectBase } = JSON.parse(readFileSync(configPath, 'utf8')) as { projectBase: string };
+    const runtimeRoots = [
+      ...recursiveFiles(resolve(projectRoot, 'src'), ['.astro', '.md', '.mdx', '.ts']).filter((file) => !file.endsWith('.test.ts')).map((file) => `src/${file}`),
+      ...recursiveFiles(resolve(projectRoot, 'tests'), ['.ts']).map((file) => `tests/${file}`),
+      ...recursiveFiles(resolve(projectRoot, 'scripts'), ['.js', '.mjs', '.ts']).map((file) => `scripts/${file}`),
+      'astro.config.mjs',
+      'playwright.config.ts',
+    ];
+
+    for (const file of runtimeRoots) {
+      const absolute = resolve(projectRoot, file);
+      const source = readFileSync(absolute, 'utf8').replaceAll('https://github.com/phonchi/graduate-ai-research-workbench', '');
+      expect(source, `${absolute} hardcodes the Pages base`).not.toContain(projectBase);
+    }
   });
 });

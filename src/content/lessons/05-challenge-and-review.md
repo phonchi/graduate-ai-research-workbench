@@ -25,6 +25,10 @@ references:
     url: https://airc.nist.gov/airmf-resources/airmf/
     type: standard
     note: NIST 的 AI 風險治理框架，以 Govern、Map、Measure、Manage 四個功能組織風險管理工作。
+  - title: Demystifying evals for AI agents
+    url: https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
+    type: official
+    note: 說明如何組合程式、模型與人工 grader，檢查研究主張的來源支持、涵蓋度與來源品質。
 keyTerms:
   - 靜默失敗
   - 規格漂移
@@ -32,6 +36,8 @@ keyTerms:
   - gold task
   - rubric
   - 停止條件
+  - eval
+  - grader
 relatedTools:
   - chatgpt
   - codex
@@ -42,7 +48,7 @@ relatedCases:
   - interactive-calculus
   - anonymous-manuscript-review
   - algorithm-visualization
-lastVerified: 2026-07-10
+lastVerified: 2026-09-05
 draft: false
 featured: true
 ---
@@ -98,6 +104,24 @@ featured: true
 
 評估集不是一次性的考卷。當資料格式、模型、prompt、Skill 或程式改變時，重跑相同案例並比較差異；新增失敗案例時，也要記錄它代表哪一種風險。NIST AI RMF 強調風險管理應持續進行，而不是完成一次檢查就永久有效。
 
+## 練習：三篇論文，三種評估案例
+
+沿用[第 2 課](../02-ask-before-action/)的論文比較任務，先準備三段可人工核對的材料。下表的數字是教學用假設，不代表任何真實論文；實作時要換成你持有來源中的原文與位置。
+
+| 案例 | 給 Agent 的材料 | 預期行為 | 實際怎麼驗收 |
+|---|---|---|---|
+| 正常 | A 的 Methods 清楚寫出「120 位受試者、600 張影像」 | 分別填入受試者數與影像數，附 Methods 位置 | 用程式確認兩欄為 120、600；人工核對數字意義與引用位置 |
+| 缺值 | B 只報告 600 張影像，沒有受試者數 | 受試者數標記「未提供」，不由影像數推估 | 檢查缺值標記，並回看指定材料，確認沒有漏讀已提供的數字 |
+| 矛盾來源 | C 的摘要寫 120 位，Methods 寫 118 位，未說明差異 | 同時記錄兩值與位置，標記「待核」，暫不填唯一總數 | 確認沒有自行挑一值、取平均或掩蓋矛盾；由研究者查補充資料或勘誤 |
+
+**Grader 是判定方式或評分工具**。欄位是否齊全、數字是否相同，可由程式檢查；引文是否支持主張、限制有沒有被省略，通常需要領域判斷。模型可以協助找疑點，但模型評分要用人工判定過的案例校準，不能讓產生答案的 Agent 一句「已全部確認」就算通過。
+
+同一個案例可以有多項判定：表格格式正確，來源支持卻不合格，就只記錄格式通過。保留待核項與不通過原因，不要用一個平均分數把關鍵數字錯誤沖淡。這些做法對應 Anthropic 評估指南中的程式、模型與人工 grader；上面的三個案例則是本站為研究生設計的練習。
+
+用固定案例比較 prompt、Skill 或模型變更時，也記錄版本與每次結果。輸出可能因執行而異，單次通過不能代表穩定可靠；需要多高的一致性，應由任務用途決定。評估者要開啟實際產出的檔案、核對原文或執行測試，才能判定成果。
+
+同樣的檢查可以用在[實驗流程](../../guides/research-skills/#experiment)與[視覺化](../../guides/research-skills/#visualize)：重新計算圖中數字、核對單位，再檢查圖例是否與結果一致。挑選技能不會取代這些驗收步驟。
+
 ## 何時必須停止並升級
 
 符合任一條就停止自動重試，把現場與證據交給研究者、指導者或領域專家：
@@ -106,7 +130,7 @@ featured: true
 - 關鍵數字無法回到來源，或不同來源互相矛盾。
 - 下一步需要刪除、覆寫、公開、擴大資料權限，或會改變研究結論與作者責任。
 
-停止不是失敗；在證據不足時停止，正是可靠流程的一部分。更完整的資料、公開與外部服務界線集中在[研究安全與責任](/graduate-ai-research-workbench/safety/)；需要讓另一位檢查者盲化複核時，可直接使用[獨立複核範本](/graduate-ai-research-workbench/templates/independent-review/)。
+停止不是失敗；在證據不足時停止，正是可靠流程的一部分。更完整的資料、公開與外部服務界線集中在[研究安全與責任](../../safety/)；需要讓另一位檢查者盲化複核時，可直接使用[獨立複核範本](../../templates/independent-review/)。
 
 ## 把失敗變成下一輪的檢查點
 

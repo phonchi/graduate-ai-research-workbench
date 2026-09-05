@@ -11,6 +11,7 @@ const items = (await getCollection('lessons', ({ data }) => !data.draft)).sort((
     <div><span class="section-kicker">CORE LEARNING PATH</span><h1>七站建立可驗證的 Agent 合作習慣</h1><p>不預設程式背景。每站處理一個研究工作卡點，並把概念、工具名詞與可驗收做法接起來。</p></div>
   </header>
   <section class="page-band">
+    <p>想先試一項現成工具？<a href={buildSitePath(base, '/guides/research-skills/')}>研究技能選用指南</a>整理了適用情境、交辦範例與驗收方法。</p>
     <h2 class="sr-only">七篇核心課程</h2>
     <ol class="lesson-list">
       {items.map((item, index) => (

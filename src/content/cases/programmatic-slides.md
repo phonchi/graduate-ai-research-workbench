@@ -19,7 +19,7 @@ draft: false
 sourceUrl: https://docs.google.com/presentation/d/1mnjmwNZKsl1afDW2ia_QjWbJ9t45-FNC/
 sourceLicense: 封面是作者 phonchi 的公開簡報並由作者授權本站以 CC BY 4.0 收錄；簡報內其他圖像、圖示和字型仍依各自授權使用。
 privacyReview: 封面保留已公開的作者名稱 phonchi、活動名稱與日期；未收錄聯絡資料、學生資料、未公開研究結果或講者備註。
-coverImage: /graduate-ai-research-workbench/images/cases/programmatic-slides.webp
+coverImage: /images/cases/programmatic-slides.webp
 ---
 
 ## 成果先看

@@ -18,7 +18,7 @@ draft: false
 sourceUrl: https://phonchi.github.io/nsysu-math208/lectures/
 sourceLicense: 本頁截圖由原網站作者 phonchi 提供並以 CC BY 4.0 收錄；原站教材、原始碼、校徽與第三方資產不因本案例而重新授權。
 privacyReview: 截圖與來源連結限定在不含人員名單的 lectures 頁；本站不鏡像課程首頁的助教姓名、電子郵件、學生帳號、成績或後台資料。
-coverImage: /graduate-ai-research-workbench/images/cases/course-site-pages.webp
+coverImage: /images/cases/course-site-pages.webp
 ---
 
 ## 成果先看

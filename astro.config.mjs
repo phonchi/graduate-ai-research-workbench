@@ -1,8 +1,9 @@
 import { defineConfig } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import { rehypeAccessibleTaskLists } from './src/lib/rehypeAccessibleTaskLists';
+import siteConfig from './site.config.json' with { type: 'json' };
 
-const projectBase = '/graduate-ai-research-workbench';
+const { projectBase } = siteConfig;
 const withinProject = (path) => {
   const [pathname, fragment] = path.split('#');
   const normalizedPath = pathname.endsWith('/') ? pathname : `${pathname}/`;
@@ -10,7 +11,7 @@ const withinProject = (path) => {
 };
 
 export default defineConfig({
-  site: 'https://phonchi.github.io',
+  site: siteConfig.site,
   base: projectBase,
   trailingSlash: 'always',
   redirects: {
