@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { skillCategories } from './data/skill-categories';
 
 const difficulty = z.enum(['入門', '實作', '進階']);
 const toolKind = z.enum(['網頁', '桌面 App', 'CLI', '檔案', '功能', '協定', '工作方式']);
@@ -84,7 +85,24 @@ const templates = defineCollection({
     applicableTasks: z.array(taskId).min(1),
     relatedTools: z.array(z.string()).default([]),
     templateBody: z.string(),
+    exampleBody: z.string().optional(),
   }),
 });
 
-export const collections = { lessons, tools, cases, templates };
+const researchSkills = defineCollection({
+  loader: glob({ base: './src/content/research-skills', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    title: z.string().min(1),
+    summary: z.string().min(1),
+    order: z.number().int().nonnegative(),
+    categories: z.array(z.string().refine((id) => skillCategories.some((category) => category.id === id), 'Unknown skill category')).min(1),
+    kind: z.string().min(1),
+    aliases: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
+    platforms: z.array(z.string()).default([]),
+    sourceUrl: z.url(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { lessons, tools, cases, templates, researchSkills };

@@ -1,12 +1,14 @@
 ---
 import { Search } from 'lucide-astro';
 import { buildSitePath } from '../lib/site';
-const action = buildSitePath(import.meta.env.BASE_URL, '/search/');
+interface Props { destination?: string; label?: string; placeholder?: string; }
+const { destination = '/search/', label = '搜尋全站教材', placeholder = '搜尋課程、工具與案例…' } = Astro.props;
+const action = buildSitePath(import.meta.env.BASE_URL, destination);
 ---
 
 <form class="hero-search" action={action} role="search">
   <Search size={22} aria-hidden="true" />
-  <label class="sr-only" for="home-search">搜尋研究技能與任務</label>
-  <input id="home-search" type="search" name="q" placeholder="搜尋文獻整理、引用查核、Git、Skill…" aria-label="搜尋研究技能與任務" />
+  <label class="sr-only" for="home-search">{label}</label>
+  <input id="home-search" type="search" name="q" placeholder={placeholder} aria-label={label} />
   <button type="submit">搜尋</button>
 </form>

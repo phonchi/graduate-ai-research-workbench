@@ -23,7 +23,7 @@ export default defineConfig({
     '/learn/06-verification-review': withinProject('/learn/05-challenge-and-review'),
     '/learn/07-workflow-automation': withinProject('/learn/06-build-your-toolbox'),
     '/skills': withinProject('/tools'),
-    '/skills/academic-writing': withinProject('/tasks/#write'),
+    '/skills/academic-writing': withinProject('/guides/research-skills/#write'),
     '/skills/claim-evidence-mapping': withinProject('/learn/05-challenge-and-review'),
     '/skills/context-management': withinProject('/learn/03-context-and-indexes'),
     '/skills/counterexample-checking': withinProject('/learn/05-challenge-and-review'),

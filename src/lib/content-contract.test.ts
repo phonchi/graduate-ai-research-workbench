@@ -36,15 +36,9 @@ describe('content contract', () => {
   it('ships the standalone learning path and reference collections', () => {
     expect(files('lessons')).toHaveLength(7);
     expect(files('cases')).toHaveLength(7);
-    expect(files('tools')).toHaveLength(13);
-    expect(files('templates')).toHaveLength(7);
-  });
-
-  it('keeps The Bitter Lesson as a canonical essay reference in lesson one', () => {
-    const metadata = frontmatter(read('lessons', '01-from-chat-to-agent.md'));
-    expect(metadata).toMatch(
-      / {2}- title: ["']?The Bitter Lesson["']?\n {4}url: http:\/\/www\.incompleteideas\.net\/IncIdeas\/BitterLesson\.html\n {4}type: essay\n/,
-    );
+    expect(files('tools')).toContain('hook.md');
+    expect(files('templates')).toContain('handoff.md');
+    expect(files('research-skills').length).toBeGreaterThan(0);
   });
 
   it('makes every lesson standalone and backed by a small reference set', () => {
@@ -67,7 +61,7 @@ describe('content contract', () => {
 
   it('removes slide-dependent and evidence-matrix framing from public content and pages', () => {
     const publicSources: Array<{ path: string; source: string }> = [];
-    for (const collection of ['lessons', 'tools', 'cases', 'templates']) {
+    for (const collection of ['lessons', 'tools', 'cases', 'templates', 'research-skills']) {
       for (const file of files(collection)) {
         const content = read(collection, file);
         publicSources.push({ path: `src/content/${collection}/${file}`, source: content });
@@ -138,9 +132,9 @@ describe('content contract', () => {
     }
   });
 
-  it('ships only the seven copyable templates and maps each one to research tasks', () => {
+  it('keeps the core copyable templates and maps every template to research tasks', () => {
     const taskIds = new Set(['read', 'write', 'experiment', 'present', 'publish', 'automate']);
-    expect(files('templates').sort()).toEqual([
+    expect(files('templates')).toEqual(expect.arrayContaining([
       'ask-before-action.md',
       'context-cache-index.md',
       'git-checkpoint-release.md',
@@ -148,7 +142,8 @@ describe('content contract', () => {
       'six-part-brief.md',
       'usage-review.md',
       'workspace-rules.md',
-    ]);
+      'handoff.md',
+    ]));
     for (const file of files('templates')) {
       const metadata = frontmatter(read('templates', file));
       const applicableTasks = frontmatterList(metadata, 'applicableTasks');

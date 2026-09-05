@@ -1,6 +1,6 @@
 ---
-title: 從原始量測到可驗證摘要：一個零依賴實驗
-summary: 用固定輸入、設定、命令、預期輸出與 SHA-256 manifest，示範研究結果如何由別人重新執行並核對。
+title: 讓別人重算你的平均值：五筆量測的小實驗
+summary: 從五筆數字算出摘要，保存資料、設定與程式，讓另一個人也能重跑並核對結果。
 order: 45
 part: 實作
 difficulty: 入門
@@ -11,7 +11,7 @@ relatedTools:
   - claude-code
   - git-github
 graduateTransfer:
-  - 把原始資料、設定與衍生輸出分開，讓結果可重建且不覆寫 raw data。
+  - 把原始資料、設定與衍生輸出分開，讓結果可重建且不覆寫原始資料。
   - 用預期結果、輸入雜湊與失敗紀錄驗證 Agent 產生的研究流程。
 lastVerified: 2026-07-10
 draft: false
@@ -21,69 +21,60 @@ privacyReview: 輸入是五筆人工建立的合成量測，不含受試者、�
 coverImage: /images/cases/reproducible-experiment.webp
 ---
 
-## 先看可重跑範圍
+## 五筆量測，算出同一份摘要
 
-[`examples/reproducible-experiment`](https://github.com/phonchi/graduate-ai-research-workbench/tree/main/examples/reproducible-experiment) 是一個刻意保持很小的完整實驗：不用安裝套件，Node.js 直接讀取五筆合成量測，依設定計算 count、mean、min、max，再寫出統計摘要與 provenance manifest。
+你算出一個平均值，別人想確認它怎麼來的。除了結果，還需要原始數字、計算方式和設定。這個[小型實驗](https://github.com/phonchi/graduate-ai-research-workbench/tree/main/examples/reproducible-experiment)把這些材料放在一起，讓你先用五筆合成量測試一次。
 
-它不是要示範複雜分析，而是把「可重現」拆成能逐項檢查的檔案與命令。
+`raw/measurements.csv` 的數字是 10.2、11.8、12.4、13.6、14.0。預期結果為 5 筆、平均 12.4、最小 10.2、最大 14。你可以先手算，再對照程式輸出。
 
-## 輸入與環境
+## 跑一次看看
 
-- `raw/measurements.csv`：唯一原始輸入，分析器只讀。
-- `config.json`：指定輸入、輸出、四捨五入位數、seed 與固定 timestamp。
-- `analyze.mjs`：只使用 Node.js built-ins，沒有套件安裝步驟。
-- `expected/summary-template.json`：保存預期欄位與統計值；測試執行時將 `$NODE_VERSION` 正規化為當下 runtime 版本，再進行結構比較。
-
-執行環境只要求可使用 Node.js。實際版本會寫入 manifest，不假裝不同 runtime 完全相同。
-
-## 執行命令
+準備好 Node.js 後，從專案根目錄執行下面兩行，不需為分析程式另裝套件：
 
 ```bash
 cd examples/reproducible-experiment
 node analyze.mjs
 ```
 
-程式只會建立或更新 `derived/summary.json`，不會寫入 `raw/`。
+程式依設定讀取原始 CSV，建立或更新 `derived/summary.json`，不修改 `raw/`。打開輸出，`statistics` 中的 `count`、`mean`、`min`、`max` 就是筆數、平均、最小值與最大值。
 
-## 輸出與 manifest
+同一個檔案還有 `manifest`，記錄這次用了哪些輸入、設定與環境。這份來源紀錄讓別人能追問「你跑的是哪一版」，不必只憑最後的數字猜測。
 
-統計輸出固定為五筆量測的 count、mean、min 與 max。Manifest 同時記錄：
+## 幾個檔案怎麼分工？
 
-- 原始 CSV 的 SHA-256。
-- config 的 SHA-256。
-- 實際命令。
-- Node 版本。
-- config 中的 seed。
-- config 中的固定 timestamp。
+| 檔案 | 用途 |
+|---|---|
+| `raw/measurements.csv` | 五筆合成量測，分析時只讀 |
+| `config.json` | 指定輸入、輸出、四捨五入位數及示範用記錄欄位 |
+| `analyze.mjs` | 計算摘要的程式，只使用 Node.js 內建功能 |
+| `expected/summary-template.json` | 預先保存的正確欄位與統計值，供測試比對 |
 
-雜湊能證明測試針對哪一組 bytes 執行，但不能證明輸入資料本身真實、無偏或符合研究倫理。
+## 想了解怎麼核對版本，再看 manifest
 
-## 如何驗證
+紀錄中包含原始 CSV 與設定檔的 SHA-256 雜湊、實際命令、Node.js 版本，以及設定中的 `seed` 與 `timestamp`。雜湊相當於檔案內容的校驗值，用來確認比對的是否為同一份內容；它不會判斷量測本身是否真實或合理。
 
-從 repo 根目錄執行：
+這個例子沒有隨機計算，`seed` 只是示範隨機種子的記錄位置；`timestamp` 也是固定設定，不能當成實際執行時間。真正的隨機實驗，要把種子接入計算，並另記實際執行時間。
+
+## 自動檢查會看哪些事？
+
+先回到已安裝網站測試依賴的專案根目錄，再執行：
 
 ```bash
 npm test -- src/lib/reproducible-experiment.test.ts
 ```
 
-測試會先記錄 raw CSV 的內容與 SHA-256，刪除舊 derived output，重新執行分析，再確認：
+測試會記下原始 CSV 的內容與雜湊，移除舊的衍生輸出，再重新分析。接著比對統計值和欄位、確認原始 CSV 沒有改變，並檢查程式成功結束、來源紀錄齊全，以及程式引用的模組都來自 Node.js 內建功能。
 
-1. process exit status 為 0。
-2. 將 expected template 的 runtime 欄位正規化後，summary 的結構與值相符。
-3. manifest 欄位齊全，兩個 SHA-256 格式正確。
-4. raw CSV 執行前後內容與雜湊不變。
-5. 分析器的 import 全部來自 `node:` built-ins。
+預期範本中的 `$NODE_VERSION` 會換成當下實際版本，再做結構比較。這讓測試可以比對本次環境記錄，並不表示各種執行環境必然有相同行為。
 
-## 一個刻意記錄的失敗
+## 欄名改了，程式會怎麼辦？
 
-開發時曾在暫存副本把 CSV 欄名改成 `value`，分析器立即以 `Expected CSV header: sample_id,measurement` 停止。這不是要讓程式猜測另一種格式，而是把輸入契約寫清楚：欄位變更應先更新 config、分析器與 expected template，再由 review 判斷是否仍是同一個實驗。
+範例的失敗紀錄曾在暫存副本把 CSV 欄名改成 `value`，程式便以 `Expected CSV header: sample_id,measurement` 停止。這指出它需要的輸入格式，沒有繼續猜測資料意義。
 
-失敗紀錄至少要回答：用了哪個輸入、執行哪個命令、錯在哪裡、是否產生不完整輸出，以及下一次修正要改規格還是改程式。
+若你確實要改欄位，就一起調整相關設定、分析程式和預期輸出，再確認分析意義是否改變。保留失敗時的輸入、命令和錯誤訊息，才知道下一次該從哪一步修正。
 
-## 搬進真實研究前
+## 換成自己的研究資料
 
-- 把合成 CSV 換成資料 manifest，而不是直接提交受管制 raw data。
-- 固定 environment 或 lockfile，並記錄硬體、套件與外部服務版本。
-- 把 seed 真正接入隨機流程；本例沒有隨機計算，seed 只示範 manifest 欄位。
-- 保存 stdout、stderr、exit status 與失敗輸出，不只保存成功結果。
-- 為科學主張建立人工 rubric；測試通過只能證明流程符合目前規格。
+沿用「原始資料、設定、衍生結果分開」的方式，並保留資料取得位置和版本；受限制的原始資料不要直接加入公開專案。分析環境要記下硬體、套件與外部服務版本，必要時保存套件版本鎖定檔。
+
+執行紀錄也要一起保存，包括正常輸出、錯誤訊息、結束狀態及失敗結果。這些檢查能確認程式是否照設定完成；方法是否適合研究問題、結果支持多強的結論，還要由研究者判斷。

@@ -9,7 +9,7 @@ describe('search index contract', () => {
     const homepage = source('src/pages/index.astro');
 
     expect(homepage).toMatch(/import SearchBox from ['"]\.\.\/components\/SearchBox\.astro['"]/);
-    expect(homepage).toMatch(/<SearchBox\s*\/>/);
+    expect(homepage).toContain('destination="/guides/research-skills/"');
   });
 
   it('passes a URL query to the initialized Pagefind UI', () => {

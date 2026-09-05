@@ -1,6 +1,6 @@
 ---
 title: AskUserQuestion
-summary: Claude Code 的內建提問工具；共通習慣是開工前先把缺的規格問回來。
+summary: 當缺少會影響成果的決定時，讓 Agent 提出問題並取得你的選擇。
 order: 9
 kind: 功能
 level: 入門
@@ -14,7 +14,7 @@ capabilities:
   humanApproval: yes
 bestFor: [補齊模糊規格, 讓使用者選擇方案, 高影響決策前確認]
 avoidFor: [可從檔案自行查明的問題, 每一步都停下來問, 用提問逃避合理判斷]
-firstStep: 在 prompt 最後加上「動工前先問我最多三個會影響結果的問題」。
+firstStep: 先讓 Agent 查現有資料，仍有會影響成果的未決事項時再提問。
 platformNames: [Claude Code AskUserQuestion]
 officialUrl: https://code.claude.com/docs/en/tools-reference
 relatedLessons: [02-ask-before-action]
@@ -22,22 +22,19 @@ lastVerified: 2026-07-10
 draft: false
 ---
 
-## 白話是什麼
+## 缺一個關鍵決定時，先問清楚
 
-`AskUserQuestion` 是 Claude Code 的內建提問工具，不是所有 AI 都有同名按鈕。真正要學的是「先反問、再動手」：把你漏掉的目標、範圍或選擇問完整，避免 agent 自己腦補。
+`AskUserQuestion` 是 Claude Code 的提問工具。你不用記住這個名稱，也能請 Agent 在資訊不足時提出問題。例如比較論文前，「樣本數」究竟指受試者、影像或實驗次數，會影響整張表，值得先確認。
 
-## 什麼時候用
+可以從現有文件找到的答案，讓 Agent 先查；已交代清楚的小修改則直接做。提問適合用在兩種合理做法會產生不同成果，而且資料無法代你決定的時候。
 
-當兩種做法都合理，而且選擇會大幅改變成果時使用，例如研究對象、輸出格式、是否改動原資料或 A/B 版本差異。問題最好附少量、互斥的選項。
+## 可以先試
 
-## 不要拿它做什麼
+```text
+請比較 papers/ 中三篇論文的方法。
+先讀 notes/sources.md 和現有比較欄位；
+若仍有會改變比較結果、且無法從資料查明的選擇，
+再提出少量問題，附上你的建議與理由。
+```
 
-不要詢問 agent 能從 repo、既有文件或工作區規則查到的事，也不要每改一行就反問。太多低影響問題會中斷工作，反而把責任全丟回使用者。
-
-## 小型練習
-
-沒有同名功能時，試這段 prompt：「請不要直接動工。先列出最多三個會實質影響成果、且無法從現有資料查明的問題；提供選項與你的建議。」
-
-## 和其他工具的關係
-
-它補的是六要素規格裡的缺口，不是 Skill、MCP 或 subagent。Skill 固定流程，MCP 連外部工具，subagent 拆工作；`AskUserQuestion` 只負責在關鍵決策前取得人的答案。
+這樣的交辦讓 Agent 先利用已知資訊，再把真正需要你決定的部分交回來。沒有同名提問工具，也能直接在對話中完成。

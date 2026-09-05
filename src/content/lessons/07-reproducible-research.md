@@ -1,164 +1,135 @@
 ---
-title: 讓下一個人真的跑得出來：可重現研究工作流
-summary: 從唯讀盤點、環境與資料版本，到 manifest、gold tasks、人工 rubric 與失敗日誌，建立可交接的研究執行紀錄。
+title: 今天先做到這裡：讓下一次對話接得上
+summary: 用一張交接便條留下研究目標、完成事項、檔案位置與下一步，換個對話也能接著做。
 order: 7
 part: 實作
-difficulty: 進階
-estimatedMinutes: 30
+difficulty: 入門
+estimatedMinutes: 20
 learningOutcomes:
-  - 建立不改動 raw data、可追蹤環境、設定、命令與 derived outputs 的研究目錄。
-  - 撰寫一份足以讓合作者重跑的 experiment manifest。
-  - 用 gold tasks、人工 rubric、失敗日誌與停止條件驗收研究流程。
+  - 用交接便條記錄研究進度、已做的決定與下一步。
+  - 使用 handoff Skill 整理對話，並將交接文件保存在自己的工作資料夾。
+  - 在新對話中核對檔案與待辦事項，接續完成一個小任務。
 prerequisites:
+  - 03-context-and-indexes
   - 04-checkpoints-and-tools
-  - 05-challenge-and-review
 references:
-  - title: Good enough practices in scientific computing
-    url: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510
-    type: paper
-    note: Wilson 等人提出研究資料、軟體、協作、專案組織與追蹤工作的入門實務。
-  - title: The FAIR Guiding Principles for scientific data management and stewardship
-    url: https://www.nature.com/articles/sdata201618
-    type: paper
-    note: FAIR 原始論文，要求研究物件可尋、可取、可互通、可再用，並保留 metadata、授權與 provenance。
-  - title: Working with evals
-    url: https://platform.openai.com/docs/guides/evals
+  - title: Matt Pocock handoff Skill
+    url: https://github.com/mattpocock/skills/blob/main/skills/productivity/handoff/SKILL.md
     type: official
-    note: OpenAI 官方評估指南，提供代表性測試資料、ground truth 與明確 testing criteria 的實作例子。
-  - title: Best Practices for Sharing Research Software
-    url: https://datascience.nih.gov/tools-and-analytics/best-practices-for-sharing-research-software-faq
-    type: policy
-    note: NIH 官方指引，涵蓋版本控制、metadata、授權、安裝與使用說明等研究軟體分享要件。
+    note: 將目前對話整理成給下一個 Agent 的交接文件，引用既有成果並聚焦下次工作。
+  - title: Matt Pocock Skills
+    url: https://github.com/mattpocock/skills
+    type: official
+    note: handoff 所在的技能集合，提供技能用途與安裝入口。
 keyTerms:
-  - reproducibility
-  - manifest
-  - immutable raw data
-  - environment lock
-  - provenance
-  - failure log
+  - handoff
+  - 交接便條
+  - 檔案位置
+  - 下一步
 relatedTools:
   - codex
   - claude-code
-  - git-github
-  - agents-md
-  - claude-md
+  - skill
 relatedCases:
   - document-cache
-  - anonymous-manuscript-review
-  - programmatic-slides
-lastVerified: 2026-07-10
+  - reproducible-experiment
+lastVerified: 2026-09-05
 draft: false
 featured: true
 ---
 
-## 完成的定義：不是「我這台跑過」
+## 一、今天先停在這裡，明天從哪裡接？
 
-可重現的計算研究，要讓另一個人能回答：用了哪份資料、哪個程式與環境、什麼設定與命令，以及結果從哪裡產生。它不保證科學結論必然正確，但讓流程能被檢查、重跑與質疑。
+前幾課已練過比較與檢查。這一課回到只讀完前兩篇、準備暫停的時刻：D01、D02 已整理在比較表，D03 留到明天，練習怎麼讓下次接得上。
 
-下面是本站建議的起步順序，不是唯一標準流程。第一次可在無敏感資料的副本練習三個動作：固定輸入與執行條件、用 manifest 記錄一次 run、用小型代表案例驗收。其他紀錄依專案風險與交接需求補上。
+如果最後只說「明天繼續」，下次開新對話時，你還得重新解釋：比較什麼、讀到哪裡、表格存在哪裡，以及有哪些問題尚未確認。第3課談過，[對話中的 context 不是可靠的永久記憶](../03-context-and-indexes/)。
 
-## 起步一：固定輸入與執行條件
+**交接（handoff）就是把下一次工作需要的資訊留下來。** 接手的可以是明天的自己、同學，或新對話裡的 Agent。一張短便條就能開始，重點是讓對方找到材料，知道下一步要做什麼。
 
-先唯讀盤點研究問題、入口文件、程式、資料、既有環境檔、執行命令與預期輸出，並標記不確定處。
+## 二、留下能找到檔案的交接便條
 
-```text
-請只讀盤點目前專案：
-1. 找出 raw data、程式入口、設定、環境檔與既有結果；
-2. 標記每項的版本或日期，以及不能確認的地方；
-3. 提出最小重跑計畫，但不要修改、安裝或執行。
-```
-
-如果連權威資料、主要程式或成功判定都無法指出，先停在盤點階段。
-
-確認哪些是研究者尚未提交的修改，再為程式、設定與文件留下 Git checkpoint。大型資料、密鑰、受限制資料與可重建暫存檔依專案政策存放，不要因為有 Git 就全部提交。後續 manifest 應能指出這次執行使用的 commit ID。
-
-環境、資料與設定按需補到能解釋結果差異的程度：
-
-- **環境**：沿用專案既有 lockfile、conda environment、容器定義或套件清單，另記錄會影響結果的作業系統、GPU、驅動與外部程式。
-- **資料**：`raw/` 保持不可變，清理、篩選、正規化與標註輸出寫到 `derived/`；為輸入保留穩定 ID、版本或日期、取得方式、授權限制，以及可行時的 checksum。
-- **設定**：把 seed、資料切分、模型或方法版本、閾值、路徑、排除規則與統計方式放進 config，不只留在對話或 shell history。
-
-FAIR 不等於所有資料都必須公開；受限制資料仍可用 metadata、授權流程與 provenance 說明如何合法取得。固定 seed 也只能降低部分隨機差異，硬體、函式庫與非決定性運算仍要靠環境紀錄與容許誤差說明。
-
-## 起步二：用 manifest 記錄一次 run
-
-每次正式執行保存實際命令、exit code、使用的 config 與輸出位置。需要追效能或長時間工作時，再加開始/結束時間與 stdout/stderr。輸出寫入新的 run 目錄，不覆蓋先前結果：
+下面是一個教學情境。假設你的工作資料夾已有這些檔案；實際練習時，換成自己的論文與檔名：
 
 ```text
-runs/2026-07-10-baseline/
-  manifest.yaml
-  command.txt
-  stdout.log
-  stderr.log
-  metrics.json
-  figures/
+papers/
+  D01.pdf
+  D02.pdf
+  D03.pdf
+notes/
+  sources.md
+  comparison.md
+HANDOFF.md
 ```
 
-圖表與摘要應由 `metrics.json` 或同一批 derived data 產生，避免手工複製數字後失去來源。
+`papers/D03.pdf` 表示 `papers` 資料夾裡的 D03.pdf；`notes/sources.md` 是來源清單，記錄三篇論文的標題與檔案位置；`notes/comparison.md` 是正在填寫的比較表。`.md` 是可以用文字編輯器開啟的 Markdown 文件。
 
-Manifest 是一次執行的索引，不必塞入所有 log。以下是可刪減的起步例子：
+交接便條可以寫成這樣：
 
-```yaml
-run_id: 2026-07-10-baseline
-question: 比較 baseline 與 proposed method 的驗證集表現
-code_commit: abc1234
-environment: environments/analysis.lock
-data:
-  id: dataset-v2
-  checksum: sha256:...
-config: configs/baseline.yaml
-seed: 42
-command: python -m analysis.run --config configs/baseline.yaml
-outputs:
-  metrics: runs/2026-07-10-baseline/metrics.json
-  figures: runs/2026-07-10-baseline/figures/
-acceptance:
-  - command exit code 為 0
-  - metrics 包含事先指定的三個欄位
-  - 表格與圖中的數值來自同一份 metrics
-known_limits:
-  - GPU kernel 可能造成容許範圍內的浮點差異
+```markdown
+# 三篇論文比較：交接便條
+
+目標：比較三篇論文使用的資料、研究方法與主要限制。
+
+已完成：D01、D02 已讀完，整理在 notes/comparison.md。
+來源位置：notes/sources.md；原文在 papers/D01.pdf、D02.pdf、D03.pdf。
+已做的決定：比較表分開記錄受試者人數與影像張數，避免混用。
+待確認：D02 的排除條件還需要回原文核對；D03 尚未閱讀。
+下一步：先讀 papers/D03.pdf，在比較表補上 D03，附原文頁碼。
 ```
 
-路徑必須真的存在，`acceptance` 必須能逐項判定；`known_limits` 不應拿來掩蓋未調查的錯誤。
+這份便條引用已有的比較表，不必把整張表重貼一次。寫完後打開所列檔案，確認位置正確；「已完成」與「待確認」也要符合實際進度。
 
-## 起步三：用代表案例驗收並留下問題
+## 三、請 Agent 幫忙整理收尾
 
-先為最容易悄悄出錯的環節留少量 gold tasks，不必為每個階段湊齊固定題數。能客觀判定的部分用測試或精確/容差比對；涉及圖表可讀性、主張範圍或領域合理性的部分，使用簡短人工 rubric。
+不必每次從空白頁開始。準備結束工作時，可以直接交辦：
 
-代表性測試資料要包含正常輸入、邊界條件與過去失敗案例。OpenAI Evals 的 test data、ground truth 與 testing criteria 是一個結構化例子；本機研究流程可用小型 fixtures、預期檔案與人工評分表達成同樣目的。
+```text
+今天先做到這裡。請依目前對話與現有檔案整理交接便條，
+寫入工作資料夾的 HANDOFF.md：
+留下目標、完成事項、已做的決定、待確認問題、檔案位置與下一步。
+已有內容請引用檔案位置，不要整段重抄；不確定的事標成待確認。
+下次先讀 D03，補齊 notes/comparison.md。
+完成後告訴我交接文件存在哪裡。
+```
 
-遇到會影響後續結果的問題時再寫 failure log，不必把每個可立即修正的 typo 都登記。每筆保留能讓合作者定位與判斷影響的資訊：
+讀一下產出的便條，尤其看 Agent 有沒有把「討論過」寫成「做完了」，或把你的暫定想法寫成已確認的決定。下一步最好小到能立刻開始，例如「讀 D03 並補一列表格」，而不是「繼續研究」。
 
-| 欄位 | 內容 |
-|---|---|
-| run ID | 對應 manifest |
-| 症狀 | 實際觀察到什麼 |
-| 第一個偏離點 | 最早不符合預期的步驟 |
-| 證據 | log、輸入、輸出與版本位置 |
-| 處置 | 修正、重跑、接受限制或停止 |
-| 影響 | 哪些下游結果需要作廢或重建 |
+## 四、用 handoff Skill 整理一次交接
 
-新的修正應回到 gold tasks，避免相同錯誤再次靜默發生。
+上一節是直接交辦的寫法，這一節介紹現成技能，兩種方式擇一即可。Skill 是供 Agent 讀取的工作指引。Matt Pocock 的 [handoff](../../guides/research-skills/#skill-handoff) 專門把目前對話整理成給下一個 Agent 的交接文件。安裝並讓工具載入這份技能後，可以指定下次的工作重點，例如：
 
-## 只保留三條高風險紅線
+```text
+請使用 handoff，整理這次三篇論文比較的進度。
+下次對話先閱讀 D03，再補齊比較表。
+```
 
-遇到下列情況不要讓 Agent 自行擴權或重試：
+在提供斜線指令入口的環境，也可使用 `/handoff 下次先閱讀 D03，再補齊比較表`。想了解如何選用現成技能，可回看[第6課](../06-build-your-toolbox/)。
 
-- raw data、授權、IRB/同意範圍或資料版本無法確認。
-- manifest、輸入與關鍵指標互相不符，而且尚未找到第一個偏離點。
-- 下一步需要覆寫 raw data、刪除既有 run、公開未審結果或存取新系統。
+這份技能會把文件寫到**作業系統的暫存目錄**，引用已有文件或成果的位置，並列出建議下一個 Agent 使用的技能。它也會移除密鑰、密碼與個人識別資訊。[handoff 原始說明](https://github.com/mattpocock/skills/blob/main/skills/productivity/handoff/SKILL.md)
 
-停止時保留現場，列出最後成功 checkpoint 與需要誰決定。資料治理、公開與外部系統的更多情境集中在[研究安全與責任](../../safety/)，不必在每份 experiment manifest 重抄。
+為了下次容易找到，本課再加一個保存動作：
 
-## 交接前看三件事
+```text
+請把剛才產生的交接文件另存到目前工作資料夾的 HANDOFF.md，
+並回報完整位置。若已有舊交接便條，另存新檔並告訴我檔名。
+```
 
-- 新環境能依文件建立，或已記錄無法重建的原因。
-- derived outputs 能追到輸入、config、commit 與實際命令。
-- 代表案例有結果；被跳過、無法判定或仍需人工 rubric 的項目清楚可見。
+暫存目錄可能被清理；保存後開啟文件，確認內容完整，也確認列出的技能適合下一步工作。
 
-需要一份可直接填寫的交接表時，可使用[Git checkpoint 與發布範本](../../templates/git-checkpoint-release/)。Good Enough Practices 強調先採用每位研究者都做得到的資料、程式、協作與專案管理習慣；NIH 的研究軟體分享指引也要求版本控制、metadata、授權與安裝使用資訊。可重現性不是最後一次整理，而是從第一次執行就留下足夠證據。
+## 五、開新對話，真的接一次
 
-## 一句帶走
+在同一個工作資料夾開新對話，把下面的方括號換成剛才回報的實際位置。若另存了新檔，使用新的檔名，避免讀到舊便條：
 
-**把資料、環境、設定、命令、輸出與失敗串成 manifest，下一個人才有可能重跑，而不是重猜。**
+```text
+請先讀 [貼上最新交接文件的完整位置]，以及它引用的來源清單與比較表。
+用三句話說明研究目標、目前進度與下一步。
+確認檔案都找得到後，先閱讀 papers/D03.pdf，
+在 notes/comparison.md 補上 D03 的資料、方法與限制，附原文頁碼。
+若交接便條與檔案內容不一致，先指出差異。
+```
+
+這次練習只看三件事：新對話能否找到材料、能否分清完成與待確認事項，以及能否接著完成 D03 那一列。完成後，更新交接便條，讓下一次看到的是新的進度。
+
+可以從[交接便條範本](../../templates/handoff/)開始填寫。需要管理更多文獻時，再看[文件索引案例](../../cases/document-cache/)；要讓別人重跑分析程式，則接著看[可重現實驗案例](../../cases/reproducible-experiment/)，補上資料、設定與執行方式。
+
+**今天留下目標、檔案位置與下一步，明天就能從做過的地方繼續。**

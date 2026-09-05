@@ -1,119 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
-import { ArrowRight, BookOpen, ChartNoAxesCombined, Code2, FilePenLine, MonitorUp, Presentation, ShieldAlert } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { buildSitePath } from '../../lib/site';
-
-const base = import.meta.env.BASE_URL;
-const toolEntries = await getCollection('tools', ({ data }) => !data.draft);
-const toolById = new Map(toolEntries.map((tool) => [tool.id, tool]));
-const capabilityLabels = {
-  localFiles: '本機檔案',
-  commands: '命令執行',
-  sourceCitations: '固定來源引用',
-  webAccess: '網路存取',
-  backgroundTasks: '背景任務',
-} as const;
-const capabilityEntries = Object.entries(capabilityLabels) as Array<[keyof typeof capabilityLabels, string]>;
-const accessLabels = { yes: '支援', depends: '視設定', no: '不支援' } as const;
-const skillSections: Record<string, string> = { read: 'read', write: 'write', experiment: 'experiment', present: 'present', publish: 'write', automate: 'plan' };
-const tasks = [
-  { id: 'read', title: '閱讀與整理來源', description: '建立可回查的來源集合、quick notes 與索引，再決定是否需要固定來源引用。', lesson: '03-context-and-indexes', tools: ['notebooklm', 'chatgpt', 'codex', 'claude-code'], icon: BookOpen },
-  { id: 'write', title: '撰寫與修改文件', description: '先界定讀者、來源與不可改動範圍，再用差異與引用驗收。', lesson: '02-ask-before-action', tools: ['chatgpt', 'codex', 'claude-code', 'gemini-cli'], icon: FilePenLine },
-  { id: 'experiment', title: '執行程式與實驗', description: '選擇能存取工作區並執行命令的工具，先保留 checkpoint 與驗證命令。', lesson: '07-reproducible-research', tools: ['codex', 'claude-code', 'gemini-cli', 'git-github'], icon: Code2 },
-  { id: 'present', title: '製作研究簡報', description: '把內容規格、來源與視覺驗收分開，使用實際輸出檢查。', lesson: '02-ask-before-action', tools: ['chatgpt', 'codex', 'claude-code', 'gemini-cli'], icon: Presentation },
-  { id: 'publish', title: '發布研究成果', description: '先完成內容、權限與隱私檢查，再使用可追蹤的版本和發布流程。', lesson: '04-checkpoints-and-tools', tools: ['git-github', 'codex', 'claude-code'], icon: MonitorUp },
-  { id: 'automate', title: '固定重複流程', description: '流程穩定且驗收方式清楚後，再選擇 Skill、subagent、MCP 或背景任務。', lesson: '06-build-your-toolbox', tools: ['skill', 'subagent', 'mcp', 'codex', 'claude-code', 'gemini-cli'], icon: ChartNoAxesCombined },
-];
+import { skillCategories, legacySkillCategories } from '../../data/skill-categories';
+const guidePath = buildSitePath(import.meta.env.BASE_URL, '/guides/research-skills/');
 ---
-
-<BaseLayout title="研究任務" description="先確認需要的能力與資料敏感度，再比較多個適合的研究工具與課程。">
-  <header class="page-header"><div><span class="section-kicker">START FROM YOUR WORK</span><h1>先說要做什麼，再決定用哪個工具</h1><p>工具名稱會變；資料邊界、必要能力與驗收方式應先決定。</p></div></header>
-  <section class="page-band task-router" data-task-router>
-    <form class="task-router-form" aria-label="工具篩選條件" onsubmit="return false">
-      <div class="task-router-field"><label for="research-task">研究任務</label><select id="research-task" data-task-select>{tasks.map((task) => <option value={task.id}>{task.title}</option>)}</select></div>
-      <fieldset><legend>需要哪些能力</legend><div class="task-capability-options">
-        <label><input type="checkbox" data-task-capability="localFiles" />讀寫本機檔案</label>
-        <label><input type="checkbox" data-task-capability="commands" />執行程式</label>
-        <label><input type="checkbox" data-task-capability="sourceCitations" />固定來源引用</label>
-        <label><input type="checkbox" data-task-capability="webAccess" />存取網路</label>
-        <label><input type="checkbox" data-task-capability="backgroundTasks" />背景執行</label>
-      </div></fieldset>
-      <div class="task-router-field"><label for="sensitive-data">資料含敏感資訊嗎？</label><select id="sensitive-data" data-sensitive><option value="no">否</option><option value="yes">是或不確定</option></select></div>
-    </form>
-
-    <div class="no-js-task-note"><strong>未啟用 JavaScript，以下保留全部任務與候選工具。</strong><p>互動篩選目前無法使用；處理研究資料前，請先確認資料邊界並閱讀<a href={buildSitePath(base, '/safety/')}>研究安全指南</a>。</p></div>
-
-    <div class="sensitive-warning" data-sensitive-warning role="alert" hidden><ShieldAlert size={22} aria-hidden="true" /><div><strong>先停在資料邊界</strong><p>不要上傳、外傳或擴大存取範圍；先確認授權、去識別與允許使用的環境。</p><a href={buildSitePath(base, '/safety/')}>先看安全指南 <ArrowRight size={16} aria-hidden="true" /></a></div></div>
-
-    <p class="task-result-status" role="status" aria-live="polite" data-task-result-status></p>
-    <div class="task-route-results">
-      {tasks.map((task, index) => <article id={task.id} data-task-panel={task.id}>
-        <span class="task-number">{String(index + 1).padStart(2, '0')}</span><task.icon aria-hidden="true" />
-        <div><h2>{task.title}</h2><p>{task.description}</p><ul class="task-tool-list">{task.tools.map((toolId) => {
-          const tool = toolById.get(toolId);
-          if (!tool) return null;
-          return <li data-task-tool data-local-files={tool.data.capabilities.localFiles} data-commands={tool.data.capabilities.commands} data-source-citations={tool.data.capabilities.sourceCitations} data-web-access={tool.data.capabilities.webAccess} data-background-tasks={tool.data.capabilities.backgroundTasks}><a href={buildSitePath(base, `/tools/${tool.id}/`)}><strong>{tool.data.title}</strong><span>{tool.data.summary}</span></a><ul class="task-selected-capabilities" aria-label="所選能力狀態">{capabilityEntries.map(([capability, label]) => {
-            const access = tool.data.capabilities[capability];
-            return <li data-task-capability-status={capability} hidden><span>{label}</span><strong data-task-status-access={access}>{accessLabels[access]}</strong></li>;
-          })}</ul></li>;
-        })}</ul><p class="task-empty" data-task-empty hidden>目前沒有直接符合全部條件的條目，請到能力詞典比較依設定支援的選項。</p></div>
-        <div class="task-links"><a href={`${buildSitePath(base, "/guides/research-skills/")}#${skillSections[task.id]}`}>這個任務可用的技能 <ArrowRight size={16} aria-hidden="true" /></a><a href={buildSitePath(base, `/learn/${task.lesson}/`)}>推薦課程 <ArrowRight size={16} aria-hidden="true" /></a><a href={buildSitePath(base, '/tools/')}>比較完整能力詞典 <ArrowRight size={16} aria-hidden="true" /></a></div>
-      </article>)}
-    </div>
-  </section>
+<BaseLayout title="前往技能搜尋" noindex pagefindBody={false}>
+  <article class="single-article prose">
+    <h1>到這裡找研究技能</h1>
+    <p>研究任務已整合到<a href={guidePath}>技能搜尋頁</a>。你可以直接搜尋工作內容，或從下面的分類開始。</p>
+    <ul>{skillCategories.map((category) => <li><a href={`${guidePath}#${category.id}`}>{category.label}</a></li>)}</ul>
+  </article>
 </BaseLayout>
-
-<script>
-  document.querySelectorAll<HTMLElement>('[data-task-router]').forEach((root) => {
-    const taskSelect = root.querySelector<HTMLSelectElement>('[data-task-select]');
-    const capabilityInputs = Array.from(root.querySelectorAll<HTMLInputElement>('[data-task-capability]'));
-    const sensitive = root.querySelector<HTMLSelectElement>('[data-sensitive]');
-    const warning = root.querySelector<HTMLElement>('[data-sensitive-warning]');
-    const resultStatus = root.querySelector<HTMLElement>('[data-task-result-status]');
-    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-task-panel]'));
-    const taskIds = new Set(['read', 'write', 'experiment', 'present', 'publish', 'automate']);
-    const defaultTask = taskSelect?.value ?? 'read';
-
-    const applyTaskFragment = () => {
-      if (!taskSelect) return;
-      const fragment = window.location.hash.slice(1);
-      taskSelect.value = taskIds.has(fragment) ? fragment : defaultTask;
-    };
-
-    const update = () => {
-      const selectedTask = taskSelect?.value ?? 'read';
-      const requiredCapabilities = capabilityInputs.filter((input) => input.checked).map((input) => input.dataset.taskCapability).filter(Boolean) as string[];
-      panels.forEach((panel) => {
-        panel.hidden = panel.dataset.taskPanel !== selectedTask;
-        if (panel.hidden) return;
-        let visibleTools = 0;
-        panel.querySelectorAll<HTMLElement>('[data-task-tool]').forEach((tool) => {
-          const matches = requiredCapabilities.every((capability) => tool.dataset[capability] !== 'no');
-          tool.hidden = !matches;
-          tool.querySelectorAll<HTMLElement>('[data-task-capability-status]').forEach((status) => {
-            status.hidden = !requiredCapabilities.includes(status.dataset.taskCapabilityStatus ?? '');
-          });
-          if (matches) visibleTools += 1;
-        });
-        const empty = panel.querySelector<HTMLElement>('[data-task-empty]');
-        if (empty) empty.hidden = visibleTools !== 0;
-        if (resultStatus) {
-          const taskTitle = taskSelect?.selectedOptions[0]?.textContent?.trim() ?? '目前任務';
-          resultStatus.textContent = `${taskTitle}：顯示 ${visibleTools} 個候選工具。`;
-        }
-      });
-      if (warning) warning.hidden = sensitive?.value !== 'yes';
-    };
-
-    taskSelect?.addEventListener('change', update);
-    sensitive?.addEventListener('change', update);
-    capabilityInputs.forEach((input) => input.addEventListener('change', update));
-    window.addEventListener('hashchange', () => {
-      applyTaskFragment();
-      update();
-    });
-    applyTaskFragment();
-    update();
-  });
+<script is:inline define:vars={{ guidePath, legacySkillCategories }}>
+  const target = new URL(guidePath, window.location.origin);
+  target.search = window.location.search;
+  const fragment = window.location.hash.slice(1);
+  target.hash = legacySkillCategories[fragment] || fragment;
+  window.location.replace(target.href);
 </script>

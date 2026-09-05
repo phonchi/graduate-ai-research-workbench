@@ -3,95 +3,74 @@ import { AlertTriangle, ExternalLink, KeyRound, LockKeyhole, ShieldCheck, Upload
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="研究安全與責任" description="用資料分級、最小權限、prompt injection 防護與出版責任管理研究中的 AI Agent 風險。">
+<BaseLayout title="研究安全與責任" description="交給 Agent 前先確認資料能否分享、工具可以碰哪些檔案，以及公開成果前要檢查什麼。">
   <header class="page-header">
     <div>
       <span class="section-kicker">RESEARCH SAFETY</span>
-      <h1>先分級、限權、驗證，再交給 Agent</h1>
-      <p>安全不是一句「請小心」，而是從資料、權限、外部內容、套件與公開發布逐層設計可執行的邊界。</p>
+      <h1>先弄清楚哪些資料能交出去</h1>
+      <p>整理公開論文和處理受試者資料，需要的做法不同。開始前先確認資料用途與分享範圍，再讓 Agent 接手工作。</p>
     </div>
   </header>
 
   <section class="page-band prose narrow">
-    <h2>第一步：先替資料分級</h2>
-    <p>分級依機構、契約與研究計畫而異。下表是開始盤點的保守預設，不會取代 DUA、IRB、資安或期刊規範。</p>
+    <h2>手上的材料能不能上傳？</h2>
+    <p>先看你拿到材料時的約定，以及學校、研究計畫或期刊的要求。不確定時，請提供資料的人或計畫負責人確認；練習則可以先用公開或合成材料。</p>
     <table>
-      <thead><tr><th>資料級別</th><th>例子</th><th>交給 AI 前</th></tr></thead>
+      <thead><tr><th>手上的材料</th><th>交給 AI 前先做什麼</th></tr></thead>
       <tbody>
-        <tr><td>公開</td><td>正式公開論文、公開程式、合成資料</td><td>仍確認著作權、版本與來源完整性。</td></tr>
-        <tr><td>實驗室內部</td><td>未發布草稿、內部筆記、未公開結果</td><td>只用獲准環境；限制工作區與保存期限。</td></tr>
-        <tr><td>受契約或倫理約束</td><td>DUA/IRB 資料、受試者資料、可識別紀錄</td><td>未取得明確許可前不要上傳；優先用匿名合成 fixture。</td></tr>
-        <tr><td>保密審查資料</td><td>投稿稿件、審稿意見、編輯決定</td><td>依期刊與機構政策判斷；去姓名不等於解除保密義務。</td></tr>
-        <tr><td>Secrets</td><td>API key、cookie、token、私鑰、登入憑證</td><td>不要貼進 prompt、規則檔、程式碼或 Git；使用受控 secret storage。</td></tr>
+        <tr><td>公開論文、公開程式、合成資料</td><td>確認來源與版本，查看是否允許你預計的使用和分享方式。</td></tr>
+        <tr><td>研究室筆記、未發布草稿與結果</td><td>確認能否交給外部服務，只使用研究室或計畫允許的環境。</td></tr>
+        <tr><td>受試者資料、可辨識個人的紀錄</td><td>先確認研究同意內容與資料使用約定；未獲准前不上傳。測試程式時先用合成資料。</td></tr>
+        <tr><td>審稿中的稿件、審查意見</td><td>依期刊與機構的保密規定處理。刪除作者姓名，也不表示可以上傳。</td></tr>
+        <tr><td>密碼、API 金鑰、登入憑證</td><td>不要貼進對話、筆記、規則檔或版本歷史。需要登入時，使用工具提供的憑證設定方式。</td></tr>
       </tbody>
     </table>
-    <p>拿不準時先提高一級處理。可刪除不需要欄位、改用測試資料或只提供 schema，就不要先交付完整資料。</p>
+    <p>只需測試資料格式時，可以提供欄位名稱和幾筆合成範例；不必先交出整份正式資料。使用雲端服務前，也確認資料會存在哪裡、保存多久、由誰刪除。</p>
   </section>
 
   <section class="page-band safety-grid">
-    <article><LockKeyhole aria-hidden="true" /><h2>最小檔案範圍</h2><p>只開本任務需要的資料夾；raw data、憑證與其他專案預設不可讀寫。</p></article>
-    <article><KeyRound aria-hidden="true" /><h2>最小工具權限</h2><p>讀取、修改、執行、網路、安裝與發布分開授權，不用「全部允許」換方便。</p></article>
-    <article><AlertTriangle aria-hidden="true" /><h2>不可逆動作確認</h2><p>刪除、覆寫、付費操作、傳送資料、推送與公開發布前都保留人工批准。</p></article>
-    <article><ShieldCheck aria-hidden="true" /><h2>用環境強制</h2><p>規則檔是合作約定；permission、sandbox、allowlist 與隔離環境才是技術邊界。</p></article>
+    <article><LockKeyhole aria-hidden="true" /><h2>只開需要的資料夾</h2><p>比較三篇論文，就開放原文與筆記位置；不要連其他研究、帳號檔案都一起交給工具。</p></article>
+    <article><KeyRound aria-hidden="true" /><h2>先決定能做什麼</h2><p>閱讀、修改、安裝套件和連接服務是不同操作。依本次工作開放需要的能力。</p></article>
+    <article><AlertTriangle aria-hidden="true" /><h2>改檔前保存版本</h2><p>唯一版本先建立副本或 Git 存檔點。刪除、覆寫重要資料前，確認目標與可回復的版本。</p></article>
+    <article><ShieldCheck aria-hidden="true" /><h2>用設定限制範圍</h2><p>「請不要改原文」是合作約定；還要使用工具的唯讀權限或隔離環境，限制它實際能碰的檔案。</p></article>
   </section>
 
   <section class="page-band prose narrow">
-    <h2>最小權限檢查清單</h2>
-    <ul class="task-list">
-      <li><label><input type="checkbox" disabled />先列出 Agent 會讀、寫、執行與連線的範圍。</label></li>
-      <li><label><input type="checkbox" disabled />唯一版本先建立副本或 Git checkpoint。</label></li>
-      <li><label><input type="checkbox" disabled />正式資料前先用小型合成輸入試跑。</label></li>
-      <li><label><input type="checkbox" disabled />套件安裝、網路、憑證與公開發布需要個別同意。</label></li>
-      <li><label><input type="checkbox" disabled />完成後查看 diff、命令結果、衍生檔與公開網址。</label></li>
-      <li><label><input type="checkbox" disabled />確認資料保存位置、保留時間與刪除責任。</label></li>
-    </ul>
-    <p><a href="https://airc.nist.gov/airmf-resources/airmf/">NIST AI Risk Management Framework <ExternalLink size={15} aria-hidden="true" /></a> 將風險管理整理為 Govern、Map、Measure、Manage。研究專案可把資料責任、影響對象、測試證據與事故處理分別放入這四個問題，而不是只在最後做一次安全勾選。</p>
+    <h2>文件裡的指令，不一定是你要它做的事</h2>
+    <p>Agent 讀取網頁、PDF 或郵件時，可能碰到「忽略前面規則」「打開其他檔案」「把內容傳到這個網址」等文字。這類文字可能試圖改變工具的行為，稱為提示注入（prompt injection）。外部文件應當作待閱讀的材料，不是你新下的指令。</p>
+    <p>例如本次只要摘要三篇論文，論文中的文字不應讓 Agent 去讀登入金鑰或寄出整個資料夾。限制可讀位置和連線能力，能減少這類指令造成的影響。</p>
+    <p>看到外部材料要求新增工具、讀取無關檔案或傳送資料時，先停下來查看原因。不要直接執行從文件抄出的命令；需要執行的程式，先在沒有正式憑證的測試環境確認。</p>
+    <blockquote><p>同一個流程若同時能讀私人資料、讀陌生網頁、對外傳送內容，先拆開步驟或縮小權限。</p></blockquote>
+    <p>若你正在設計自己的 Agent 流程，可加入帶有這類指令的測試文件，觀察工具是否越界。<a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP 的提示注入說明 <ExternalLink size={15} aria-hidden="true" /></a>整理了常見做法與限制；沒有單一設定能保證完全防止。</p>
   </section>
 
   <section class="page-band prose narrow">
-    <h2>外部文件也可能含有指令</h2>
-    <p><strong>Prompt injection</strong> 不只來自使用者直接輸入。Agent 讀取網頁、PDF、issue、郵件或資料欄位時，裡面可能藏有要求忽略規則、讀取其他檔案或把內容傳出去的文字。這些外部內容是<strong>資料</strong>，不是可信命令。</p>
-    <ol>
-      <li>把外部內容標成 untrusted，與系統規則及研究者指令分開。</li>
-      <li>只給完成閱讀任務需要的權限；摘要網頁不需要私鑰或寫入整個硬碟。</li>
-      <li>外部內容要求使用新工具、讀取額外資料或對外傳送時，停止並請人確認。</li>
-      <li>以程式驗證結構化輸出，不直接執行模型從文件抄出的命令。</li>
-      <li>用惡意或矛盾 fixture 做測試，確認邊界真的能阻擋而非只靠模型自律。</li>
-    </ol>
-    <blockquote><p>同一工作同時包含私人資料、不可信內容與對外傳送能力時，先拆開流程或降低權限，不要讓 Agent 一次擁有三者。</p></blockquote>
-    <p><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP LLM01:2025 Prompt Injection <ExternalLink size={15} aria-hidden="true" /></a> 說明直接與間接 injection、可能影響及最小權限、隔離外部內容和高風險人工批准等緩解方式；其文件也明確指出目前沒有保證完全防止的單一方法。</p>
+    <h2>安裝工具前，看它會執行什麼</h2>
+    <p>套件、Skill 和 Hook 都可能附帶程式。先確認來源、用途與需要的權限，再於練習專案試用。已有可用工具時，不必為一個小任務增加一整套新依賴。</p>
+    <p>研究程式要保留套件版本與環境設定，讓之後能重建。登入憑證不要出現在命令輸出或執行紀錄中；測試能使用範圍較小的帳號，就不要提供正式帳號的完整權限。</p>
   </section>
 
   <section class="page-band prose narrow">
-    <h2>Secrets、套件與執行環境</h2>
-    <div class="safety-grid">
-      <article><KeyRound aria-hidden="true" /><h3>Secrets 不進 context</h3><p>不要把 key、cookie、token、私鑰寫進 prompt、工作守則或 log。若工具需要服務憑證，使用最小 scope、短效或測試帳號，並確認輸出不會回顯。</p></article>
-      <article><AlertTriangle aria-hidden="true" /><h3>安裝也是高風險動作</h3><p>新增套件前檢查來源、版本、授權與維護狀態；使用 lockfile，查看 install script，不讓 Agent 為一次小任務任意加入依賴。</p></article>
-    </div>
-    <p>外部程式與模型輸出都可能是不可信輸入。必要時使用隔離環境、唯讀掛載、無正式憑證的測試帳號與受控網路。</p>
-  </section>
-
-  <section class="page-band prose narrow">
-    <h2>公開與投稿前，責任仍在人</h2>
-    <p>Agent 可以產生草稿、程式、圖表與檢查建議，但不能承擔作者責任。公開前至少確認：</p>
+    <h2>公開成果前，再看一次內容和目的地</h2>
+    <p>Agent 做好草稿、程式或圖表後，你仍要確認這份成果適合分享。發布前檢查這幾件事：</p>
     <ul>
-      <li>數字、公式、引用與圖表已回到原始材料或實際輸出核對。</li>
-      <li>沒有密鑰、個資、未授權素材、審稿內容或隱藏中繼資料。</li>
-      <li>研究方法、限制與不確定性沒有被改寫成更強的主張。</li>
-      <li>公開儲存庫、資料集、網站與下載檔的授權和讀取權限正確。</li>
-      <li>依學校、計畫、合作契約與投稿期刊的最新規則揭露 AI 使用。</li>
+      <li>數字、公式、引用與圖表能回到原始材料或實際輸出。</li>
+      <li>檔案沒有個資、密鑰、未授權素材、審稿內容，或藏在檔案屬性裡的敏感資訊。</li>
+      <li>文章保留了研究限制，沒有把觀察或相關性改寫成更強的結論。</li>
+      <li>要推送或上傳的位置正確，可見範圍與素材授權符合預計用途。</li>
+      <li>依學校、研究計畫與投稿場合的規定，說明 AI 的使用方式。</li>
     </ul>
-    <p><a href="https://cope.onl/ai-authorship">COPE: Authorship and AI tools <ExternalLink size={15} aria-hidden="true" /></a> 的立場是 AI 工具不能列為作者；使用者需透明說明如何使用工具，並由人類作者對內容負責。各期刊對可接受用途與揭露位置可能不同，提交前要查當下政策。</p>
-    <div class="privacy-note"><Upload aria-hidden="true" /><div><strong>最後發布確認</strong><p>「測試通過」不等於「可以公開」。發布、push、寄送、投稿或上傳資料前，另設一個明確的人工作業點。</p></div></div>
+    <p><a href="https://cope.onl/ai-authorship">COPE 的 AI 與作者責任說明 <ExternalLink size={15} aria-hidden="true" /></a>指出，AI 工具不能列為作者，人類作者仍對內容負責。投稿前要另看該期刊對可接受用途與揭露方式的規定。</p>
+    <div class="privacy-note"><Upload aria-hidden="true" /><div><strong>把完成與發布分開</strong><p>「比較表已修好」不表示已同意寄給別人。公開、寄送、投稿或上傳前，確認要交付的版本、對象和目的地。</p></div></div>
   </section>
 
   <section class="page-band prose narrow">
-    <h2>權威入口</h2>
+    <h2>需要進一步確認時</h2>
+    <p>資料能否使用或上傳，先問提供者、研究計畫負責人或校內相關承辦單位。要規劃研究室共用流程時，也可參考以下資料：</p>
     <ul>
-      <li><a href="https://airc.nist.gov/airmf-resources/airmf/">NIST AI Risk Management Framework</a></li>
-      <li><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP LLM01:2025 Prompt Injection</a></li>
-      <li><a href="https://cope.onl/ai-authorship">COPE Position Statement: Authorship and AI tools</a></li>
+      <li><a href="https://airc.nist.gov/airmf-resources/airmf/">NIST AI Risk Management Framework：AI 風險管理</a></li>
+      <li><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP：提示注入及防護限制</a></li>
+      <li><a href="https://cope.onl/ai-authorship">COPE：AI 工具與作者責任</a></li>
     </ul>
-    <p>本頁是研究工作起點，不是法律、資安、研究倫理或出版規範的替代品。遇到受管制資料或高風險研究，應向校內 IRB、資安、法務、資料治理或期刊編輯確認。</p>
   </section>
 </BaseLayout>

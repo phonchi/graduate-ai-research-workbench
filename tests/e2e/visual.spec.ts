@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test';
 
 const visualRoutes = [
-  { name: 'research-skills', route: './guides/research-skills/', heading: '研究技能選用指南' },
+  { name: 'research-skills', route: './guides/research-skills/', heading: '找研究技能' },
   { name: 'home', route: './', heading: '研究生 AI 研究工作台' },
-  { name: 'lesson-7', route: './learn/07-reproducible-research/', heading: /可重現研究工作流/ },
+  { name: 'lesson-7', route: './learn/07-reproducible-research/', heading: /下一次對話接得上/ },
   { name: 'tools', route: './tools/', heading: '名字很多，先看它到底能不能動手' },
-  { name: 'tasks', route: './tasks/', heading: '先說要做什麼，再決定用哪個工具' },
+  { name: 'tasks', route: './tasks/', heading: '找研究技能' },
   { name: 'cases', route: './cases/', heading: '從公開成果、可重跑示範與流程重建學做法' },
-  { name: 'safety', route: './safety/', heading: '先分級、限權、驗證，再交給 Agent' },
+  { name: 'safety', route: './safety/', heading: '先弄清楚哪些資料能交出去' },
 ];
 
 for (const { name, route, heading } of visualRoutes) {

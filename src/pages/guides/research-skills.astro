@@ -1,288 +1,136 @@
 ---
-import { ArrowLeft } from 'lucide-astro';
+import { getCollection } from 'astro:content';
+import { markdownToHtml } from 'satteri';
+import { rehypeAccessibleTaskLists } from '../../lib/rehypeAccessibleTaskLists';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { buildSitePath } from '../../lib/site';
-
-interface ResearchSkill {
-  name: string;
-  kind: string;
-  purpose: string;
-  preparation: string;
-  prompt: string;
-  delivery: string;
-  check: string;
-  sources: { label: string; url: string }[];
-}
-
-interface TaskSection {
-  id: 'plan' | 'read' | 'experiment' | 'write' | 'visualize' | 'present';
-  title: string;
-  introduction: string;
-  items: ResearchSkill[];
-}
-
+import { normalizeSearch } from '../../lib/research-skills';
+import { skillCategories } from '../../data/skill-categories';
 const base = import.meta.env.BASE_URL;
-const checkedAt = '2026-09-05';
-const sections: TaskSection[] = [
-  {
-    id: 'plan',
-    title: '釐清問題與拆解計畫',
-    introduction: '研究問題還說不清楚時，先找出需要決定的事；已有共識後，再整理規格與可驗收的工作。這四項出自同一套工作流程，不必一次全部使用。',
-    items: [
-      {
-        name: 'grill-me',
-        kind: 'Skill 入口，呼叫 grilling',
-        purpose: '用追問檢查研究工具或實驗計畫的假設，找出還沒決定的範圍、成功條件與取捨。',
-        preparation: '提供初步想法、時間與資源限制、已有證據。原始入口會呼叫另一個 skill，環境需能載入相應技能；不能只複製入口檔就假設能運作。grilling 會一起詢問當下已有足夠前提可回答的問題。',
-        prompt: '請用 grill-me 檢查我的文獻整理工具計畫。\n先讀 proposal.md，找出會影響設計的未決事項。\n每輪提出現在能決定的問題，附上你的建議與理由；\n把已知限制、我的回答與仍待確認的假設分開記錄。',
-        delivery: '經過討論的決定、待釐清事項與修正後的計畫。',
-        check: '研究目的、成功條件與限制要能具體說明；沒有回答的問題仍標為未決，不能由 Agent 補成既定事實。',
-        sources: [
-          { label: 'grill-me 原始 skill', url: 'https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md' },
-          { label: 'grilling 工作流程', url: 'https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md' },
-        ],
-      },
-      {
-        name: 'grill-with-docs',
-        kind: 'Skill 入口，合用 grilling 與 domain-modeling',
-        purpose: '適合多人合作或會持續修改的研究軟體：一面釐清設計，一面留下術語表與設計決策紀錄（ADR）。',
-        preparation: '提供計畫、現有術語、相關程式與已做過的決定；指定文件保存位置。環境需能載入它呼叫的兩項技能，並有指定文件的寫入權限。',
-        prompt: '請用 grill-with-docs 討論我們的實驗追蹤工具。\n先讀現有 glossary 與決策紀錄，沿用已定義的名稱。\n追問尚未決定的部分，把確認過的術語與設計理由寫入 docs/；\n尚未取得共識的選項請保留為待決事項。',
-        delivery: '討論結果，以及可供下一位合作者接手的術語與決策文件。',
-        check: '相同概念用同一名稱；每項決策交代問題、選擇與理由，並與討論結果相符。',
-        sources: [{ label: 'grill-with-docs 原始 skill', url: 'https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md' }],
-      },
-      {
-        name: 'to-spec',
-        kind: '規格整理 skill',
-        purpose: '將已討論的研究工具需求整理成規格，交代使用情境、實作與測試決定，以及不在本次範圍的事。',
-        preparation: '提供已有共識的討論、程式庫、術語及決策文件。原始流程會使用已設定的 issue tracker 與標籤，並發布規格；若只要本機草稿，交辦時要明說。',
-        prompt: '請依 to-spec 整理我們已確認的資料匯入需求。\n以目前討論與程式庫為準，列出問題、使用情境、\n實作決定、測試方式與不做的範圍；確認測試邊界。\n這次只寫本機 spec.md 草稿，不發布到 issue tracker。',
-        delivery: '可交給實作者的規格草稿；不再從頭訪談所有需求。',
-        check: '研究目標、工作範圍與測試條件都能回到已確認的討論；驗收方式能判斷預期成果是否完成，並清楚列出本次不處理的問題。',
-        sources: [{ label: 'to-spec 原始 skill', url: 'https://github.com/mattpocock/skills/blob/main/skills/engineering/to-spec/SKILL.md' }],
-      },
-      {
-        name: 'to-tickets',
-        kind: '工作拆解 skill',
-        purpose: '把規格拆成能各自展示或驗證的小工作，並列出哪些工作必須先完成。',
-        preparation: '提供規格、相關程式及交付方式。原始流程會先讓你核對拆分與依賴，再寫入設定好的本機工作檔或 issue tracker；要先決定使用哪個目的地。',
-        prompt: '請用 to-tickets 拆解已確認的 spec.md。\n每項工作都要有可驗證成果、驗收條件與前置依賴，\n不要只拆成資料庫、API、畫面三個互不完整的部分。\n先讓我核對拆分；確認後每項寫成一份本機工作檔，不對外發布。',
-        delivery: '各自有交付內容、驗收條件與依賴關係的工作單。',
-        check: '每張工作單完成後都能驗證成果，依賴只列真正會阻擋開工的工作；大型跨模組重構需另行安排逐步遷移。',
-        sources: [{ label: 'to-tickets 原始 skill', url: 'https://github.com/mattpocock/skills/blob/main/skills/engineering/to-tickets/SKILL.md' }],
-      },
-    ],
-  },
-  {
-    id: 'read',
-    title: '取得論文，準備閱讀材料',
-    introduction: '先確認取得的是正確全文，再開始摘要與比較。下載工具解決取得檔案的問題；文獻是否相關、方法是否可靠，仍要另外閱讀判斷。',
-    items: [
-      {
-        name: 'paper-fetch',
-        kind: 'Python 下載工具，附有 skill',
-        purpose: '從 DOI 取得全文 PDF，依序嘗試開放取得、出版社文字探勘（TDM）API、自有機構代理；未成功時提供手動解析連結。',
-        preparation: '準備 DOI 清單、輸出資料夾與 Python 環境。開放取得路徑需設定聯絡 email；其他路徑可能需要自有 API key、圖書館端點與帳號。工具不提供機構訂閱權限。',
-        prompt: '請用 paper-fetch 處理 dois.txt，將取得的全文存到 papers/。\n先嘗試開放取得來源；只使用我已設定且有權使用的管道。\n逐篇記錄 DOI、來源與成功或失敗原因，無法取得時留下手動連結。\n不要把摘要網頁當成 PDF，也不要替未下載的論文寫摘要。',
-        delivery: '可取得的 PDF，以及逐篇取得狀態與來源紀錄。',
-        check: '檔案確實能當作 PDF 開啟，標題與 DOI 相符；無法取得的項目仍留在清單。閱讀、搜尋與文獻品質評析另作交辦。',
-        sources: [{ label: 'paper-fetch 專案與取得路徑', url: 'https://github.com/drpwchen/paper-fetch' }],
-      },
-    ],
-  },
-  {
-    id: 'experiment',
-    title: '執行實驗與保存結果',
-    introduction: '把遠端運算交給 Agent 前，先說清楚資料位置、所需資源、輸出目錄與完成條件。保存結果後，再釋放運算環境。',
-    items: [
-      {
-        name: 'colab-operator',
-        kind: '操作 Google Colab CLI 的 skill',
-        purpose: '建立與管理遠端運算 session、執行 Python 或 Notebook、同步檔案，並匯出執行歷史。',
-        preparation: '需已安裝 Colab CLI、完成登入，並提供腳本、依賴與可用資料。官方 CLI 目前支援 Linux／macOS；GPU／TPU 能否取得取決於帳戶權限與配額，不能保證指定型號可用。',
-        prompt: '請用 colab-operator 執行已核准的 smoke_test.py。\n依我指定的運算資源建立本次 session，先核對環境和輸入資料。\n將參數、執行紀錄、結果與輸出 Notebook 保存到本機 results/。\n下載後確認檔案可讀，再停止本次建立的 session；失敗也保留紀錄。',
-        delivery: '實際執行輸出、可留存的 Notebook 或紀錄，以及回存的研究成果檔案。',
-        check: '結果與本次參數、輸入及執行環境對得上；確認輸出已回存且 session 已釋放。VM 保持運行會持續使用計算資源，命令結束不代表 VM 已停止。',
-        sources: [
-          { label: 'colab-operator 官方 skill', url: 'https://github.com/googlecolab/google-colab-cli/blob/main/skills/colab-operator/SKILL.md' },
-          { label: 'Colab CLI 平台與功能說明', url: 'https://github.com/googlecolab/google-colab-cli' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'write',
-    title: '修改學術文章與中文說明',
-    introduction: '先選文章用途。論文需要保留學術用語與證據強度；研究介紹、公告與 Email 則要配合讀者調整語氣。兩者都從已有材料開始。',
-    items: [
-      {
-        name: 'academic-humanizer',
-        kind: '學術文字編修 skill',
-        purpose: '修整論文或研究計畫中的冗長語句與泛泛說法，配合作者語氣，讓主張強度符合證據。',
-        preparation: '提供草稿、結果依據、目標讀者或投稿場合；可加上自己的既有文章作語氣參考。官方說明支援 Claude Code、Codex 與 MorphMind，也可讓 Agent 讀取 SKILL.md。',
-        prompt: '請用 academic-humanizer 修改這段 Discussion。\n保留數字、符號、引用與研究限制，依附上的結果調整主張強度。\n以我的 previous_paper.pdf 作語氣參考。\n交付修改稿與重要修改理由；需要新證據的句子請標出，不要補造結果。',
-        delivery: '保留學術內容的修改稿，以及需要作者核對的主張或語句。',
-        check: '逐項核對數字、引用、符號及限制，避免相關性被改寫為因果、實驗觀察被寫成證明。編修不能替代結果查核；投稿仍依該場合規定揭露 AI 使用。',
-        sources: [{ label: 'academic-humanizer 專案與編修範圍', url: 'https://github.com/AIScientists-Dev/academic-humanizer/tree/main' }],
-      },
-      {
-        name: 'speak-human-tw',
-        kind: '繁體中文校對與改寫 skill',
-        purpose: '讓研究介紹、公告、簡報文字與 Email 更自然，調整臺灣用語和標點，刪去空泛套話。',
-        preparation: '提供原稿、使用場合、讀者與不能改的資訊。專案列出 Claude Code、Codex、Cursor 等用法；預設先列修改建議，若要直接套用，需在交辦時說清楚。',
-        prompt: '請用 speak-human-tw 校對這封寄給研究室同學的公告。\n日期、地點、姓名與連結都不能改，也不要加入原稿沒有的承諾。\n這次直接套用修改，交付改稿與重要修改摘要；\n保留正式通知的語氣，不要改成社群貼文。',
-        delivery: '符合用途的繁體中文稿件，以及可對照的修改建議或摘要。',
-        check: '原稿每個資訊點仍找得到，未增加虛構經歷或事實。它處理語氣與文字，不是 AI 作者身分鑑定，也不代替事實查核。',
-        sources: [{ label: 'speak-human-tw 專案與使用流程', url: 'https://github.com/Raymondhou0917/speak-human-tw' }],
-      },
-    ],
-  },
-  {
-    id: 'visualize',
-    title: '畫出流程，解釋陌生概念',
-    introduction: '下面三項適合概念、系統關係與教學說明。實驗曲線、誤差棒或統計圖應由真實資料與繪圖程式產生，保留計算方式、單位與來源，不能請模型憑描述補出數據。',
-    items: [
-      {
-        name: 'Archify',
-        kind: 'Agent skill，搭配 Node.js 繪圖與驗證工具',
-        purpose: '把程式庫或系統描述轉成架構、資料流、時序、工作流程或生命週期圖，方便解釋研究軟體如何運作。',
-        preparation: '提供程式庫或明確的系統描述、要回答的問題與圖面範圍。官方列 Cursor、Claude Code、Codex CLI、OpenCode；工具以結構化 JSON 作為繪圖與驗證來源。',
-        prompt: '請用 Archify 畫出這個分析專案從原始資料到結果檔的資料流。\n先讀程式，再標示輸入、轉換、儲存位置與外部依賴。\n只畫有依據的關係，未確認部分另列問題。\n交付可單獨開啟的 HTML、SVG 與結構化來源。',
-        delivery: '獨立 HTML 圖面與結構化來源；專案亦提供 PNG、SVG、WebM 等輸出方式。',
-        check: '節點與箭頭逐一對照程式或系統描述，檢查標籤、方向與匯出檔。通過圖面驗證不等於證明實際系統行為正確。',
-        sources: [{ label: 'Archify 官方專案', url: 'https://github.com/tt-a1i/archify' }],
-      },
-      {
-        name: 'diagram-design',
-        kind: '概念圖與版面設計 skill',
-        purpose: '將方法步驟、時序、資料模型或比較關係整理成 HTML＋SVG 圖面，也能依既有 Mermaid 或 draw.io 重繪。',
-        preparation: '提供需要表達的關係、原圖或文字、使用尺寸與讀者。官方列 Claude Code、Codex、Pi 等 Agent Skills 相容環境；預設輸出靜態圖。',
-        prompt: '請用 diagram-design 將這份方法說明畫成流程圖。\n每個節點都需對應原文步驟，保留分支條件與回到前一步的路徑。\n圖會放在白底講義，請交付可直接開啟的靜態 HTML＋SVG，\n並列出原文仍不清楚、需要作者確認的關係。',
-        delivery: '可在瀏覽器開啟的獨立 HTML＋SVG 圖面。',
-        check: '讀者能沿箭頭找到每條路徑；縮到目標尺寸仍能辨認文字。版面整理不能新增原文沒有的因果關係或實驗數據。',
-        sources: [{ label: 'diagram-design 官方專案', url: 'https://github.com/cathrynlavery/diagram-design' }],
-      },
-      {
-        name: 'eli5',
-        kind: 'Claude 社群 plugin，內含解說 skill',
-        purpose: '用大圖與少量文字製作 HTML 入門解說，適合向不同領域的同學介紹一個陌生概念。',
-        preparation: '提供概念、讀者背景與可信的參考材料。指定來源是 Claude plugin，提供 /eli5 入口；其他平台需另確認技能載入方式，不能直接視為通用 plugin。',
-        prompt: '請用 eli5 向沒有機器學習背景的同學解釋過度擬合。\n依附上的課堂筆記做一份大圖、少字的 HTML。\n用一個生活比喻幫助理解，並簡短指出比喻在哪裡不適用。\n若用示意曲線，請明確標成示意，不要假裝是實驗結果。',
-        delivery: '以圖像為主、少量文字輔助的 HTML 解說。',
-        check: '新手能說出核心概念，比喻不會造成錯誤推論；需要完整推導或嚴格定義時，另附正式材料。',
-        sources: [{ label: 'eli5 plugin 與輸出說明', url: 'https://github.com/anthropics/claude-plugins-community/tree/main/eli5' }],
-      },
-    ],
-  },
-  {
-    id: 'present',
-    title: '製作研究簡報',
-    introduction: '先決定這場報告要讓聽眾記住什麼，再交辦頁面與版面。已有結果圖時，提供原檔與圖說，避免在做投影片時重新編造資料。',
-    items: [
-      {
-        name: 'open-slide',
-        kind: 'React 簡報框架與 CLI',
-        purpose: '讓 Agent 以 React 編寫投影片，並在畫面上調整文字、樣式、圖片或留下修改註記。',
-        preparation: '提供報告大綱、聽眾、時間、圖表素材與來源；需要能執行該專案的本機開發環境。官網列 Claude、Codex、Cursor、Gemini CLI 等能編輯 React 的 Agent。',
-        prompt: '請用 open-slide 製作一份十分鐘的研究進度報告。\n依 outline.md 與 figures/ 排出問題、方法、結果與下一步，\n每張結果圖保留來源、單位與限制，不補造數據。\n交付可在瀏覽器展示的投影片原始碼，並逐頁檢查文字與素材。',
-        delivery: '可編輯的 React 投影片專案，以及可在瀏覽器查看的簡報。',
-        check: '逐頁核對內容、引用、圖表與展示尺寸，實際走一次報告流程。這裡確認的是 React／瀏覽器簡報；需要可編輯 PPTX 時，應另查轉換或其他製作流程。',
-        sources: [{ label: 'open-slide 官方網站', url: 'https://open-slide.dev/' }],
-      },
-    ],
-  },
-];
+const entries = (await getCollection('researchSkills', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+const items = await Promise.all(entries.map(async (entry) => ({ entry, html: (await markdownToHtml(entry.body ?? '', { hastPlugins: [rehypeAccessibleTaskLists()] })).html })));
 ---
 
-<BaseLayout title="研究技能選用指南" description="按研究任務挑選技能與工具：釐清計畫、取得論文、執行實驗、修改文章、畫圖與製作簡報，附材料、交辦範例和驗收方式。" pagefindBody={false}>
-  <div class="article-shell">
-    <aside class="article-context">
-      <a class="back-link" href={buildSitePath(base, '/tasks/')}><ArrowLeft size={16} aria-hidden="true" />研究任務</a>
-      <div class="context-label">使用方式</div>
-      <p>找到現在要做的工作，準備材料，再改寫交辦範例。完成後照驗收條件核對成果。</p>
-      <div class="context-label">相關入口</div>
-      <ul>
-        <li><a href={buildSitePath(base, '/tools/')}>工具詞典</a></li>
-        <li><a href={buildSitePath(base, '/templates/')}>直接拿來用</a></li>
-        <li><a href={buildSitePath(base, '/safety/')}>研究安全與責任</a></li>
-      </ul>
-    </aside>
-
-    <article class="lesson-article" data-pagefind-body>
-      <header class="article-header">
-        <span class="section-kicker">RESEARCH SKILLS</span>
-        <h1 data-pagefind-meta="title">研究技能選用指南</h1>
-        <p>從手上的工作挑技能。這份指南整理各項工具需要什麼材料、可以交付什麼，以及你要怎麼檢查。</p>
-        <div class="article-meta"><span>來源查核：<time datetime={checkedAt}>{checkedAt}</time></span></div>
-      </header>
-
-      <div class="prose">
-        <p>Skill 是提供給 Agent 的工作說明；plugin 可以把技能與其他功能包在一起；CLI 與框架則是需要執行的軟體。下面保留這些差別，讓你先判斷自己的環境是否適用，再決定要不要採用。</p>
-        <p>本頁依原始專案文件整理，未逐項安裝或實測。交辦範例與驗收條件是研究情境的使用建議，不代表專案已保證那些成果。來源可能更新，正式使用前請回原站核對目前版本與需求。</p>
-
-        <nav class="guide-overview" aria-label="依任務選用">
-          <strong>你現在要做什麼？</strong>
-          <ul>{sections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}</ul>
-        </nav>
-
-        {sections.map((section) => (
-          <section aria-labelledby={section.id}>
-            <h2 id={section.id}>{section.title}</h2>
-            <p>{section.introduction}</p>
-            {section.items.map((item) => (
-              <div class="skill-entry">
-                <h3>{item.name}</h3>
-                <p class="skill-kind">{item.kind}</p>
-                <p>{item.purpose}</p>
-                <p><strong>材料與環境：</strong>{item.preparation}</p>
-                <p class="prompt-label"><strong>交辦範例</strong></p>
-                <pre><code>{item.prompt}</code></pre>
-                <p><strong>預期成果：</strong>{item.delivery}</p>
-                <p><strong>怎麼驗收：</strong>{item.check}</p>
-                <p class="skill-sources">
-                  原始來源：{item.sources.map((source, index) => (
-                    <>{index > 0 && '、'}<a href={source.url}>{source.label}</a></>
-                  ))}
-                  <span>查核日期：<time datetime={checkedAt}>{checkedAt}</time></span>
-                </p>
-              </div>
-            ))}
-          </section>
-        ))}
-
-        <section aria-labelledby="further-watching">
-          <h2 id="further-watching">延伸觀看</h2>
-          <p>以下影片可供延伸觀看，目前尚未核對影片內容。本頁功能介紹以各項可查核的原始文件為準。</p>
-          <ul class="video-links">
-            <li><a href="https://www.youtube.com/watch?v=GzHfE50N8x4">延伸影片一</a></li>
-            <li><a href="https://www.youtube.com/watch?v=h7abDtqN9gs&t=199s">延伸影片二（3:19 起）</a></li>
-            <li><a href="https://www.youtube.com/watch?v=aR97E7aKEgg&t=987s">延伸影片三（16:27 起）</a></li>
-          </ul>
-        </section>
-      </div>
-    </article>
-
-    <aside class="toc" aria-label="頁內目錄">
-      <strong>本頁內容</strong>
-      <ol>
-        {sections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}
-        <li><a href="#further-watching">延伸觀看</a></li>
-      </ol>
-    </aside>
-  </div>
+<BaseLayout title="找研究技能" description="搜尋讀論文、寫作、做簡報、跑實驗與交接會用到的 AI 技能，找到適合的工具，再展開看用法。" pagefindBody={false}>
+  <header class="page-header"><div>
+    <span class="section-kicker">RESEARCH SKILLS</span>
+    <h1>找研究技能</h1>
+    <p>讀論文、修改文章、做簡報，或把進度交給下一次對話：從你現在要做的工作找起。</p>
+  </div></header>
+  <section class="page-band skill-catalog" data-skill-catalog data-pagefind-body>
+    <h2 class="sr-only" data-pagefind-meta="title">研究技能選用指南</h2>
+    <p>第一次使用時，先展開卡片，依「原始專案與安裝說明」完成設定。若是 Skill，請讓 Agent 確認已載入，再把交辦範例換成自己的材料。</p>
+    <form class="skill-search" role="search" aria-label="搜尋技能" onsubmit="return false">
+      <div><label for="skill-query">想找什麼技能？</label><input id="skill-query" name="q" type="search" placeholder="例如：交接、論文、簡報、NotebookLM" /></div>
+      <div><label for="skill-category">依任務篩選</label><select id="skill-category" name="category"><option value="">全部任務</option>{skillCategories.map((category) => <option value={category.id}>{category.label}</option>)}</select></div>
+      <button type="button" class="button secondary" data-clear-skills>清除搜尋</button>
+    </form>
+    <p class="no-js-skill-note">下方列出所有技能，可展開閱讀用法；啟用 JavaScript 後可搜尋與篩選。</p>
+    <nav class="skill-categories" aria-label="技能分類">{skillCategories.map((category) => <a id={category.id} href={`#${category.id}`} data-category-link={category.id}>{category.label}</a>)}</nav>
+    <p class="skill-count" role="status" aria-live="polite" data-skill-count>共 {items.length} 項技能與工具</p>
+    <div class="skill-grid">
+      {items.map(({ entry, html }) => <article class="skill-card" id={`skill-${entry.id}`} data-skill-card data-categories={entry.data.categories.join('|')} data-search={normalizeSearch([entry.data.title, entry.data.summary, ...entry.data.aliases, ...entry.data.tags, ...entry.data.platforms, ...entry.data.categories.map((id) => skillCategories.find((category) => category.id === id)?.label ?? id)].join(' '))}>
+        <div class="card-topline"><span>{entry.data.kind}</span><span>{entry.data.categories.map((id) => skillCategories.find((category) => category.id === id)?.label).join('・')}</span></div>
+        <h2>{entry.data.title}</h2>
+        <p>{entry.data.summary}</p>
+        <details><summary>查看 {entry.data.title} 用法</summary><div class="prose skill-body">
+          <div set:html={html} />
+          {entry.data.platforms.length > 0 && <p><strong>適用環境：</strong>{entry.data.platforms.join('、')}</p>}
+          <p><a href={entry.data.sourceUrl}>原始專案與安裝說明</a> · <a href={`#skill-${entry.id}`}>這項技能的連結</a></p>
+        </div></details>
+      </article>)}
+    </div>
+    <div class="empty-state" data-no-skills hidden><strong>沒有找到符合條件的技能</strong><p>試試較短的關鍵字，或清除分類再找一次。</p><button class="button secondary" type="button" data-clear-skills>顯示全部技能</button></div>
+    <p>想知道 Skill、Hook 或 MCP 是什麼？到<a href={buildSitePath(base, '/tools/')}>工具詞典</a>看說明。要學會怎麼交辦與檢查成果，可以從<a href={buildSitePath(base, '/learn/')}>七篇入門課程</a>開始。</p>
+  </section>
 </BaseLayout>
 
+<script>
+  import { matchesSkill } from '../../lib/research-skills';
+  import { legacySkillCategories } from '../../data/skill-categories';
+  const root = document.querySelector<HTMLElement>('[data-skill-catalog]');
+  if (root) {
+    const query = root.querySelector<HTMLInputElement>('#skill-query')!;
+    const category = root.querySelector<HTMLSelectElement>('#skill-category')!;
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-skill-card]'));
+    const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-category-link]'));
+    const validCategories = new Set(Array.from(category.options).map((option) => option.value));
+    const count = root.querySelector<HTMLElement>('[data-skill-count]')!;
+    const empty = root.querySelector<HTMLElement>('[data-no-skills]')!;
+    const apply = (writeURL = false) => {
+      let visible = 0;
+      for (const card of cards) {
+        card.hidden = !matchesSkill(card.dataset.search ?? '', (card.dataset.categories ?? '').split('|'), query.value, category.value);
+        if (!card.hidden) visible += 1;
+      }
+      count.textContent = `顯示 ${visible} 項技能與工具`;
+      empty.hidden = visible > 0;
+      for (const link of links) {
+        if (link.dataset.categoryLink === category.value) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      }
+      if (writeURL) {
+        const url = new URL(window.location.href);
+        if (query.value.trim()) url.searchParams.set('q', query.value.trim()); else url.searchParams.delete('q');
+        if (category.value) url.searchParams.set('category', category.value); else url.searchParams.delete('category');
+        url.hash = '';
+        history.replaceState(null, '', url);
+      }
+    };
+    const readURL = () => {
+      const url = new URL(window.location.href);
+      let fragment = '';
+      try { fragment = decodeURIComponent(url.hash.slice(1)); } catch { /* Ignore malformed fragments. */ }
+      query.value = url.searchParams.get('q') ?? '';
+      const requested = url.searchParams.get('category') ?? legacySkillCategories[fragment] ?? fragment;
+      category.value = validCategories.has(requested) ? requested : '';
+      const target = document.getElementById(fragment);
+      if (target && root.contains(target)) {
+        const card = target.closest<HTMLElement>('[data-skill-card]');
+        if (card) {
+          query.value = '';
+          category.value = '';
+          const details = card.querySelector('details');
+          if (details) details.open = true;
+        }
+      }
+      apply();
+      if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+    };
+    query.addEventListener('input', () => apply(true));
+    category.addEventListener('change', () => apply(true));
+    root.querySelectorAll('[data-clear-skills]').forEach((button) => button.addEventListener('click', () => {
+      query.value = ''; category.value = ''; apply(true); query.focus();
+    }));
+    links.forEach((link) => link.addEventListener('click', (event) => {
+      event.preventDefault();
+      category.value = link.dataset.categoryLink ?? '';
+      apply(true);
+    }));
+    window.addEventListener('hashchange', readURL);
+    window.addEventListener('popstate', readURL);
+    readURL();
+  }
+</script>
+
 <style>
-  .guide-overview { margin: 28px 0; padding: 20px 24px; background: var(--surface-soft); border: 1px solid var(--line); }
-  .guide-overview ul { margin-bottom: 0; }
-  .skill-entry { margin-top: 30px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
-  .skill-entry h3 { margin-bottom: 6px; }
-  .skill-kind { margin-top: 0; color: var(--muted); font-size: .88rem; }
-  .prompt-label { margin-bottom: 8px; }
-  .skill-entry pre { margin-top: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
-  .skill-sources { font-size: .85rem; }
-  .skill-sources span { display: block; margin-top: 5px; color: var(--muted); }
-  .video-links a { overflow-wrap: anywhere; }
-  h2 { scroll-margin-top: 100px; }
+  .skill-search { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; gap: 16px; align-items: end; padding: 22px; background: var(--surface-soft); border: 1px solid var(--line); }
+  .skill-search label { display: block; margin-bottom: 8px; font-weight: 700; }
+  .skill-search input, .skill-search select { width: 100%; min-height: 46px; padding: 10px; background: white; color: var(--ink); border: 1px solid #aab7b0; border-radius: 4px; font: inherit; }
+  .skill-categories { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+  .skill-categories a { padding: 8px 12px; border: 1px solid var(--line); border-radius: 5px; text-decoration: none; scroll-margin-top: 100px; }
+  .skill-categories a[aria-current] { background: var(--teal); color: white; }
+  .skill-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+  .skill-card { padding: 24px; background: white; border: 1px solid var(--line); border-radius: 6px; min-width: 0; scroll-margin-top: 100px; }
+  .skill-card h2 { font-size: 1.4rem; margin: 14px 0 8px; overflow-wrap: anywhere; }
+  .skill-card > p { color: var(--muted); }
+  .skill-card summary { cursor: pointer; padding: 12px 0; color: var(--teal-dark); font-weight: 700; }
+  .skill-body :global(pre) { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .skill-body :global(h3) { font-size: 1.08rem; }
+  .skill-body :global(a) { overflow-wrap: anywhere; }
+  .skill-catalog [hidden] { display: none !important; }
+  :global(.js) .no-js-skill-note { display: none; }
+  :global(.no-js) .skill-search { display: none; }
+  @media (max-width: 760px) { .skill-grid, .skill-search { grid-template-columns: 1fr; } }
 </style>

@@ -1,9 +1,75 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { markdownToHtml } from 'satteri';
 import { ArrowLeft, Check, Copy, Download } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { buildSitePath } from '../../lib/site';
-export async function getStaticPaths() { const entries = await getCollection('templates', ({ data }) => !data.draft); return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } })); }
-const { entry } = Astro.props; const { Content } = await render(entry); const base = import.meta.env.BASE_URL; const filename = `${entry.id}.md`;
+import { rehypeAccessibleTaskLists } from '../../lib/rehypeAccessibleTaskLists';
+export async function getStaticPaths() {
+  const entries = await getCollection('templates', ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const base = import.meta.env.BASE_URL;
+const options = { hastPlugins: [rehypeAccessibleTaskLists()] };
+const preview = await markdownToHtml(entry.data.templateBody, options);
+const example = entry.data.exampleBody ? await markdownToHtml(entry.data.exampleBody, options) : undefined;
 ---
-<BaseLayout title={entry.data.title} description={entry.data.summary}><div class="template-layout"><article class="single-article" data-pagefind-body><a class="back-link" href={buildSitePath(base, '/templates/')}><ArrowLeft size={16} aria-hidden="true" />直接拿來用</a><header class="article-header"><span class="section-kicker">{entry.data.category}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p></header><div class="prose"><Content /></div></article><aside class="template-panel"><div class="template-toolbar"><strong>可複製文字</strong><div><button type="button" class="icon-button" title="複製模板" aria-label="複製模板" data-copy-template><Copy size={18} aria-hidden="true" /><Check class="copy-success" size={18} aria-hidden="true" /></button><button type="button" class="icon-button" title="下載 Markdown" aria-label="下載 Markdown" data-download-template data-filename={filename}><Download size={18} aria-hidden="true" /></button></div></div><pre tabindex="0"><code data-template-body>{entry.data.templateBody}</code></pre><p class="copy-status" aria-live="polite" data-copy-status></p></aside></div><script>document.querySelectorAll<HTMLElement>('.template-panel').forEach((panel) => { const body = panel.querySelector<HTMLElement>('[data-template-body]')?.innerText ?? ''; const status = panel.querySelector<HTMLElement>('[data-copy-status]'); panel.querySelector('[data-copy-template]')?.addEventListener('click', async () => { await navigator.clipboard.writeText(body); panel.toggleAttribute('data-copied', true); if (status) status.textContent = '已複製模板'; window.setTimeout(() => panel.removeAttribute('data-copied'), 1500); }); panel.querySelector<HTMLElement>('[data-download-template]')?.addEventListener('click', (event) => { const button = event.currentTarget as HTMLElement; const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([body], { type: 'text/markdown;charset=utf-8' })); link.download = button.dataset.filename ?? 'template.md'; link.click(); URL.revokeObjectURL(link.href); }); });</script></BaseLayout>
+<BaseLayout title={entry.data.title} description={entry.data.summary}>
+  <div class="template-layout">
+    <article class="single-article" data-pagefind-body>
+      <a class="back-link" href={buildSitePath(base, '/templates/')}><ArrowLeft size={16} aria-hidden="true" />直接拿來用</a>
+      <header class="article-header"><span class="section-kicker">{entry.data.category}</span><h1 data-pagefind-meta="title">{entry.data.title}</h1><p>{entry.data.summary}</p></header>
+      <div class="prose"><Content /></div>
+      {example && <details class="template-example"><summary>看一份填好的例子</summary><div class="prose" set:html={example.html} /></details>}
+    </article>
+    <aside class="template-panel">
+      <div class="template-toolbar"><strong>模板預覽</strong><div>
+        <button type="button" class="icon-button" aria-label="複製模板" data-copy-template><Copy size={18} aria-hidden="true" /><Check class="copy-success" size={18} aria-hidden="true" /></button>
+        <button type="button" class="icon-button" aria-label="下載 Markdown" data-download-template data-filename={`${entry.id}.md`}><Download size={18} aria-hidden="true" /></button>
+      </div></div>
+      <div class="prose template-preview" set:html={preview.html} />
+      <details class="template-source"><summary>查看 Markdown 原文</summary><pre tabindex="0"><code data-template-body>{entry.data.templateBody}</code></pre></details>
+      <p class="copy-status" aria-live="polite" data-copy-status></p>
+    </aside>
+  </div>
+</BaseLayout>
+<script>
+  document.querySelectorAll<HTMLElement>('.template-panel').forEach((panel) => {
+    const body = panel.querySelector<HTMLElement>('[data-template-body]')?.textContent ?? '';
+    const status = panel.querySelector<HTMLElement>('[data-copy-status]');
+    panel.querySelector('[data-copy-template]')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(body);
+        panel.toggleAttribute('data-copied', true);
+        if (status) status.textContent = '已複製模板';
+        window.setTimeout(() => panel.removeAttribute('data-copied'), 1500);
+      } catch {
+        if (status) status.textContent = '無法自動複製，請展開 Markdown 原文複製，或下載檔案。';
+      }
+    });
+    panel.querySelector<HTMLElement>('[data-download-template]')?.addEventListener('click', (event) => {
+      const button = event.currentTarget as HTMLElement;
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(new Blob([body], { type: 'text/markdown;charset=utf-8' }));
+      link.download = button.dataset.filename ?? 'template.md';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+  });
+</script>
+<style>
+  .template-preview { padding: 16px 22px; min-width: 0; overflow-wrap: anywhere; }
+  .template-preview :global(h1) { font-size: 1.4rem; }
+  .template-preview :global(p), .template-example :global(p) { white-space: pre-line; }
+  .template-preview :global(h2), .template-example :global(h2) { font-size: 1.1rem; }
+  .template-preview :global(table), .template-example :global(table) { display: block; overflow-x: auto; max-width: 100%; }
+  .template-panel { min-width: 0; background: white; color: var(--ink); }
+  .template-toolbar { background: #1c2521; color: #f7f8f5; }
+  .template-source pre { background: #1c2521; color: #f7f8f5; }
+  .copy-status { color: var(--teal-dark); }
+  .template-source, .template-example { margin: 20px; }
+  .template-example { margin: 24px 0; }
+  summary { cursor: pointer; color: var(--teal-dark); font-weight: 700; padding: 12px 0; }
+</style>

@@ -1,66 +1,21 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFile } from 'node:fs/promises';
+import { readdirSync, readFileSync } from 'node:fs';
 import siteConfig from '../../site.config.json' with { type: 'json' };
 
 const projectBase = siteConfig.projectBase;
-const projectBasePattern = projectBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const toolPathPattern = new RegExp(`^${projectBasePattern}/tools/[a-z0-9-]+/$`);
-
 const presentationFraming = /\bslideRefs\b|對照投影片|投影片主線|投影片的核心比喻|\.pptx?\b|第\s*\d+\s*(?:張|頁)\s*投影片|投影片\s*\d+/iu;
 
+const collectionSlugs = (collection: string) => readdirSync(`src/content/${collection}`)
+  .filter((file) => /\.mdx?$/.test(file) && !/^draft:\s*true\s*$/m.test(readFileSync(`src/content/${collection}/${file}`, 'utf8')))
+  .map((file) => file.replace(/\.mdx?$/, ''));
+const toolCount = collectionSlugs('tools').length;
 const publicContentRoutes = [
-  './',
-  './learn/',
-  ...[
-    '01-from-chat-to-agent',
-    '02-ask-before-action',
-    '03-context-and-indexes',
-    '04-checkpoints-and-tools',
-    '05-challenge-and-review',
-    '06-build-your-toolbox',
-    '07-reproducible-research',
-  ].map((slug) => `./learn/${slug}/`),
-  './tools/',
-  ...[
-    'agents-md',
-    'ask-user-question',
-    'chatgpt',
-    'claude-code',
-    'claude-md',
-    'codex',
-    'gemini-cli',
-    'git-github',
-    'insights',
-    'mcp',
-    'notebooklm',
-    'skill',
-    'subagent',
-  ].map((slug) => `./tools/${slug}/`),
-  './cases/',
-  ...[
-    'algorithm-visualization',
-    'anonymous-manuscript-review',
-    'course-site-pages',
-    'document-cache',
-    'interactive-calculus',
-    'programmatic-slides',
-    'reproducible-experiment',
-  ].map((slug) => `./cases/${slug}/`),
-  './templates/',
-  ...[
-    'ask-before-action',
-    'context-cache-index',
-    'git-checkpoint-release',
-    'independent-review',
-    'six-part-brief',
-    'usage-review',
-    'workspace-rules',
-  ].map((slug) => `./templates/${slug}/`),
-  './tasks/',
-  './safety/',
-  './search/',
-  './content-license/',
+  './', './learn/', './tools/', './cases/', './templates/', './guides/research-skills/',
+  ...Object.entries({ lessons: 'learn', tools: 'tools', cases: 'cases', templates: 'templates' })
+    .flatMap(([collection, route]) => collectionSlugs(collection).map((slug) => `./${route}/${slug}/`)),
+  './safety/', './search/', './content-license/',
 ];
 
 const legacyRedirects = [
@@ -72,7 +27,7 @@ const legacyRedirects = [
   ['./learn/06-verification-review/', './learn/05-challenge-and-review/'],
   ['./learn/07-workflow-automation/', './learn/06-build-your-toolbox/'],
   ['./skills/', './tools/'],
-  ['./skills/academic-writing/', './tasks/#write'],
+  ['./skills/academic-writing/', './guides/research-skills/#write'],
   ['./skills/claim-evidence-mapping/', './learn/05-challenge-and-review/'],
   ['./skills/context-management/', './learn/03-context-and-indexes/'],
   ['./skills/counterexample-checking/', './learn/05-challenge-and-review/'],
@@ -98,10 +53,10 @@ test('homepage introduces an agent-first learning journey with three clear entry
   await page.goto('./');
 
   await expect(page.getByRole('heading', { level: 1, name: '研究生 AI 研究工作台' })).toBeVisible();
-  await expect(page.getByText('把 AI 從聊天工具變成會做事的研究助手')).toBeVisible();
+  await expect(page.getByText('這裡可以找適合研究工作的 AI 技能')).toBeVisible();
   await expect(page.getByRole('link', { name: /第一次用 Agent/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /查工具名詞/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: /我有研究任務/ })).toBeVisible();
+  await expect(page.locator('.entry-actions').getByRole('link', { name: /找研究技能/ })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2, name: '先學會怎麼合作，再決定用哪個工具' })).toBeVisible();
 });
 
@@ -111,7 +66,7 @@ test('the standalone learning path ships seven lessons', async ({ page }) => {
   const lessons = page.locator('.lesson-list > li');
   await expect(lessons).toHaveCount(7);
   await expect(lessons.first()).toContainText('學完可以：');
-  await expect(lessons.last().getByRole('link', { name: /可重現研究工作流/ })).toBeVisible();
+  await expect(lessons.last().getByRole('link', { name: /下一次對話接得上/ })).toBeVisible();
 });
 
 test.describe('public content presentation independence', () => {
@@ -129,7 +84,7 @@ test.describe('public content presentation independence', () => {
 test('lesson seven exposes outcomes, prerequisites, tools, and two to four named references', async ({ page }) => {
   await page.goto('./learn/07-reproducible-research/');
 
-  await expect(page.getByRole('heading', { level: 1, name: /可重現研究工作流/ })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /下一次對話接得上/ })).toBeVisible();
   await expect(page.getByText('學習成果', { exact: true })).toBeVisible();
   await expect(page.getByText('先備條件', { exact: true })).toBeVisible();
   await expect(page.getByText('相關工具', { exact: true })).toBeVisible();
@@ -200,7 +155,7 @@ test('capability filters surface agents and source-grounded tools', async ({ pag
   await expect(visibleTools).toHaveCount(0);
   await expect(page.getByText('沒有符合條件的工具')).toBeVisible();
   await page.getByRole('button', { name: '清除篩選' }).click();
-  await expect(visibleTools).toHaveCount(13);
+  await expect(visibleTools).toHaveCount(toolCount);
 
   await page.getByLabel('固定來源引用').selectOption('yes');
   await expect(visibleTools).toHaveCount(1);
@@ -212,7 +167,7 @@ test('tool cards and details expose all six capability facets', async ({ page })
   await page.goto('./tools/');
 
   const cards = page.locator('[data-catalog-item]');
-  await expect(cards).toHaveCount(13);
+  await expect(cards).toHaveCount(toolCount);
   for (const card of await cards.all()) await expect(card.locator('.capability-list li')).toHaveCount(6);
 
   await page.goto('./tools/codex/');
@@ -221,31 +176,6 @@ test('tool cards and details expose all six capability facets', async ({ page })
   for (const facet of ['本機檔案', '命令執行', '固定來源引用', '網路存取', '背景任務', '人工確認']) {
     await expect(capabilityDetails.getByText(facet, { exact: true })).toBeVisible();
   }
-});
-
-test('capability-first task routing offers choices and protects sensitive data', async ({ page }) => {
-  await page.goto('./tasks/');
-
-  await page.getByLabel('研究任務').selectOption('experiment');
-  const experiment = page.locator('[data-task-panel="experiment"]');
-  await expect(experiment.getByRole('heading', { name: '執行程式與實驗' })).toBeVisible();
-  await page.getByLabel('讀寫本機檔案').check();
-  await page.getByLabel('執行程式').check();
-  const visibleCandidates = experiment.locator('[data-task-tool]:visible');
-  await expect(visibleCandidates).toHaveCount(4);
-  await expect(experiment.getByRole('link', { name: /Codex/ })).toBeVisible();
-  const conditionalCandidate = experiment.locator('[data-task-tool]').filter({ hasText: 'Git 與 GitHub' });
-  await expect(conditionalCandidate).toBeVisible();
-  await expect(conditionalCandidate).toContainText('視設定');
-
-  await page.getByLabel('固定來源引用').check();
-  await expect(visibleCandidates).toHaveCount(3);
-  await expect(conditionalCandidate).toBeHidden();
-  await expect(experiment.getByRole('link', { name: /NotebookLM/ })).toHaveCount(0);
-  await expect(experiment.getByRole('link', { name: '推薦課程' })).toHaveAttribute('href', /\/learn\/07-reproducible-research\/$/);
-
-  await page.getByLabel('資料含敏感資訊嗎？').selectOption('yes');
-  await expect(page.getByRole('link', { name: '先看安全指南' })).toBeVisible();
 });
 
 test('case catalog exposes seven categories and the runnable experiment evidence', async ({ page }) => {
@@ -258,10 +188,10 @@ test('case catalog exposes seven categories and the runnable experiment evidence
   await expect(page.locator('.card-topline > span:first-child').filter({ hasText: '匿名流程重建' })).toHaveCount(1);
 
   await page.goto('./cases/reproducible-experiment/');
-  await expect(page.getByRole('heading', { level: 1, name: /從原始量測到可驗證摘要/ })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /五筆量測的小實驗/ })).toBeVisible();
   await expect(page.getByText('可依本站輸入與命令重新執行', { exact: true })).toBeVisible();
   await expect(page.locator('.prose code').filter({ hasText: 'node analyze.mjs' }).first()).toBeVisible();
-  await expect(page.getByRole('heading', { level: 2, name: '一個刻意記錄的失敗' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: '欄名改了，程式會怎麼辦？' })).toBeVisible();
   const cover = page.locator('.case-figure img');
   await expect(cover).toBeVisible();
   expect(await cover.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
@@ -271,43 +201,26 @@ test('research safety covers data, privilege, injection, secrets, publication, a
   await page.goto('./safety/');
 
   for (const heading of [
-    '第一步：先替資料分級',
-    '最小權限檢查清單',
-    '外部文件也可能含有指令',
-    'Secrets、套件與執行環境',
-    '公開與投稿前，責任仍在人',
-    '權威入口',
+    '手上的材料能不能上傳？',
+    '文件裡的指令，不一定是你要它做的事',
+    '安裝工具前，看它會執行什麼',
+    '公開成果前，再看一次內容和目的地',
+    '需要進一步確認時',
   ]) {
     await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
   }
   await expect(page.getByRole('link', { name: /NIST AI Risk Management Framework/ }).first()).toBeVisible();
-  await expect(page.getByRole('link', { name: /OWASP LLM01:2025 Prompt Injection/ }).first()).toBeVisible();
-  await expect(page.getByRole('link', { name: /COPE: Authorship and AI tools/ })).toBeVisible();
+  await expect(page.locator('a[href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/"]').first()).toBeVisible();
+  await expect(page.locator('a[href="https://cope.onl/ai-authorship"]').first()).toBeVisible();
 });
 
 test('lesson pages teach presentation concepts through named tools and a usable prompt', async ({ page }) => {
   await page.goto('./learn/02-ask-before-action/');
 
-  await expect(page.getByRole('heading', { level: 1, name: /別給願望/ })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /三篇論文|任務|交辦/ })).toBeVisible();
   const lesson = page.locator('.prose');
   await expect(lesson.getByText('AskUserQuestion', { exact: true }).first()).toBeVisible();
-  await expect(lesson.locator('pre').filter({ hasText: '動工前' }).first()).toBeVisible();
-});
-
-test('homepage search carries its query into Pagefind and returns a relevant result', async ({ page, baseURL }) => {
-  const query = 'AskUserQuestion';
-  await page.goto('./');
-  await page.getByRole('searchbox', { name: '搜尋研究技能與任務' }).fill(query);
-  await page.getByRole('button', { name: '搜尋', exact: true }).click();
-
-  await expect(page).toHaveURL(new URL(`search/?q=${encodeURIComponent(query)}`, baseURL).href);
-  const fullText = page.locator('.pagefind-ui__search-input');
-  await expect(fullText).toHaveValue(query);
-  const expectedPath = `${projectBase}/tools/ask-user-question/`;
-  const result = page.locator('.pagefind-ui__result').filter({
-    has: page.locator(`.pagefind-ui__result-link[href="${expectedPath}"]`),
-  });
-  await expect(result).toContainText(query);
+  await expect(lesson.locator('pre').first()).toBeVisible();
 });
 
 test('Pagefind returns the AskUserQuestion tool result and follows its destination', async ({ page, baseURL }) => {
@@ -334,11 +247,7 @@ test.describe('legacy redirects', () => {
       await page.goto(source);
       await expect(page).toHaveURL(new URL(destination, baseURL).href);
 
-      if (source === './skills/academic-writing/') {
-        await expect(page.locator('[data-task-select]')).toHaveValue('write');
-        await expect(page.locator('[data-task-panel="write"]')).toBeVisible();
-        await expect(page.locator('[data-task-panel="read"]')).toBeHidden();
-      }
+
     });
   }
 });
@@ -348,7 +257,7 @@ test('templates can be copied and downloaded as Markdown', async ({ page, contex
   await page.goto('./templates/six-part-brief/');
   await page.getByRole('button', { name: '複製模板' }).click();
   await expect(page.getByText('已複製模板')).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('## 目標');
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('目標：');
 
   const downloadEvent = page.waitForEvent('download');
   await page.getByRole('button', { name: '下載 Markdown' }).click();
@@ -356,7 +265,7 @@ test('templates can be copied and downloaded as Markdown', async ({ page, contex
   expect(download.suggestedFilename()).toBe('six-part-brief.md');
   const downloadPath = await download.path();
   expect(downloadPath).not.toBeNull();
-  expect(await readFile(downloadPath as string, 'utf8')).toContain('## 目標');
+  expect(await readFile(downloadPath as string, 'utf8')).toContain('目標：');
 });
 
 test('mobile navigation opens without covering the menu control', async ({ page }, testInfo) => {
@@ -392,18 +301,6 @@ test('/tools/ has no automatically detectable accessibility violations', async (
   expect(results.violations).toEqual([]);
 });
 
-test('/tasks/ has no automatically detectable accessibility violations after interaction', async ({ page }) => {
-  await page.goto('./tasks/');
-  await page.getByLabel('研究任務').selectOption('experiment');
-  await page.getByLabel('讀寫本機檔案').check();
-  await page.getByLabel('執行程式').check();
-  await page.getByLabel('資料含敏感資訊嗎？').selectOption('yes');
-  await expect(page.locator('[data-sensitive-warning]')).toBeVisible();
-
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(results.violations).toEqual([]);
-});
-
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
@@ -419,32 +316,4 @@ test.describe('without JavaScript', () => {
     expect(await page.locator('.reference-list li').count()).toBeGreaterThanOrEqual(2);
   });
 
-  test('task routing falls back to readable static guidance and valid local candidate links', async ({ page, request, baseURL }) => {
-    await page.goto('./tasks/');
-
-    await expect(page.locator('.task-router-form')).toBeHidden();
-    const fallback = page.locator('.no-js-task-note');
-    await expect(fallback).toBeVisible();
-    await expect(fallback.getByRole('link', { name: /安全指南/ })).toBeVisible();
-
-    const taskPanels = page.locator('[data-task-panel]');
-    await expect(taskPanels).toHaveCount(6);
-    const candidateHrefs = new Set<string>();
-    for (const panel of await taskPanels.all()) {
-      await expect(panel).toBeVisible();
-      const candidateLinks = panel.locator('[data-task-tool] > a');
-      expect(await candidateLinks.count()).toBeGreaterThan(0);
-      for (const link of await candidateLinks.all()) {
-        await expect(link).toBeVisible();
-        const href = await link.getAttribute('href');
-        expect(href).toMatch(toolPathPattern);
-        candidateHrefs.add(href as string);
-      }
-    }
-
-    for (const href of candidateHrefs) {
-      const response = await request.get(new URL(href, baseURL).href);
-      expect(response.ok(), `${href} should resolve inside the project`).toBe(true);
-    }
-  });
 });

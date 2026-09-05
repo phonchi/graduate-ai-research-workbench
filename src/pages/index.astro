@@ -22,15 +22,14 @@ const featuredTools = ['notebooklm', 'codex', 'claude-code', 'git-github', 'skil
       <div class="intro-copy">
         <p class="eyebrow">AI AGENT FIELD GUIDE</p>
         <h1>研究生 AI 研究工作台</h1>
-        <p class="intro-lead">把 AI 從聊天工具變成會做事的研究助手</p>
-        <p class="intro-note">不用先學會所有模型。先練習怎麼交辦、怎麼給資料、怎麼存檔與挑錯，再挑適合你的工具。</p>
-        <p class="intro-note">把這次要做的事寫成 spec，把長期規矩留在 rules，再用 evals 檢查換了模型或流程後，成果是否仍符合要求。</p>
+        <p class="intro-lead">這裡可以找適合研究工作的 AI 技能</p>
+        <p class="intro-note">讀論文、修改文章、做簡報，或把進度交給下一次對話：先找一項現在用得上的技能，展開介紹就能看到怎麼開始。</p>
         <div class="entry-actions" aria-label="選擇開始方式">
           <a class="entry-link primary-entry" href={buildSitePath(base, '/learn/')}><MessageSquareMore aria-hidden="true" /><span><strong>第一次用 Agent</strong><small>從 Chat 與 Agent 的差別開始</small></span><ArrowRight aria-hidden="true" /></a>
           <a class="entry-link" href={buildSitePath(base, '/tools/')}><Wrench aria-hidden="true" /><span><strong>查工具名詞</strong><small>NotebookLM、Codex、Skill 到 MCP</small></span><ArrowRight aria-hidden="true" /></a>
-          <a class="entry-link" href={buildSitePath(base, '/tasks/')}><FolderSearch aria-hidden="true" /><span><strong>我有研究任務</strong><small>從論文、程式、簡報或網站進入</small></span><ArrowRight aria-hidden="true" /></a>
+          <a class="entry-link" href={buildSitePath(base, '/guides/research-skills/')}><FolderSearch aria-hidden="true" /><span><strong>找研究技能</strong><small>搜尋用途、名稱，再展開看用法</small></span><ArrowRight aria-hidden="true" /></a>
         </div>
-        <SearchBox />
+        <SearchBox destination="/guides/research-skills/" label="搜尋研究技能" placeholder="試試：論文、簡報、交接、NotebookLM…" />
       </div>
       <div class="agent-loop" aria-label="Agent 由腦、手、規矩與驗證迴圈組成">
         <div class="loop-title">會做事的助手</div>
@@ -46,7 +45,7 @@ const featuredTools = ['notebooklm', 'codex', 'claude-code', 'git-github', 'skil
 
   <section class="page-band learning-preview">
     <div class="section-heading split-heading">
-      <div><span class="section-kicker">核心學習路徑</span><h2>先學會怎麼合作，再決定用哪個工具</h2><p>七站從研究生會遇到的卡點出發，最後把工作流落到可重現研究與評估。</p></div>
+      <div><span class="section-kicker">核心學習路徑</span><h2>先學會怎麼合作，再決定用哪個工具</h2><p>從一份組會任務開始，練習交辦、找資料、檢查成果，再把進度交接給下一次對話。</p></div>
       <a class="text-link" href={buildSitePath(base, '/learn/')}>查看完整路徑 <ArrowRight size={17} aria-hidden="true" /></a>
     </div>
     <ol class="learning-rail journey-rail">
@@ -85,7 +84,7 @@ const featuredTools = ['notebooklm', 'codex', 'claude-code', 'git-github', 'skil
   </section>
 
   <section class="closing-band practical-closing">
-    <div><span class="section-kicker">第一個習慣</span><h2>別給願望。讓它先反問，再動手。</h2></div>
+    <div><span class="section-kicker">第一個習慣</span><h2>把要做的事說清楚，從一個小任務開始。</h2></div>
     <a class="button light" href={buildSitePath(base, '/templates/ask-before-action/')}>直接拿走這段 prompt <ArrowRight size={18} aria-hidden="true" /></a>
   </section>
 </BaseLayout>
