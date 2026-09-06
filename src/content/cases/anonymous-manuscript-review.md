@@ -1,6 +1,6 @@
 ---
 title: 匿名合成案例：把論文修改流程封裝成獨立審查 Skill
-summary: 依真實工作流程重建匿名合成案例，示範如何將寫作檢核變成 Manuscript Review Skill，再用乾淨對話獨立挑錯。
+summary: 依真實工作流程重建匿名合成案例，示範如何將寫作檢核變成 Manuscript Review Skill，再開一段不含先前討論的新對話，獨立檢查內容。
 order: 60
 part: 把關
 difficulty: 進階

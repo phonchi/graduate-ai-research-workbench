@@ -1,6 +1,6 @@
 ---
 title: 挑錯與獨立檢查
-summary: 讓另一個乾淨對話或分身專門找錯、找反例與核對限制，避免產出者成為唯一驗收者。
+summary: 讓不含先前討論的新對話或分身專門找錯、找反例與核對限制，避免產出者成為唯一驗收者。
 order: 50
 category: 驗證
 applicableTasks: [read, write, experiment, present, publish]
@@ -30,7 +30,7 @@ templateBody: |
   最後列出要先修正的問題、已檢查無誤的項目與待人工確認處。
 exampleBody: |
   請在這個新對話中檢查 notes/comparison.md，不修改檔案。
-  用途是組會介紹 D01、D02、D03 的資料與方法，不替方法排名。
+  用途是研究室會議介紹 D01、D02、D03 的資料與方法，不替方法排名。
   原始來源為 papers/D01.pdf、papers/D02.pdf、papers/D03.pdf；
   版本與位置見 notes/sources.md。
 

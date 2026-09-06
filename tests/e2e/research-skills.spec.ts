@@ -108,8 +108,8 @@ for (const [slug, marker] of [['context-cache-index', 'D01'], ['independent-revi
     await page.getByText('看一份填好的例子', { exact: true }).click();
     await expect(page.locator('.template-example .prose')).toBeVisible();
     expect((await page.locator('.template-example .prose').innerText()).trim().length).toBeGreaterThan(40);
-    await page.getByRole('button', { name: '複製模板' }).click();
-    await expect(page.getByText('已複製模板')).toBeVisible();
+    await page.getByRole('button', { name: '複製範本' }).click();
+    await expect(page.getByText('已複製範本')).toBeVisible();
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(text);
     const downloadEvent = page.waitForEvent('download');
     await page.getByRole('button', { name: '下載 Markdown' }).click();

@@ -3,4 +3,4 @@ import { ArrowLeft } from 'lucide-astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { buildSitePath } from '../lib/site';
 ---
-<BaseLayout title="找不到頁面" noindex pagefindBody={false}><section class="not-found"><span>404</span><h1>這份研究材料不在這裡</h1><p>網址可能已更新。回到首頁搜尋技能、案例或模板。</p><a class="button primary" href={buildSitePath(import.meta.env.BASE_URL, '/')}><ArrowLeft size={18} />回到工作台</a></section></BaseLayout>
+<BaseLayout title="找不到頁面" noindex pagefindBody={false}><section class="not-found"><span>404</span><h1>這份研究材料不在這裡</h1><p>網址可能已更新。回到首頁搜尋技能、案例或範本。</p><a class="button primary" href={buildSitePath(import.meta.env.BASE_URL, '/')}><ArrowLeft size={18} />回到工作台</a></section></BaseLayout>

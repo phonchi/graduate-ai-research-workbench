@@ -15,7 +15,7 @@ capabilities:
   humanApproval: depends
 bestFor: [長文件與專案修改, 執行檢查, 使用 Skill 或 subagent 拆解工作]
 avoidFor: [未確認差異就發布, 把長期規矩只留在對話裡, 高風險資料的無界線操作]
-firstStep: 在副本或 Git repo 中先做只讀盤點，確認工具看到的範圍。
+firstStep: 在副本或 Git repo 中先做唯讀盤點，確認工具看到的範圍。
 platformNames: [Claude Code desktop app, Claude Code CLI]
 officialUrl: https://code.claude.com/docs/en/overview
 relatedLessons: [01-from-chat-to-agent, 04-checkpoints-and-tools, 05-challenge-and-review, 06-build-your-toolbox]
@@ -32,7 +32,7 @@ Claude Code 能閱讀和修改專案檔案，也能執行命令檢查成果。�
 先開一份沒有敏感資料的練習資料夾，請它熟悉現況：
 
 ```text
-先只讀 notes/sources.md 和 notes/comparison.md。
+先閱讀 notes/sources.md 和 notes/comparison.md，本輪不修改檔案。
 說明三篇論文目前比較了哪些欄位，哪些內容尚待補充。
 先不修改；若要補內容，指出需要讀哪篇原文。
 ```

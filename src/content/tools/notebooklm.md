@@ -1,6 +1,6 @@
 ---
 title: NotebookLM
-summary: 針對指定資料查問並回查引用；先用網頁閱讀，重複操作時可再了解社群自動化工具。
+summary: 依指定資料提問，再沿引用回查原文；先用網頁閱讀，重複操作時可再了解社群自動化工具。
 order: 2
 kind: 網頁
 level: 零門檻
@@ -37,7 +37,7 @@ NotebookLM 適合針對指定材料問問題。你把論文、講義或網址加
 
 ## 想重複操作時，可以再接 Python、CLI 或 Skill
 
-社群專案 [notebooklm-py](https://github.com/teng-lin/notebooklm-py) 提供 Python、CLI（命令列）與 Agent Skill，能建立筆記本、加入來源、查問及下載產出。它不是 Google 官方工具，使用前需要安裝並完成 Google 登入；登入資料應保留在工具的憑證儲存位置，不要貼進交辦。
+社群專案 [notebooklm-py](https://github.com/teng-lin/notebooklm-py) 提供 Python、CLI（命令列）與 Agent Skill，能建立筆記本、加入來源、提問及下載成果。它不是 Google 官方工具，使用前需要安裝並完成 Google 登入；登入資料應保留在工具的憑證儲存位置，不要貼進交辦。
 
 例如你每週整理一批可上傳的論文，可以交辦：
 

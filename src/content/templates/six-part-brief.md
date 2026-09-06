@@ -24,7 +24,7 @@ templateBody: |
   確認後整理成一段任務說明，依已授權範圍執行。
   完成時回報產物位置、檢查結果與未完成事項。
 exampleBody: |
-  # 組會論文比較
+  # 研究室會議論文比較
 
   目標：讓沒讀過原文的實驗室同學了解三篇論文的資料與方法。
   範圍：papers/D01.pdf、papers/D02.pdf、papers/D03.pdf；可修改 notes/。

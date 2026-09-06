@@ -103,7 +103,7 @@ HANDOFF.md
 
 在提供斜線指令入口的環境，也可使用 `/handoff 下次先閱讀 D03，再補齊比較表`。想了解如何選用現成技能，可回看[第6課](../06-build-your-toolbox/)。
 
-這份技能會把文件寫到**作業系統的暫存目錄**，引用已有文件或成果的位置，並列出建議下一個 Agent 使用的技能。它也會移除密鑰、密碼與個人識別資訊。[handoff 原始說明](https://github.com/mattpocock/skills/blob/main/skills/productivity/handoff/SKILL.md)
+這份技能會把文件寫到**作業系統的暫存目錄**，引用已有文件或成果的位置，並列出建議下一個 Agent 使用的技能。它也會移除金鑰、密碼與個人識別資訊。[handoff 原始說明](https://github.com/mattpocock/skills/blob/main/skills/productivity/handoff/SKILL.md)
 
 為了下次容易找到，本課再加一個保存動作：
 

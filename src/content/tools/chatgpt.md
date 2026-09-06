@@ -39,4 +39,4 @@ ChatGPT 可以直接在瀏覽器對話，適合討論研究點子、解釋概念
 
 讀完後回看原文，確認數字、引用與方法含義沒有改掉。討論變長或換了方向時，整理目前結論再開新對話，通常比繼續堆材料容易掌握。
 
-要針對一批指定來源查問，可看 [NotebookLM](../notebooklm/)；要直接修改本機的 `notes/comparison.md`，則使用 [Codex](../codex/)、[Claude Code](../claude-code/) 或 [Gemini CLI](../gemini-cli/)。
+要依一批指定來源提問，可看 [NotebookLM](../notebooklm/)；要直接修改本機的 `notes/comparison.md`，則使用 [Codex](../codex/)、[Claude Code](../claude-code/) 或 [Gemini CLI](../gemini-cli/)。

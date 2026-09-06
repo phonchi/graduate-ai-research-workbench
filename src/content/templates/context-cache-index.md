@@ -37,7 +37,7 @@ templateBody: |
 
   下一步要開啟的來源與位置：
 exampleBody: |
-  # 組會來源筆記：notes/sources.md
+  # 研究室會議來源筆記：notes/sources.md
 
   用途：比較三篇論文使用的資料與方法。
   原始檔資料夾：papers/。
@@ -72,4 +72,4 @@ draft: false
 
 下方示例是尚未完成閱讀的起步筆記，所以標題、版本與頁碼仍標「待查」。使用自己的論文時，應在核對後逐項填入，不要把示例當成已完成的索引。
 
-三篇論文可以直接讀 PDF。需要搜尋大量文件時，再填文字快取欄位，記錄擷取結果與失敗處。允許上傳的來源也可放入 NotebookLM 問答；需要保留本機路徑與處理紀錄時，使用本地索引較方便。接著看[第 3 課](../../learn/03-context-and-indexes/)或[閱讀工具箱](../../guides/research-skills/#read)。
+三篇論文可以直接讀 PDF。需要搜尋大量文件時，再填文字快取欄位，記錄擷取結果與失敗處。允許上傳的來源也可放入 NotebookLM 問答；需要保留本機路徑與處理紀錄時，使用本機索引較方便。接著看[第 3 課](../../learn/03-context-and-indexes/)或[閱讀工具箱](../../guides/research-skills/#read)。

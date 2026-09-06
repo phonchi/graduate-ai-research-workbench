@@ -249,8 +249,8 @@ test.describe('legacy redirects', () => {
 test('templates can be copied and downloaded as Markdown', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto('./templates/six-part-brief/');
-  await page.getByRole('button', { name: '複製模板' }).click();
-  await expect(page.getByText('已複製模板')).toBeVisible();
+  await page.getByRole('button', { name: '複製範本' }).click();
+  await expect(page.getByText('已複製範本')).toBeVisible();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('目標：');
 
   const downloadEvent = page.waitForEvent('download');

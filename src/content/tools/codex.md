@@ -15,7 +15,7 @@ capabilities:
   humanApproval: depends
 bestFor: [跨檔案修改, 執行測試與建置, 檢查研究程式或網站]
 avoidFor: [未建立存檔點就大改, 未授權的公開發布, 只需一句定義的問題]
-firstStep: 選一個有 Git 存檔點的測試資料夾，先要求只讀盤點，不要修改。
+firstStep: 選一個有 Git 存檔點的測試資料夾，先要求唯讀盤點，不要修改。
 platformNames: [Codex app, Codex CLI]
 officialUrl: https://developers.openai.com/codex/
 relatedLessons: [01-from-chat-to-agent, 04-checkpoints-and-tools, 05-challenge-and-review, 06-build-your-toolbox]
@@ -29,7 +29,7 @@ Codex 能讀取專案、修改檔案與執行檢查。它適合需要跨檔案�
 
 ## 可以先試
 
-準備一份練習資料夾，先讓它只讀：
+準備一份練習資料夾，先讓它只閱讀，不修改：
 
 ```text
 請先讀 notes/sources.md 和 notes/comparison.md，不修改檔案。

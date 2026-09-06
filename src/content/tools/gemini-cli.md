@@ -14,7 +14,7 @@ capabilities:
   humanApproval: depends
 bestFor: [終端機研究流程, 程式與文件修改, Google 生態使用者的 agent 工作]
 avoidFor: [不熟 terminal 的第一次體驗, 未確認權限的工具操作, 單純來源問答]
-firstStep: 先依官方文件完成安裝登入，再在測試 repo 中執行只讀任務。
+firstStep: 先依官方文件完成安裝登入，再在測試 repo 中執行唯讀任務。
 platformNames: [Gemini CLI]
 officialUrl: https://github.com/google-gemini/gemini-cli
 relatedLessons: [01-from-chat-to-agent, 04-checkpoints-and-tools, 06-build-your-toolbox]

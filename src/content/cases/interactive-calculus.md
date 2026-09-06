@@ -12,7 +12,7 @@ relatedTools:
   - git-github
 graduateTransfer:
   - 把模型參數、空間結構或敏感度分析做成可拖曳的研究互動圖。
-  - 用最小反例測試方法假設，做成組會或口試時可操作的概念頁。
+  - 用最小反例測試方法假設，做成研究室會議或口試時可操作的概念頁。
 lastVerified: 2026-07-10
 draft: false
 sourceUrl: https://phonchi.github.io/nsysu-calculus2/static_files/presentations/surfaces_3d.html#sec-surfaces

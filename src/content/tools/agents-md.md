@@ -13,7 +13,7 @@ capabilities:
   backgroundTasks: no
   humanApproval: depends
 bestFor: [固定專案慣例, 設定工作紅線, 告訴 agent 如何驗證]
-avoidFor: [放單次任務細節, 保存密鑰與個資, 取代 Skill 的完整專門流程]
+avoidFor: [放單次任務細節, 保存金鑰與個資, 取代 Skill 的完整專門流程]
 firstStep: 先合作幾次，再請主 agent 根據重複出現的偏好草擬內容供你確認。
 platformNames: [Codex]
 officialUrl: https://developers.openai.com/codex/guides/agents-md
@@ -24,7 +24,7 @@ draft: false
 
 ## 給每次進入專案的 Agent 一頁說明
 
-`AGENTS.md` 是 Codex 等工具會讀取的工作區規則。把你每次都會交代的事寫進去，例如使用繁體中文、原始論文只讀、筆記沿用來源編號。它像新助理的入職須知，省下反覆交代的時間。
+`AGENTS.md` 是 Codex 等工具會讀取的工作區規則。把你每次都會交代的事寫進去，例如使用繁體中文、原始論文僅供讀取、筆記沿用來源編號。它像新助理的到職說明，省下反覆交代的時間。
 
 只在這次需要的任務，例如「補 D02 的樣本數」，留在當次交辦；做到哪裡則記在 `HANDOFF.md`。規則越貼近長期慣例，越不容易過期。
 

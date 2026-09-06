@@ -25,8 +25,8 @@ const example = entry.data.exampleBody ? await markdownToHtml(entry.data.example
       {example && <details class="template-example"><summary>看一份填好的例子</summary><div class="prose" set:html={example.html} /></details>}
     </article>
     <aside class="template-panel">
-      <div class="template-toolbar"><strong>模板預覽</strong><div>
-        <button type="button" class="icon-button" aria-label="複製模板" data-copy-template><Copy size={18} aria-hidden="true" /><Check class="copy-success" size={18} aria-hidden="true" /></button>
+      <div class="template-toolbar"><strong>範本預覽</strong><div>
+        <button type="button" class="icon-button" aria-label="複製範本" data-copy-template><Copy size={18} aria-hidden="true" /><Check class="copy-success" size={18} aria-hidden="true" /></button>
         <button type="button" class="icon-button" aria-label="下載 Markdown" data-download-template data-filename={`${entry.id}.md`}><Download size={18} aria-hidden="true" /></button>
       </div></div>
       <div class="prose template-preview" set:html={preview.html} />
@@ -43,7 +43,7 @@ const example = entry.data.exampleBody ? await markdownToHtml(entry.data.example
       try {
         await navigator.clipboard.writeText(body);
         panel.toggleAttribute('data-copied', true);
-        if (status) status.textContent = '已複製模板';
+        if (status) status.textContent = '已複製範本';
         window.setTimeout(() => panel.removeAttribute('data-copied'), 1500);
       } catch {
         if (status) status.textContent = '無法自動複製，請展開 Markdown 原文複製，或下載檔案。';

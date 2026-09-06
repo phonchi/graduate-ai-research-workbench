@@ -21,7 +21,7 @@ const items = await Promise.all(entries.map(async (entry) => ({ entry, html: (aw
   <section class="page-band skill-catalog" data-skill-catalog data-pagefind-body>
     <h2 class="sr-only" data-pagefind-meta="title">研究技能選用指南</h2>
     <p>第一次使用時，先展開卡片，依「原始專案與安裝說明」完成設定。若是 Skill，請讓 Agent 確認已載入，再把交辦範例換成自己的材料。</p>
-    <p>工作要交給哪個模型？<a href={`${buildSitePath(base, '/learn/03-context-and-indexes/')}#model-delegation`}>拆解工作、分配算力：高階模型決策、次階模型實作</a>，附上可直接使用的分工模板。</p>
+    <p>工作要交給哪個模型？<a href={`${buildSitePath(base, '/learn/03-context-and-indexes/')}#model-delegation`}>拆解工作、分配算力：高階模型決策、次階模型實作</a>，附上可直接使用的分工範本。</p>
     <form class="skill-search" role="search" aria-label="搜尋技能" onsubmit="return false">
       <div><label for="skill-query">想找什麼技能？</label><input id="skill-query" name="q" type="search" placeholder="例如：交接、論文、簡報、NotebookLM" /></div>
       <div><label for="skill-category">依任務篩選</label><select id="skill-category" name="category"><option value="">全部任務</option>{skillCategories.map((category) => <option value={category.id}>{category.label}</option>)}</select></div>
