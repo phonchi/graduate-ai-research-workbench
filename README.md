@@ -9,7 +9,7 @@
 - `找研究技能`：首頁可直接搜尋用途或名稱，依任務篩選，展開卡片閱讀交辦範例。
 - `概念與習慣`：七篇以組會任務串起的課程，從交辦走到檢查與交接。
 - `工具詞典`：產品、檔案、Hook 與工作方式的白話說明。
-- `研究案例`：公開成果、可重跑示範與匿名流程重建。
+- `研究案例`：研究與教學成果，以及匿名流程重建。
 - `直接拿來用`：可閱讀預覽、複製與下載的模板，附填妥示例。
 - `研究安全`：處理資料、檔案與公開成果時的基本提醒。
 
@@ -67,6 +67,6 @@ npm run verify
 
 `verify` 會執行 lint、單元測試、Astro/content schema、production build、Pagefind 索引，以及 desktop/mobile Playwright 測試。
 
-合成案例封面可用 `node scripts/build-case-assets.mjs` 從 repo 內的預覽來源重新產生；其餘實作成果圖保留為公開成果的授權快照。
+案例封面可用 `node scripts/build-case-assets.mjs` 從 repo 內的預覽來源重新產生；其餘實作成果圖保留為公開成果的授權快照。
 
 網站程式碼採 MIT License，原創教材採 CC BY 4.0。

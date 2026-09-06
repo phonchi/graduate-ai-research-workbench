@@ -178,23 +178,17 @@ test('tool cards and details expose all six capability facets', async ({ page })
   }
 });
 
-test('case catalog exposes seven categories and the runnable experiment evidence', async ({ page }) => {
+test('case catalog shows the remaining research work and redirects retired examples', async ({ page, baseURL }) => {
   await page.goto('./cases/');
-
-  const cases = page.locator('.content-card');
-  await expect(cases).toHaveCount(7);
-  await expect(page.locator('.card-topline > span:first-child').filter({ hasText: '公開成果' })).toHaveCount(4);
-  await expect(page.locator('.card-topline > span:first-child').filter({ hasText: '可重跑示範' })).toHaveCount(2);
-  await expect(page.locator('.card-topline > span:first-child').filter({ hasText: '匿名流程重建' })).toHaveCount(1);
-
-  await page.goto('./cases/reproducible-experiment/');
-  await expect(page.getByRole('heading', { level: 1, name: /五筆量測的小實驗/ })).toBeVisible();
-  await expect(page.getByText('可依本站輸入與命令重新執行', { exact: true })).toBeVisible();
-  await expect(page.locator('.prose code').filter({ hasText: 'node analyze.mjs' }).first()).toBeVisible();
-  await expect(page.getByRole('heading', { level: 2, name: '欄名改了，程式會怎麼辦？' })).toBeVisible();
-  const cover = page.locator('.case-figure img');
-  await expect(cover).toBeVisible();
-  expect(await cover.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  const cards = page.locator('.content-card');
+  await expect(cards).toHaveCount(collectionSlugs('cases').length);
+  expect(await cards.count()).toBeGreaterThan(0);
+  await expect(page.locator('.card-topline > span:first-child').filter({ hasText: '可重跑示範' })).toHaveCount(0);
+  for (const slug of ['document-cache', 'reproducible-experiment']) {
+    await expect(page.locator(`a[href*="/cases/${slug}/"]`)).toHaveCount(0);
+    await page.goto(`./cases/${slug}/`);
+    await expect(page).toHaveURL(new URL('./cases/', baseURL).href);
+  }
 });
 
 test('research safety covers data, privilege, injection, secrets, publication, and policy', async ({ page }) => {

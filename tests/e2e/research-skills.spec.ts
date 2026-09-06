@@ -97,14 +97,14 @@ test('lesson tables render as tables, not Markdown code', async ({ page }) => {
   for (const text of await page.locator('.prose pre').allTextContents()) expect(text).not.toMatch(/^\s*\|.*\|\s*$/m);
 });
 
-for (const [slug, marker] of [['context-cache-index', 'D01'], ['independent-review', '差異'], ['usage-review', 'token'], ['handoff', '下一步']]) {
+for (const [slug, marker] of [['context-cache-index', 'D01'], ['independent-review', '差異'], ['usage-review', 'token'], ['handoff', '下一步'], ['model-delegation', '次階模型']]) {
   test(`${slug} previews, copies and downloads its Markdown`, async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.goto(`./templates/${slug}/`);
     const text = await page.locator('[data-template-body]').textContent();
     expect(text).toContain(marker);
     await expect(page.locator('.template-preview')).toBeVisible();
-    if (slug !== 'handoff') expect(await page.locator('.template-preview table').count()).toBeGreaterThan(0);
+    if (['context-cache-index', 'independent-review', 'usage-review'].includes(slug)) expect(await page.locator('.template-preview table').count()).toBeGreaterThan(0);
     await page.getByText('看一份填好的例子', { exact: true }).click();
     await expect(page.locator('.template-example .prose')).toBeVisible();
     expect((await page.locator('.template-example .prose').innerText()).trim().length).toBeGreaterThan(40);
@@ -148,4 +148,15 @@ test.describe('without JavaScript', () => {
     await page.getByRole('link', { name: '技能搜尋頁', exact: true }).click();
     await expect(page.getByRole('heading', { name: '找研究技能', level: 1 })).toBeVisible();
   });
+});
+
+test('model delegation is directly reachable from the homepage and skill catalog', async ({ page }) => {
+  for (const route of ['./', './guides/research-skills/']) {
+    await page.goto(route);
+    await page.locator('a[href$="/learn/03-context-and-indexes/#model-delegation"]').click();
+    await expect(page.locator('#model-delegation')).toBeVisible();
+    await expect(page.locator('main')).toContainText('次階模型');
+    await page.locator('a[href="../../templates/model-delegation/"]').first().click();
+    await expect(page.locator('[data-template-body]')).toContainText('高階模型');
+  }
 });

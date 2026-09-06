@@ -30,9 +30,7 @@ relatedTools:
   - codex
   - claude-code
   - skill
-relatedCases:
-  - document-cache
-  - reproducible-experiment
+relatedCases: []
 lastVerified: 2026-09-05
 draft: false
 featured: true
@@ -130,6 +128,6 @@ HANDOFF.md
 
 這次練習只看三件事：新對話能否找到材料、能否分清完成與待確認事項，以及能否接著完成 D03 那一列。完成後，更新交接便條，讓下一次看到的是新的進度。
 
-可以從[交接便條範本](../../templates/handoff/)開始填寫。需要管理更多文獻時，再看[文件索引案例](../../cases/document-cache/)；要讓別人重跑分析程式，則接著看[可重現實驗案例](../../cases/reproducible-experiment/)，補上資料、設定與執行方式。
+可以從[交接便條範本](../../templates/handoff/)開始填寫。要整理更多文獻時，沿用[第 3 課的來源表與索引](../03-context-and-indexes/)，讓接手者找得到原文。
 
 **今天留下目標、檔案位置與下一步，明天就能從做過的地方繼續。**

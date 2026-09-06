@@ -6,7 +6,7 @@ const visualRoutes = [
   { name: 'lesson-7', route: './learn/07-reproducible-research/', heading: /下一次對話接得上/ },
   { name: 'tools', route: './tools/', heading: '名字很多，先看它到底能不能動手' },
   { name: 'tasks', route: './tasks/', heading: '找研究技能' },
-  { name: 'cases', route: './cases/', heading: '從公開成果、可重跑示範與流程重建學做法' },
+  { name: 'cases', route: './cases/', heading: '從研究與教學成果學做法' },
   { name: 'safety', route: './safety/', heading: '先弄清楚哪些資料能交出去' },
 ];
 

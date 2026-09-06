@@ -35,7 +35,9 @@ const bannedPublicPatterns: Array<{ label: string; pattern: RegExp }> = [
 describe('content contract', () => {
   it('ships the standalone learning path and reference collections', () => {
     expect(files('lessons')).toHaveLength(7);
-    expect(files('cases')).toHaveLength(7);
+    expect(files('cases').length).toBeGreaterThan(0);
+    expect(files('cases')).not.toContain('document-cache.md');
+    expect(files('cases')).not.toContain('reproducible-experiment.md');
     expect(files('tools')).toContain('hook.md');
     expect(files('templates')).toContain('handoff.md');
     expect(files('research-skills').length).toBeGreaterThan(0);
@@ -150,13 +152,6 @@ describe('content contract', () => {
       expect(applicableTasks.length, `${file} needs at least one applicable task`).toBeGreaterThan(0);
       for (const task of applicableTasks) expect(taskIds.has(task), `${file} references unknown task ${task}`).toBe(true);
     }
-  });
-
-  it('ships the four-source synthetic corpus claimed by the document-cache case', () => {
-    const corpus = resolve(process.cwd(), 'examples/synthetic-corpus');
-    const index = JSON.parse(readFileSync(resolve(corpus, 'index.json'), 'utf8')) as Array<{ path: string }>;
-    expect(index).toHaveLength(4);
-    for (const entry of index) expect(() => readFileSync(resolve(corpus, entry.path))).not.toThrow();
   });
 
   it('keeps the project base in one config consumed by build and test infrastructure', () => {

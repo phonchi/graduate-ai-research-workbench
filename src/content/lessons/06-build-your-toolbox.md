@@ -43,7 +43,6 @@ relatedTools:
   - claude-md
 relatedCases:
   - programmatic-slides
-  - document-cache
   - anonymous-manuscript-review
 lastVerified: 2026-09-05
 draft: false

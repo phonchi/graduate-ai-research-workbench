@@ -15,6 +15,8 @@ export default defineConfig({
   base: projectBase,
   trailingSlash: 'always',
   redirects: {
+    '/cases/document-cache': withinProject('/cases/'),
+    '/cases/reproducible-experiment': withinProject('/cases/'),
     '/learn/01-task-specification': withinProject('/learn/02-ask-before-action'),
     '/learn/02-literature-evidence': withinProject('/learn/03-context-and-indexes'),
     '/learn/03-context-knowledge-base': withinProject('/learn/03-context-and-indexes'),

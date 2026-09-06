@@ -9,9 +9,9 @@ const tools = await getCollection('tools', ({ data }) => !data.draft);
 const toolTitles = new Map(tools.map((tool) => [tool.id, tool.data.title]));
 ---
 <BaseLayout title="研究案例">
-  <header class="page-header"><div><span class="section-kicker">OUTCOMES, RUNS, WORKFLOWS</span><h1>從公開成果、可重跑示範與流程重建學做法</h1><p>案例會標明能否完整重跑與公開邊界，方便你判斷哪些可直接驗證、哪些用來理解合作流程。</p></div></header>
+  <header class="page-header"><div><span class="section-kicker">RESEARCH IN PRACTICE</span><h1>從研究與教學成果學做法</h1><p>看看研究寫作、互動教材、簡報與網站如何完成，再把適合的做法用到自己的工作。</p></div></header>
   <section class="page-band">
-    <h2 class="sr-only">七個研究工作案例</h2>
+    <h2 class="sr-only">研究工作案例</h2>
     <div class="card-grid three">
       {items.map((item) => <CollectionCard href={buildSitePath(base, `/cases/${item.id}/`)} eyebrow={`${item.data.category} · ${item.data.reproducible ? '可重跑' : '流程紀錄'}`} title={item.data.title} summary={item.data.summary} tags={item.data.relatedTools.slice(0, 3).map((tool) => toolTitles.get(tool) ?? tool)} />)}
     </div>
