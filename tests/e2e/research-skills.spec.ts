@@ -121,7 +121,7 @@ for (const [slug, marker] of [['context-cache-index', 'D01'], ['independent-revi
 }
 
 test('catalog and expanded templates are accessible and fit the viewport', async ({ page }) => {
-  for (const route of ['./guides/research-skills/', './templates/context-cache-index/', './templates/usage-review/']) {
+  for (const route of ['./guides/research-skills/', './templates/context-cache-index/', './templates/usage-review/', './templates/model-delegation/']) {
     await page.goto(route);
     await page.locator('details').first().locator('summary').click();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
