@@ -55,6 +55,21 @@ featured: false
 
 Skill 可以附上範例與程式，但最初只要一份清楚的 `SKILL.md`。你也可以從第一次任務就選用別人整理好的 Skill，先看用途、需要的材料與工具，再用小份材料試用。找現成工具可從[研究技能指南](../../guides/research-skills/)開始；只有想保存自己的做法時，才需要往下寫手冊。
 
+## 試用現成工具：把比較筆記做成閱讀頁
+
+如果你已核對三篇論文的比較筆記，想在研究室會議中讓同學閱讀，可以試用 [html-visualizer](../../guides/research-skills/#skill-html-visualizer)。它把長篇筆記整理成有目錄、比較表與圖解的 HTML，適合展示方法差異與研究限制。
+
+先依技能卡的原始專案連結完成安裝，重新載入後確認 Agent 找得到技能，再用一小份允許分享的筆記試做：
+
+```text
+請用 html-visualizer，把 notes/comparison.md 整理成研究室會議閱讀頁，
+存到 reports/comparison.html；來源與位置見 notes/sources.md。
+保留所有比較條件、原文位置、缺值、限制與待確認事項，不新增研究結果。
+請檢查目錄、表格與手機閱讀，回報完成的檢查及未驗證項目。
+```
+
+打開 HTML，逐項對照原筆記。若內容在排版時被省略、數字失去單位，或限制被改成肯定的結論，就要修正。閱讀頁做得清楚，不表示文獻解讀一定正確；關鍵內容仍需回到原文。若只需要一張架構圖或方法圖，可分別選用 [Archify](../../guides/research-skills/#skill-archify) 或 [diagram-design](../../guides/research-skills/#skill-diagram-design)，不必每次製作整份報告。
+
 ## 先做完一次，再整理初稿
 
 拿出這次的交辦、`notes/sources.md`、`notes/comparison.md` 與 `HANDOFF.md`。從裡面挑出下一批論文仍適用的步驟：先認清每篇來源，再擷取資訊，最後回查數字。D03 的特定數值則留在案例裡，不寫成所有論文都要遵守的規則。

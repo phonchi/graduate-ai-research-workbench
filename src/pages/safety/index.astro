@@ -1,6 +1,23 @@
 ---
 import { AlertTriangle, ExternalLink, KeyRound, LockKeyhole, ShieldCheck, Upload } from 'lucide-astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const checklistGroups = [
+  { title: '輸入前：材料可以交出去嗎？', items: [
+    '已確認材料可用於這次任務，且所選工具與分享方式符合授權。',
+    '只提供必要內容，已排除個資、憑證與未獲准分享的資料。',
+    '已確認工具的資料保存、訓練設定及研究計畫或機構規範。',
+  ] },
+  { title: '使用中：研究判斷仍由我掌握嗎？', items: [
+    '問題、方法與驗收判準由我設定，尚未決定的事項由我確認。',
+    '已保留來源位置、工具、日期、用途與重要交辦紀錄。',
+    '已區分原始證據與 AI 推論，關鍵結果安排重算或另一種方法核對。',
+  ] },
+  { title: '提交前：我能說明並負責嗎？', items: [
+    '已回查重要書目、數值與圖表，未查完的事項有明確標記。',
+    '已檢視與修改 AI 產出，能解釋使用的方法、推論與研究限制。',
+    '已依適用規範處理引用、素材授權與 AI 使用揭露，並確認交付對象。',
+  ] },
+];
 ---
 
 <BaseLayout title="研究安全與責任" description="交給 Agent 前先確認資料能否分享、工具可以碰哪些檔案，以及公開成果前要檢查什麼。">
@@ -73,4 +90,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <li><a href="https://cope.onl/ai-authorship">COPE：AI 工具與作者責任</a></li>
     </ul>
   </section>
+  <section id="research-checklist" class="page-band prose narrow research-checklist" aria-labelledby="research-checklist-title">
+    <h2 id="research-checklist-title">開始與提交前，花三分鐘檢查</h2>
+    <p>依這次任務逐項確認；尚未做到的項目，先找出缺少的材料或需要詢問的人。這份清單協助你回查，不取代學校、研究計畫或期刊的規範。</p>
+    <form autocomplete="off" data-research-checklist>
+      {checklistGroups.map((group) => <fieldset><legend>{group.title}</legend>{group.items.map((item) => <label><input type="checkbox" /> <span>{item}</span></label>)}</fieldset>)}
+      <button type="reset" class="button secondary">清除勾選</button>
+    </form>
+    <p class="checklist-note">勾選只供這次閱讀使用，不儲存、不傳送；重新開啟或載入頁面會清除。全部勾選也不代表已取得授權或通過倫理審查。</p>
+  </section>
 </BaseLayout>
+
+<script>
+  const resetChecklist = () => document.querySelector<HTMLFormElement>('[data-research-checklist]')?.reset();
+  resetChecklist();
+  window.addEventListener('pageshow', resetChecklist);
+</script>
+
+<style>
+  .research-checklist { scroll-margin-top: 100px; }
+  .research-checklist fieldset { min-width: 0; margin: 24px 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+  .research-checklist legend { padding: 0 6px; font-weight: 750; }
+  .research-checklist label { display: flex; gap: 12px; align-items: flex-start; min-height: 44px; padding: 10px 0; cursor: pointer; }
+  .research-checklist input { flex-shrink: 0; width: 20px; height: 20px; margin: 4px 0 0; accent-color: var(--teal); }
+  .research-checklist span { text-wrap: pretty; }
+  .checklist-note { color: var(--muted); font-size: .9rem; }
+</style>

@@ -1,0 +1,1841 @@
+
+> graduate-ai-research-workbench@0.1.0 test:e2e
+> playwright test
+
+[WebServer] 30 pages found without an <html> element. 
+[WebServer] Pages without an outer <html> element will not be processed by default. 
+[WebServer] If adding this element is not possible, use the root selector config to target a different root element.
+[WebServer]   * "/skills/source-verification/" has no <html> element
+[WebServer]   * "/skills/" has no <html> element
+[WebServer]   * "/skills/visual-verification/" has no <html> element
+[WebServer]   * "/skills/data-provenance/" has no <html> element
+[WebServer]   * "/skills/subagent-delegation/" has no <html> element
+[WebServer]   * "/skills/counterexample-checking/" has no <html> element
+[WebServer]   * "/skills/context-management/" has no <html> element
+[WebServer]   * "/skills/skill-design/" has no <html> element
+[WebServer]   * "/skills/literature-synthesis/" has no <html> element
+[WebServer]   * "/skills/git-version-control/" has no <html> element
+[WebServer]   * "/skills/reproducible-research/" has no <html> element
+[WebServer]   * "/skills/task-specification/" has no <html> element
+[WebServer]   * "/skills/claim-evidence-mapping/" has no <html> element
+[WebServer]   * "/skills/academic-writing/" has no <html> element
+[WebServer]   * "/cases/document-cache/" has no <html> element
+[WebServer]   * "/cases/reproducible-experiment/" has no <html> element
+[WebServer]   * "/templates/manuscript-review-checklist/" has no <html> element
+[WebServer]   * "/templates/claim-citation-audit/" has no <html> element
+[WebServer]   * "/templates/reproducibility-checklist/" has no <html> element
+[WebServer]   * "/templates/research-log/" has no <html> element
+[WebServer]   * "/templates/research-task-brief/" has no <html> element
+[WebServer]   * "/templates/presentation-web-qa/" has no <html> element
+[WebServer]   * "/templates/literature-evidence-matrix/" has no <html> element
+[WebServer]   * "/learn/06-verification-review/" has no <html> element
+[WebServer]   * "/learn/02-literature-evidence/" has no <html> element
+[WebServer]   * "/learn/04-research-outputs/" has no <html> element
+[WebServer]   * "/learn/03-context-knowledge-base/" has no <html> element
+[WebServer]   * "/learn/05-reproducibility-git/" has no <html> element
+[WebServer]   * "/learn/01-task-specification/" has no <html> element
+[WebServer]   * "/learn/07-workflow-automation/" has no <html> element
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] node:events:487
+[WebServer]       throw er; // Unhandled 'error' event
+[WebServer]       ^
+[WebServer] 
+[WebServer] Error: listen EPERM: operation not permitted 127.0.0.1:4173
+[WebServer]     at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+[WebServer]     at listenInCluster (node:net:2065:12)
+[WebServer]     at node:net:2274:7
+[WebServer]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[WebServer] Emitted 'error' event on Server instance at:
+[WebServer]     at emitErrorNT (node:net:2044:8)
+[WebServer]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+[WebServer]   code: 'EPERM',
+[WebServer]   errno: -1,
+[WebServer]   syscall: 'listen',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 4173
+[WebServer] }
+[WebServer] 
+[WebServer] Node.js v24.15.0
+Error: Process from config.webServer was not able to start. Exit code: 1
+
+
+> graduate-ai-research-workbench@0.1.0 test:e2e
+> playwright test
+
+[WebServer] (node:3308517) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3308743) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 30 pages found without an <html> element. 
+[WebServer] Pages without an outer <html> element will not be processed by default. 
+[WebServer] If adding this element is not possible, use the root selector config to target a different root element.
+[WebServer]   * "/skills/source-verification/" has no <html> element
+[WebServer]   * "/skills/" has no <html> element
+[WebServer]   * "/skills/visual-verification/" has no <html> element
+[WebServer]   * "/skills/data-provenance/" has no <html> element
+[WebServer]   * "/skills/subagent-delegation/" has no <html> element
+[WebServer]   * "/skills/counterexample-checking/" has no <html> element
+[WebServer]   * "/skills/context-management/" has no <html> element
+[WebServer]   * "/skills/skill-design/" has no <html> element
+[WebServer]   * "/skills/literature-synthesis/" has no <html> element
+[WebServer]   * "/skills/git-version-control/" has no <html> element
+[WebServer]   * "/skills/reproducible-research/" has no <html> element
+[WebServer]   * "/skills/task-specification/" has no <html> element
+[WebServer]   * "/skills/claim-evidence-mapping/" has no <html> element
+[WebServer]   * "/skills/academic-writing/" has no <html> element
+[WebServer]   * "/cases/document-cache/" has no <html> element
+[WebServer]   * "/cases/reproducible-experiment/" has no <html> element
+[WebServer]   * "/templates/manuscript-review-checklist/" has no <html> element
+[WebServer]   * "/templates/claim-citation-audit/" has no <html> element
+[WebServer]   * "/templates/reproducibility-checklist/" has no <html> element
+[WebServer]   * "/templates/research-log/" has no <html> element
+[WebServer]   * "/templates/research-task-brief/" has no <html> element
+[WebServer]   * "/templates/presentation-web-qa/" has no <html> element
+[WebServer]   * "/templates/literature-evidence-matrix/" has no <html> element
+[WebServer]   * "/learn/06-verification-review/" has no <html> element
+[WebServer]   * "/learn/02-literature-evidence/" has no <html> element
+[WebServer]   * "/learn/04-research-outputs/" has no <html> element
+[WebServer]   * "/learn/03-context-knowledge-base/" has no <html> element
+[WebServer]   * "/learn/05-reproducibility-git/" has no <html> element
+[WebServer]   * "/learn/01-task-specification/" has no <html> element
+[WebServer]   * "/learn/07-workflow-automation/" has no <html> element
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] (node:3309012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 270 tests using 14 workers
+
+(node:3309030) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309050) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309031) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309038) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309037) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309067) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309069) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309107) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3309109) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   14 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link publish selects write (997ms)
+  ✓    6 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link experiment selects experiment (997ms)
+  ✓   13 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link write selects write (1.0s)
+  ✓   12 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link read selects read (1.0s)
+  ✓    3 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link automate selects plan (1.1s)
+  ✓    7 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link present selects present (1.1s)
+  ✓    2 [desktop] › tests/e2e/research-skills.spec.ts:53:1 › direct card links open details and invalid filters fall back to all categories (1.1s)
+  ✓   10 [desktop] › tests/e2e/research-skills.spec.ts:7:1 › homepage searches skills directly (1.3s)
+  ✓    8 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds spec (1.6s)
+  ✓    9 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds evals (1.6s)
+  ✓   11 [desktop] › tests/e2e/research-skills.spec.ts:18:1 › cards support searching, combining categories, resetting, and sharing (1.6s)
+  ✓    5 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds grill-me (1.7s)
+  ✓   18 [desktop] › tests/e2e/research-skills.spec.ts:92:1 › lesson tables render as tables, not Markdown code (683ms)
+  ✓   19 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › context-cache-index previews, copies and downloads its Markdown (804ms)
+  ✓   20 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › independent-review previews, copies and downloads its Markdown (817ms)
+  ✓   21 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › usage-review previews, copies and downloads its Markdown (814ms)
+  ✓   22 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › handoff previews, copies and downloads its Markdown (718ms)
+  ✓   15 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds handoff (1.1s)
+  ✓   16 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Hook (1.1s)
+  ✓   17 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Colab (1.2s)
+  ✓   26 [desktop] › tests/e2e/research-skills.spec.ts:146:3 › without JavaScript › the old tasks page offers links to the new catalog (594ms)
+  ✓   23 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › model-delegation previews, copies and downloads its Markdown (735ms)
+  ✓    4 [desktop] › tests/e2e/research-skills.spec.ts:62:1 › guide links from lessons and templates still resolve (2.4s)
+  ✓   25 [desktop] › tests/e2e/research-skills.spec.ts:134:3 › without JavaScript › all skills and native details remain readable (1.2s)
+  ✓   30 [desktop] › tests/e2e/research-workflow.spec.ts:40:1 › HTML reports are discoverable by use, category, permalink and lesson (1.4s)
+  ✓   29 [desktop] › tests/e2e/research-workflow.spec.ts:20:1 › each prompt copies its own full text and reports clipboard failure (1.5s)
+  ✓   35 [desktop] › tests/e2e/visual.spec.ts:15:3 › research-workflow fits the viewport and renders its visual assets (1.3s)
+  ✓   36 [desktop] › tests/e2e/visual.spec.ts:15:3 › research-skills fits the viewport and renders its visual assets (1.2s)
+  ✓   37 [desktop] › tests/e2e/visual.spec.ts:15:3 › home fits the viewport and renders its visual assets (1.2s)
+  ✓   38 [desktop] › tests/e2e/visual.spec.ts:15:3 › lesson-7 fits the viewport and renders its visual assets (1.2s)
+  ✓   28 [desktop] › tests/e2e/research-workflow.spec.ts:4:1 › homepage stages reach the matching guide sections and existing resources (2.3s)
+  ✓   43 [desktop] › tests/e2e/workbench.spec.ts:52:1 › homepage introduces an agent-first learning journey with three clear entry points (547ms)
+  ✓   39 [desktop] › tests/e2e/visual.spec.ts:15:3 › tools fits the viewport and renders its visual assets (1.0s)
+  ✓   41 [desktop] › tests/e2e/visual.spec.ts:15:3 › cases fits the viewport and renders its visual assets (883ms)
+  ✓   44 [desktop] › tests/e2e/workbench.spec.ts:63:1 › the standalone learning path ships seven lessons (384ms)
+  ✓   46 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/ has no presentation-dependent framing (323ms)
+  ✓   32 [desktop] › tests/e2e/research-workflow.spec.ts:67:1 › safety checklist has nine labeled items, resets and does not retain checks on reload (2.5s)
+  ✓   40 [desktop] › tests/e2e/visual.spec.ts:15:3 › tasks fits the viewport and renders its visual assets (1.2s)
+  ✓   45 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./ has no presentation-dependent framing (454ms)
+  ✓   48 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ has no presentation-dependent framing (342ms)
+  ✓   42 [desktop] › tests/e2e/visual.spec.ts:15:3 › safety fits the viewport and renders its visual assets (1.3s)
+  ✓   49 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/ has no presentation-dependent framing (363ms)
+  ✓   47 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ has no presentation-dependent framing (450ms)
+  ✓   50 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-skills/ has no presentation-dependent framing (529ms)
+  ✓   51 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-workflow/ has no presentation-dependent framing (460ms)
+  ✓   53 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/02-ask-before-action/ has no presentation-dependent framing (478ms)
+  ✓   52 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/01-from-chat-to-agent/ has no presentation-dependent framing (523ms)
+  ✓   55 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/05-challenge-and-review/ has no presentation-dependent framing (434ms)
+  ✓   57 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/04-checkpoints-and-tools/ has no presentation-dependent framing (451ms)
+  ✓   56 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/06-build-your-toolbox/ has no presentation-dependent framing (486ms)
+  ✓   54 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/03-context-and-indexes/ has no presentation-dependent framing (513ms)
+  ✓    1 [desktop] › tests/e2e/links.spec.ts:4:1 › all discoverable internal links resolve (5.5s)
+  ✓   59 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/agents-md/ has no presentation-dependent framing (383ms)
+  ✓   60 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ask-user-question/ has no presentation-dependent framing (343ms)
+  ✓   58 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/07-reproducible-research/ has no presentation-dependent framing (451ms)
+  ✓   61 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/chatgpt/ has no presentation-dependent framing (347ms)
+  ✓   33 [desktop] › tests/e2e/research-workflow.spec.ts:87:1 › expanded workflow and safety checklist remain accessible with no runtime errors (3.5s)
+  ✓   62 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-code/ has no presentation-dependent framing (348ms)
+  ✓   63 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-md/ has no presentation-dependent framing (330ms)
+  ✓   65 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/gemini-cli/ has no presentation-dependent framing (321ms)
+  ✓   64 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/codex/ has no presentation-dependent framing (338ms)
+  ✓   66 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/hook/ has no presentation-dependent framing (332ms)
+  ✓   68 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/insights/ has no presentation-dependent framing (307ms)
+  ✓   67 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/git-github/ has no presentation-dependent framing (348ms)
+  ✓   69 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/mcp/ has no presentation-dependent framing (304ms)
+  ✓   70 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/notebooklm/ has no presentation-dependent framing (355ms)
+  ✓   71 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/skill/ has no presentation-dependent framing (340ms)
+  ✓   73 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/algorithm-visualization/ has no presentation-dependent framing (342ms)
+  ✓   74 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/anonymous-manuscript-review/ has no presentation-dependent framing (344ms)
+  ✓   75 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/course-site-pages/ has no presentation-dependent framing (334ms)
+  ✓   72 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/subagent/ has no presentation-dependent framing (370ms)
+  ✓   27 [desktop] › tests/e2e/research-skills.spec.ts:153:1 › model delegation is directly reachable from the homepage and skill catalog (4.5s)
+  ✓   77 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/programmatic-slides/ has no presentation-dependent framing (330ms)
+  ✓   79 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/context-cache-index/ has no presentation-dependent framing (345ms)
+  ✓   78 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ask-before-action/ has no presentation-dependent framing (358ms)
+  ✓   76 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/interactive-calculus/ has no presentation-dependent framing (421ms)
+  ✓   81 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/handoff/ has no presentation-dependent framing (335ms)
+  ✓   80 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/git-checkpoint-release/ has no presentation-dependent framing (366ms)
+  ✓   83 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/six-part-brief/ has no presentation-dependent framing (347ms)
+  ✓   84 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/independent-review/ has no presentation-dependent framing (351ms)
+  ✓   85 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/usage-review/ has no presentation-dependent framing (351ms)
+  ✓   82 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/model-delegation/ has no presentation-dependent framing (409ms)
+  ✓   88 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./content-license/ has no presentation-dependent framing (234ms)
+  ✓   87 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./search/ has no presentation-dependent framing (318ms)
+  ✓   86 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./safety/ has no presentation-dependent framing (345ms)
+  ✓   89 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/workspace-rules/ has no presentation-dependent framing (316ms)
+  ✓   90 [desktop] › tests/e2e/workbench.spec.ts:84:1 › lesson seven exposes outcomes, prerequisites, tools, and two to four named references (579ms)
+  ✓   91 [desktop] › tests/e2e/workbench.spec.ts:103:1 › tool glossary filters named products and concepts with a resettable empty state (622ms)
+  ✓   96 [desktop] › tests/e2e/workbench.spec.ts:194:1 › research safety covers data, privilege, injection, secrets, publication, and policy (514ms)
+  ✓   95 [desktop] › tests/e2e/workbench.spec.ts:181:1 › case catalog shows the remaining research work and redirects retired examples (534ms)
+  ✓   97 [desktop] › tests/e2e/workbench.spec.ts:211:1 › lesson pages teach presentation concepts through named tools and a usable prompt (502ms)
+  ✓   92 [desktop] › tests/e2e/workbench.spec.ts:117:1 › tool glossary includes multi-interface agents in type and level filters (697ms)
+  ✓   99 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/01-task-specification/ redirects to ./learn/02-ask-before-action/ (466ms)
+  ✓  100 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/02-literature-evidence/ redirects to ./learn/03-context-and-indexes/ (506ms)
+  ✓   93 [desktop] › tests/e2e/workbench.spec.ts:139:1 › capability filters surface agents and source-grounded tools (808ms)
+  ✓   24 [desktop] › tests/e2e/research-skills.spec.ts:123:1 › catalog and expanded templates are accessible and fit the viewport (5.7s)
+  ✓   94 [desktop] › tests/e2e/workbench.spec.ts:166:1 › tool cards and details expose all six capability facets (817ms)
+  ✓  101 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/03-context-knowledge-base/ redirects to ./learn/03-context-and-indexes/ (450ms)
+  ✓  103 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/05-reproducibility-git/ redirects to ./learn/04-checkpoints-and-tools/ (386ms)
+  ✓  104 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/06-verification-review/ redirects to ./learn/05-challenge-and-review/ (404ms)
+  ✓  102 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/04-research-outputs/ redirects to ./learn/02-ask-before-action/ (411ms)
+  ✓  107 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/academic-writing/ redirects to ./guides/research-skills/#write (341ms)
+  ✓  105 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/07-workflow-automation/ redirects to ./learn/06-build-your-toolbox/ (401ms)
+  ✓  106 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/ redirects to ./tools/ (391ms)
+  ✘   31 [desktop] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide (5.4s)
+  ✓  108 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/claim-evidence-mapping/ redirects to ./learn/05-challenge-and-review/ (393ms)
+  ✓   98 [desktop] › tests/e2e/workbench.spec.ts:220:1 › Pagefind returns the AskUserQuestion tool result and follows its destination (995ms)
+  ✓  111 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/data-provenance/ redirects to ./learn/04-checkpoints-and-tools/ (391ms)
+  ✓  110 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/counterexample-checking/ redirects to ./learn/05-challenge-and-review/ (399ms)
+  ✓  109 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/context-management/ redirects to ./learn/03-context-and-indexes/ (461ms)
+  ✓  112 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/git-version-control/ redirects to ./tools/git-github/ (332ms)
+  ✓  115 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/skill-design/ redirects to ./tools/skill/ (355ms)
+  ✓  114 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/reproducible-research/ redirects to ./learn/04-checkpoints-and-tools/ (403ms)
+  ✓  113 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/literature-synthesis/ redirects to ./learn/03-context-and-indexes/ (440ms)
+  ✓  117 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/subagent-delegation/ redirects to ./tools/subagent/ (386ms)
+  ✓  116 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/source-verification/ redirects to ./learn/05-challenge-and-review/ (399ms)
+  ✓  118 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/task-specification/ redirects to ./learn/02-ask-before-action/ (396ms)
+  ✓  119 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/claim-citation-audit/ redirects to ./templates/independent-review/ (353ms)
+  -  127 [desktop] › tests/e2e/workbench.spec.ts:265:1 › mobile navigation opens without covering the menu control
+  ✓  120 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/literature-evidence-matrix/ redirects to ./templates/context-cache-index/ (363ms)
+  ✓  122 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/presentation-web-qa/ redirects to ./templates/git-checkpoint-release/ (370ms)
+  ✓  121 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/manuscript-review-checklist/ redirects to ./templates/independent-review/ (384ms)
+  ✓  123 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/reproducibility-checklist/ redirects to ./templates/git-checkpoint-release/ (360ms)
+  ✓  124 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-log/ redirects to ./templates/usage-review/ (363ms)
+(node:3312573) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  125 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-task-brief/ redirects to ./templates/six-part-brief/ (360ms)
+  ✓  126 [desktop] › tests/e2e/workbench.spec.ts:249:1 › templates can be copied and downloaded as Markdown (505ms)
+  ✓  134 [desktop] › tests/e2e/workbench.spec.ts:301:3 › without JavaScript › navigation and lesson content remain readable (480ms)
+(node:3312776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3312785) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  135 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/visual-verification/ redirects to ./learn/05-challenge-and-review/ (462ms)
+(node:3312898) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3312895) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3312919) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  131 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./templates/six-part-brief/ has no automatically detectable accessibility violations (1.1s)
+(node:3312942) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  130 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./tools/notebooklm/ has no automatically detectable accessibility violations (1.2s)
+  ✓  132 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./safety/ has no automatically detectable accessibility violations (1.3s)
+(node:3313125) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  129 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./learn/02-ask-before-action/ has no automatically detectable accessibility violations (1.5s)
+  ✓  128 [desktop] › tests/e2e/workbench.spec.ts:278:1 › homepage has no automatically detectable accessibility violations (1.6s)
+(node:3313182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3313264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  137 [mobile] › tests/e2e/research-skills.spec.ts:7:1 › homepage searches skills directly (862ms)
+  ✓  138 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link read selects read (688ms)
+(node:3313497) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  140 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link write selects write (691ms)
+(node:3313528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  141 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link experiment selects experiment (735ms)
+(node:3313540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  133 [desktop] › tests/e2e/workbench.spec.ts:292:1 › /tools/ has no automatically detectable accessibility violations (2.2s)
+  ✓  142 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link present selects present (828ms)
+  ✓  143 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link publish selects write (811ms)
+  ✓  145 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link automate selects plan (800ms)
+  ✓  139 [mobile] › tests/e2e/research-skills.spec.ts:18:1 › cards support searching, combining categories, resetting, and sharing (1.5s)
+  ✓  144 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds spec (1.0s)
+(node:3314138) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  146 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds evals (1.0s)
+  ✓  147 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds handoff (1.0s)
+  ✓  148 [mobile] › tests/e2e/research-skills.spec.ts:53:1 › direct card links open details and invalid filters fall back to all categories (844ms)
+  ✓  152 [mobile] › tests/e2e/research-skills.spec.ts:92:1 › lesson tables render as tables, not Markdown code (559ms)
+  ✓  153 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › context-cache-index previews, copies and downloads its Markdown (613ms)
+  ✓  154 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › independent-review previews, copies and downloads its Markdown (623ms)
+  ✓  155 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › usage-review previews, copies and downloads its Markdown (654ms)
+  ✓  156 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › handoff previews, copies and downloads its Markdown (580ms)
+  ✓  151 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds grill-me (1.2s)
+  ✓  149 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Hook (1.5s)
+  ✓  157 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › model-delegation previews, copies and downloads its Markdown (695ms)
+  ✓  161 [mobile] › tests/e2e/research-skills.spec.ts:146:3 › without JavaScript › the old tasks page offers links to the new catalog (618ms)
+  ✓  150 [mobile] › tests/e2e/research-skills.spec.ts:62:1 › guide links from lessons and templates still resolve (1.7s)
+  ✓  160 [mobile] › tests/e2e/research-skills.spec.ts:134:3 › without JavaScript › all skills and native details remain readable (1.1s)
+  ✓  159 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Colab (1.2s)
+  ✓  165 [mobile] › tests/e2e/research-workflow.spec.ts:40:1 › HTML reports are discoverable by use, category, permalink and lesson (1.1s)
+  ✓  164 [mobile] › tests/e2e/research-workflow.spec.ts:20:1 › each prompt copies its own full text and reports clipboard failure (1.3s)
+  ✓  136 [mobile] › tests/e2e/links.spec.ts:4:1 › all discoverable internal links resolve (4.1s)
+  ✓  171 [mobile] › tests/e2e/visual.spec.ts:15:3 › research-skills fits the viewport and renders its visual assets (1.5s)
+  ✓  170 [mobile] › tests/e2e/visual.spec.ts:15:3 › research-workflow fits the viewport and renders its visual assets (1.7s)
+  ✓  167 [mobile] › tests/e2e/research-workflow.spec.ts:67:1 › safety checklist has nine labeled items, resets and does not retain checks on reload (2.3s)
+  ✓  172 [mobile] › tests/e2e/visual.spec.ts:15:3 › home fits the viewport and renders its visual assets (1.8s)
+  ✓  168 [mobile] › tests/e2e/research-workflow.spec.ts:87:1 › expanded workflow and safety checklist remain accessible with no runtime errors (2.5s)
+  ✓  173 [mobile] › tests/e2e/visual.spec.ts:15:3 › lesson-7 fits the viewport and renders its visual assets (1.6s)
+  -  180 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./ has no presentation-dependent framing
+  ✓  178 [mobile] › tests/e2e/workbench.spec.ts:52:1 › homepage introduces an agent-first learning journey with three clear entry points (374ms)
+  -  181 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/ has no presentation-dependent framing
+  -  182 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ has no presentation-dependent framing
+  ✓  174 [mobile] › tests/e2e/visual.spec.ts:15:3 › tools fits the viewport and renders its visual assets (1.6s)
+  ✓  175 [mobile] › tests/e2e/visual.spec.ts:15:3 › tasks fits the viewport and renders its visual assets (1.5s)
+  ✓  179 [mobile] › tests/e2e/workbench.spec.ts:63:1 › the standalone learning path ships seven lessons (311ms)
+  -  183 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/ has no presentation-dependent framing
+  -  184 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ has no presentation-dependent framing
+  ✓  163 [mobile] › tests/e2e/research-workflow.spec.ts:4:1 › homepage stages reach the matching guide sections and existing resources (3.1s)
+  -  185 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-skills/ has no presentation-dependent framing
+  -  186 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-workflow/ has no presentation-dependent framing
+  -  188 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/02-ask-before-action/ has no presentation-dependent framing
+  -  187 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/01-from-chat-to-agent/ has no presentation-dependent framing
+  -  190 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/04-checkpoints-and-tools/ has no presentation-dependent framing
+  -  189 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/03-context-and-indexes/ has no presentation-dependent framing
+  -  192 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/05-challenge-and-review/ has no presentation-dependent framing
+  -  191 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/06-build-your-toolbox/ has no presentation-dependent framing
+  -  193 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/07-reproducible-research/ has no presentation-dependent framing
+  -  195 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ask-user-question/ has no presentation-dependent framing
+  -  194 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/agents-md/ has no presentation-dependent framing
+  -  197 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-code/ has no presentation-dependent framing
+  -  199 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/codex/ has no presentation-dependent framing
+  -  198 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-md/ has no presentation-dependent framing
+  -  196 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/chatgpt/ has no presentation-dependent framing
+  ✓  176 [mobile] › tests/e2e/visual.spec.ts:15:3 › cases fits the viewport and renders its visual assets (1.1s)
+  -  200 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/gemini-cli/ has no presentation-dependent framing
+  -  201 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/git-github/ has no presentation-dependent framing
+  -  202 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/hook/ has no presentation-dependent framing
+  -  203 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/insights/ has no presentation-dependent framing
+  -  205 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/skill/ has no presentation-dependent framing
+  -  204 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/mcp/ has no presentation-dependent framing
+  -  207 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/notebooklm/ has no presentation-dependent framing
+  -  206 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/algorithm-visualization/ has no presentation-dependent framing
+  -  208 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/subagent/ has no presentation-dependent framing
+  -  209 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/anonymous-manuscript-review/ has no presentation-dependent framing
+  -  210 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/course-site-pages/ has no presentation-dependent framing
+  -  212 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/programmatic-slides/ has no presentation-dependent framing
+  -  211 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/interactive-calculus/ has no presentation-dependent framing
+  -  215 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/git-checkpoint-release/ has no presentation-dependent framing
+  -  213 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ask-before-action/ has no presentation-dependent framing
+  -  214 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/context-cache-index/ has no presentation-dependent framing
+  -  216 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/handoff/ has no presentation-dependent framing
+  ✓  158 [mobile] › tests/e2e/research-skills.spec.ts:123:1 › catalog and expanded templates are accessible and fit the viewport (4.0s)
+  -  217 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/independent-review/ has no presentation-dependent framing
+  -  221 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/workspace-rules/ has no presentation-dependent framing
+  -  223 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./search/ has no presentation-dependent framing
+  -  219 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/model-delegation/ has no presentation-dependent framing
+  -  218 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/six-part-brief/ has no presentation-dependent framing
+  -  220 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/usage-review/ has no presentation-dependent framing
+  -  222 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./safety/ has no presentation-dependent framing
+  -  224 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./content-license/ has no presentation-dependent framing
+  ✓  232 [mobile] › tests/e2e/workbench.spec.ts:211:1 › lesson pages teach presentation concepts through named tools and a usable prompt (371ms)
+  ✓  225 [mobile] › tests/e2e/workbench.spec.ts:84:1 › lesson seven exposes outcomes, prerequisites, tools, and two to four named references (470ms)
+  ✓  228 [mobile] › tests/e2e/workbench.spec.ts:181:1 › case catalog shows the remaining research work and redirects retired examples (407ms)
+  ✓  231 [mobile] › tests/e2e/workbench.spec.ts:194:1 › research safety covers data, privilege, injection, secrets, publication, and policy (409ms)
+  ✓  177 [mobile] › tests/e2e/visual.spec.ts:15:3 › safety fits the viewport and renders its visual assets (1.8s)
+  ✓  226 [mobile] › tests/e2e/workbench.spec.ts:103:1 › tool glossary filters named products and concepts with a resettable empty state (523ms)
+  -  234 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/01-task-specification/ redirects to ./learn/02-ask-before-action/
+  -  236 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/03-context-knowledge-base/ redirects to ./learn/03-context-and-indexes/
+  -  237 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/04-research-outputs/ redirects to ./learn/02-ask-before-action/
+  -  235 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/02-literature-evidence/ redirects to ./learn/03-context-and-indexes/
+  -  238 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/05-reproducibility-git/ redirects to ./learn/04-checkpoints-and-tools/
+  ✓  227 [mobile] › tests/e2e/workbench.spec.ts:117:1 › tool glossary includes multi-interface agents in type and level filters (581ms)
+  -  239 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/06-verification-review/ redirects to ./learn/05-challenge-and-review/
+  -  240 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/07-workflow-automation/ redirects to ./learn/06-build-your-toolbox/
+  ✓  230 [mobile] › tests/e2e/workbench.spec.ts:139:1 › capability filters surface agents and source-grounded tools (647ms)
+  -  241 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/ redirects to ./tools/
+  -  242 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/academic-writing/ redirects to ./guides/research-skills/#write
+  -  243 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/claim-evidence-mapping/ redirects to ./learn/05-challenge-and-review/
+  ✓  229 [mobile] › tests/e2e/workbench.spec.ts:166:1 › tool cards and details expose all six capability facets (677ms)
+  -  244 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/context-management/ redirects to ./learn/03-context-and-indexes/
+  -  245 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/counterexample-checking/ redirects to ./learn/05-challenge-and-review/
+  -  246 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/data-provenance/ redirects to ./learn/04-checkpoints-and-tools/
+  -  247 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/git-version-control/ redirects to ./tools/git-github/
+  -  250 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/skill-design/ redirects to ./tools/skill/
+  -  249 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/reproducible-research/ redirects to ./learn/04-checkpoints-and-tools/
+  -  248 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/literature-synthesis/ redirects to ./learn/03-context-and-indexes/
+  -  251 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/source-verification/ redirects to ./learn/05-challenge-and-review/
+  -  252 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/subagent-delegation/ redirects to ./tools/subagent/
+  -  254 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/visual-verification/ redirects to ./learn/05-challenge-and-review/
+  -  253 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/task-specification/ redirects to ./learn/02-ask-before-action/
+  -  255 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/claim-citation-audit/ redirects to ./templates/independent-review/
+  -  256 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/literature-evidence-matrix/ redirects to ./templates/context-cache-index/
+  ✓  233 [mobile] › tests/e2e/workbench.spec.ts:220:1 › Pagefind returns the AskUserQuestion tool result and follows its destination (823ms)
+  -  257 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/manuscript-review-checklist/ redirects to ./templates/independent-review/
+  -  259 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/reproducibility-checklist/ redirects to ./templates/git-checkpoint-release/
+  -  258 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/presentation-web-qa/ redirects to ./templates/git-checkpoint-release/
+  -  261 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-task-brief/ redirects to ./templates/six-part-brief/
+  -  260 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-log/ redirects to ./templates/usage-review/
+  ✓  262 [mobile] › tests/e2e/workbench.spec.ts:249:1 › templates can be copied and downloaded as Markdown (412ms)
+  ✓  263 [mobile] › tests/e2e/workbench.spec.ts:265:1 › mobile navigation opens without covering the menu control (443ms)
+  ✓  270 [mobile] › tests/e2e/workbench.spec.ts:301:3 › without JavaScript › navigation and lesson content remain readable (449ms)
+  ✓  267 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./templates/six-part-brief/ has no automatically detectable accessibility violations (814ms)
+  ✓  266 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./tools/notebooklm/ has no automatically detectable accessibility violations (910ms)
+  ✘  166 [mobile] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide (5.3s)
+  ✓  268 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./safety/ has no automatically detectable accessibility violations (1.0s)
+  ✓  265 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./learn/02-ask-before-action/ has no automatically detectable accessibility violations (1.1s)
+  ✓  264 [mobile] › tests/e2e/workbench.spec.ts:278:1 › homepage has no automatically detectable accessibility violations (1.1s)
+  ✓  162 [mobile] › tests/e2e/research-skills.spec.ts:153:1 › model delegation is directly reachable from the homepage and skill catalog (6.1s)
+  ✓  269 [mobile] › tests/e2e/workbench.spec.ts:292:1 › /tools/ has no automatically detectable accessibility violations (1.4s)
+  ✘   34 [desktop] › tests/e2e/research-workflow.spec.ts:101:3 › without JavaScript › workflow prompts, resource links and checklist remain usable (30.1s)
+  ✘  169 [mobile] › tests/e2e/research-workflow.spec.ts:101:3 › without JavaScript › workflow prompts, resource links and checklist remain usable (30.2s)
+
+
+  1) [desktop] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.pagefind-ui__result-link').filter({ hasText: '依研究階段開始' }).first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.pagefind-ui__result-link').filter({ hasText: '依研究階段開始' }).first()
+
+
+      60 |   await page.goto('./search/?q=依研究階段開始');
+      61 |   const result = page.locator('.pagefind-ui__result-link').filter({ hasText: '依研究階段開始' }).first();
+    > 62 |   await expect(result).toBeVisible();
+         |                        ^
+      63 |   await result.click();
+      64 |   await expect(page.getByRole('heading', { level: 1, name: '依研究階段開始' })).toBeVisible();
+      65 | });
+        at /home/phonchi/learn_cli/graduate-ai-research-workbench/tests/e2e/research-workflow.spec.ts:62:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › tests/e2e/research-workflow.spec.ts:101:3 › without JavaScript › workflow prompts, resource links and checklist remain usable 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.check: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('[data-research-checklist]').getByRole('checkbox').first()
+        - locator resolved to <input type="checkbox" data-astro-cid-e4x2ensg=""/>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not stable
+        - retrying click action
+        - waiting 20ms
+      - element was detached from the DOM, retrying
+
+
+      108 |     await page.getByRole('link', { name: '研究安全檢核', exact: true }).click();
+      109 |     const checks = page.locator('[data-research-checklist]').getByRole('checkbox');
+    > 110 |     await checks.first().check();
+          |                          ^
+      111 |     await expect(checks.first()).toBeChecked();
+      112 |     await page.getByRole('button', { name: '清除勾選' }).click();
+      113 |     await expect(checks.first()).not.toBeChecked();
+        at /home/phonchi/learn_cli/graduate-ai-research-workbench/tests/e2e/research-workflow.spec.ts:110:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/research-workflow-without--684f5-and-checklist-remain-usable-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/research-workflow-without--684f5-and-checklist-remain-usable-desktop/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/research-workflow-without--684f5-and-checklist-remain-usable-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/research-workflow-without--684f5-and-checklist-remain-usable-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [mobile] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.pagefind-ui__result-link').filter({ hasText: '依研究階段開始' }).first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.pagefind-ui__result-link').filter({ hasText: '依研究階段開始' }).first()
+
+
+      60 |   await page.goto('./search/?q=依研究階段開始');
+      61 |   const result = page.locator('.pagefind-ui__result-link').filter({ hasText: '依研究階段開始' }).first();
+    > 62 |   await expect(result).toBeVisible();
+         |                        ^
+      63 |   await result.click();
+      64 |   await expect(page.getByRole('heading', { level: 1, name: '依研究階段開始' })).toBeVisible();
+      65 | });
+        at /home/phonchi/learn_cli/graduate-ai-research-workbench/tests/e2e/research-workflow.spec.ts:62:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile] › tests/e2e/research-workflow.spec.ts:101:3 › without JavaScript › workflow prompts, resource links and checklist remain usable 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.check: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('[data-research-checklist]').getByRole('checkbox').first()
+        - locator resolved to <input type="checkbox" data-astro-cid-e4x2ensg=""/>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not stable
+        - retrying click action
+        - waiting 20ms
+      - element was detached from the DOM, retrying
+        - locator resolved to <input type="checkbox" data-astro-cid-e4x2ensg=""/>
+
+
+      108 |     await page.getByRole('link', { name: '研究安全檢核', exact: true }).click();
+      109 |     const checks = page.locator('[data-research-checklist]').getByRole('checkbox');
+    > 110 |     await checks.first().check();
+          |                          ^
+      111 |     await expect(checks.first()).toBeChecked();
+      112 |     await page.getByRole('button', { name: '清除勾選' }).click();
+      113 |     await expect(checks.first()).not.toBeChecked();
+        at /home/phonchi/learn_cli/graduate-ai-research-workbench/tests/e2e/research-workflow.spec.ts:110:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/research-workflow-without--684f5-and-checklist-remain-usable-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/research-workflow-without--684f5-and-checklist-remain-usable-mobile/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/research-workflow-without--684f5-and-checklist-remain-usable-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/research-workflow-without--684f5-and-checklist-remain-usable-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [desktop] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+    [desktop] › tests/e2e/research-workflow.spec.ts:101:3 › without JavaScript › workflow prompts, resource links and checklist remain usable 
+    [mobile] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+    [mobile] › tests/e2e/research-workflow.spec.ts:101:3 › without JavaScript › workflow prompts, resource links and checklist remain usable 
+  74 skipped
+  192 passed (53.2s)
+
+> graduate-ai-research-workbench@0.1.0 verify
+> npm run lint && npm run test && npm run build && npm run test:e2e
+
+
+> graduate-ai-research-workbench@0.1.0 lint
+> eslint .
+
+
+> graduate-ai-research-workbench@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /home/phonchi/learn_cli/graduate-ai-research-workbench
+
+
+ Test Files  7 passed (7)
+      Tests  27 passed (27)
+   Start at  15:04:15
+   Duration  267ms (transform 230ms, setup 0ms, import 315ms, tests 290ms, environment 1ms)
+
+
+> graduate-ai-research-workbench@0.1.0 build
+> astro check && astro build && pagefind --site dist
+
+15:04:16 [content] Syncing content
+15:04:16 [content] Synced content
+15:04:16 [types] Generated 335ms
+15:04:16 [check] Getting diagnostics for Astro files in /home/phonchi/learn_cli/graduate-ai-research-workbench...
+Result (49 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
+
+15:04:23 [content] Syncing content
+15:04:23 [content] Synced content
+15:04:23 [types] Generated 319ms
+15:04:23 [build] output: "static"
+15:04:23 [build] mode: "static"
+15:04:23 [build] directory: /home/phonchi/learn_cli/graduate-ai-research-workbench/dist/
+15:04:23 [build] Collecting build info...
+15:04:23 [build] ✓ Completed in 339ms.
+15:04:23 [build] Building static entrypoints...
+15:04:23 [vite] ✓ built in 635ms
+15:04:23 [vite] ✓ built in 23ms
+15:04:23 [build] Rearranging server assets...
+
+ generating static routes 
+15:04:23   ├─ /404.html (+6ms) 
+15:04:23   ├─ /cases/document-cache/index.html (+1ms) 
+15:04:23   ├─ /cases/reproducible-experiment/index.html (+1ms) 
+15:04:23   ├─ /cases/index.html (+3ms) 
+15:04:23   ├─ /cases/algorithm-visualization/index.html (+2ms) 
+15:04:23   ├─ /cases/anonymous-manuscript-review/index.html (+2ms) 
+15:04:23   ├─ /cases/course-site-pages/index.html (+1ms) 
+15:04:23   ├─ /cases/interactive-calculus/index.html (+1ms) 
+15:04:23   ├─ /cases/programmatic-slides/index.html (+2ms) 
+15:04:23   ├─ /content-license/index.html (+2ms) 
+15:04:23   ├─ /guides/research-skills/index.html (+4ms) 
+15:04:23   ├─ /guides/research-workflow/index.html (+2ms) 
+15:04:23   ├─ /learn/01-task-specification/index.html (+1ms) 
+15:04:23   ├─ /learn/02-literature-evidence/index.html (+0ms) 
+15:04:23   ├─ /learn/03-context-knowledge-base/index.html (+0ms) 
+15:04:23   ├─ /learn/04-research-outputs/index.html (+0ms) 
+15:04:23   ├─ /learn/05-reproducibility-git/index.html (+0ms) 
+15:04:23   ├─ /learn/06-verification-review/index.html (+0ms) 
+15:04:23   ├─ /learn/07-workflow-automation/index.html (+0ms) 
+15:04:23   ├─ /learn/index.html (+2ms) 
+15:04:23   ├─ /learn/01-from-chat-to-agent/index.html (+2ms) 
+15:04:23   ├─ /learn/02-ask-before-action/index.html (+1ms) 
+15:04:23   ├─ /learn/03-context-and-indexes/index.html (+2ms) 
+15:04:23   ├─ /learn/04-checkpoints-and-tools/index.html (+2ms) 
+15:04:23   ├─ /learn/05-challenge-and-review/index.html (+1ms) 
+15:04:23   ├─ /learn/06-build-your-toolbox/index.html (+1ms) 
+15:04:23   ├─ /learn/07-reproducible-research/index.html (+1ms) 
+15:04:23   ├─ /safety/index.html (+2ms) 
+15:04:23   ├─ /search/index.html (+1ms) 
+15:04:23   ├─ /skills/academic-writing/index.html (+1ms) 
+15:04:23   ├─ /skills/claim-evidence-mapping/index.html (+0ms) 
+15:04:23   ├─ /skills/context-management/index.html (+0ms) 
+15:04:23   ├─ /skills/counterexample-checking/index.html (+0ms) 
+15:04:23   ├─ /skills/data-provenance/index.html (+0ms) 
+15:04:23   ├─ /skills/git-version-control/index.html (+0ms) 
+15:04:23   ├─ /skills/literature-synthesis/index.html (+0ms) 
+15:04:23   ├─ /skills/reproducible-research/index.html (+0ms) 
+15:04:23   ├─ /skills/skill-design/index.html (+0ms) 
+15:04:23   ├─ /skills/source-verification/index.html (+0ms) 
+15:04:23   ├─ /skills/subagent-delegation/index.html (+0ms) 
+15:04:23   ├─ /skills/task-specification/index.html (+0ms) 
+15:04:23   ├─ /skills/visual-verification/index.html (+0ms) 
+15:04:23   ├─ /skills/index.html (+0ms) 
+15:04:23   ├─ /tasks/index.html (+1ms) 
+15:04:23   ├─ /templates/claim-citation-audit/index.html (+1ms) 
+15:04:23   ├─ /templates/literature-evidence-matrix/index.html (+0ms) 
+15:04:23   ├─ /templates/manuscript-review-checklist/index.html (+0ms) 
+15:04:23   ├─ /templates/presentation-web-qa/index.html (+0ms) 
+15:04:23   ├─ /templates/reproducibility-checklist/index.html (+0ms) 
+15:04:23   ├─ /templates/research-log/index.html (+0ms) 
+15:04:23   ├─ /templates/research-task-brief/index.html (+0ms) 
+15:04:23   ├─ /templates/index.html (+2ms) 
+15:04:23   ├─ /templates/ask-before-action/index.html (+1ms) 
+15:04:23   ├─ /templates/context-cache-index/index.html (+1ms) 
+15:04:23   ├─ /templates/git-checkpoint-release/index.html (+2ms) 
+15:04:23   ├─ /templates/handoff/index.html (+1ms) 
+15:04:23   ├─ /templates/independent-review/index.html (+1ms) 
+15:04:23   ├─ /templates/model-delegation/index.html (+10ms) 
+15:04:23   ├─ /templates/six-part-brief/index.html (+1ms) 
+15:04:23   ├─ /templates/usage-review/index.html (+1ms) 
+15:04:23   ├─ /templates/workspace-rules/index.html (+1ms) 
+15:04:23   ├─ /tools/index.html (+2ms) 
+15:04:23   ├─ /tools/agents-md/index.html (+1ms) 
+15:04:23   ├─ /tools/ask-user-question/index.html (+1ms) 
+15:04:23   ├─ /tools/chatgpt/index.html (+1ms) 
+15:04:23   ├─ /tools/claude-code/index.html (+1ms) 
+15:04:23   ├─ /tools/claude-md/index.html (+1ms) 
+15:04:23   ├─ /tools/codex/index.html (+1ms) 
+15:04:23   ├─ /tools/gemini-cli/index.html (+1ms) 
+15:04:23   ├─ /tools/git-github/index.html (+1ms) 
+15:04:23   ├─ /tools/hook/index.html (+1ms) 
+15:04:23   ├─ /tools/insights/index.html (+1ms) 
+15:04:23   ├─ /tools/mcp/index.html (+1ms) 
+15:04:23   ├─ /tools/notebooklm/index.html (+1ms) 
+15:04:23   ├─ /tools/skill/index.html (+1ms) 
+15:04:23   ├─ /tools/subagent/index.html (+1ms) 
+15:04:23   ├─ /index.html (+3ms) 
+15:04:23 ✓ Completed in 119ms.
+
+15:04:23 [build] ✓ Completed in 800ms.
+15:04:23 [build] 47 page(s) built in 1.14s
+15:04:23 [build] Complete!
+
+Running Pagefind v1.5.2 (Extended)
+Running from: "/home/phonchi/learn_cli/graduate-ai-research-workbench"
+Source:       "dist"
+Output:       "dist/pagefind"
+
+[Walking source directory]
+Found 77 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+30 pages found without an <html> element. 
+Pages without an outer <html> element will not be processed by default. 
+If adding this element is not possible, use the root selector config to target a different root element.
+  * "/skills/source-verification/" has no <html> element
+  * "/skills/" has no <html> element
+  * "/skills/visual-verification/" has no <html> element
+  * "/skills/data-provenance/" has no <html> element
+  * "/skills/subagent-delegation/" has no <html> element
+  * "/skills/counterexample-checking/" has no <html> element
+  * "/skills/context-management/" has no <html> element
+  * "/skills/skill-design/" has no <html> element
+  * "/skills/literature-synthesis/" has no <html> element
+  * "/skills/git-version-control/" has no <html> element
+  * "/skills/reproducible-research/" has no <html> element
+  * "/skills/task-specification/" has no <html> element
+  * "/skills/claim-evidence-mapping/" has no <html> element
+  * "/skills/academic-writing/" has no <html> element
+  * "/cases/document-cache/" has no <html> element
+  * "/cases/reproducible-experiment/" has no <html> element
+  * "/templates/manuscript-review-checklist/" has no <html> element
+  * "/templates/claim-citation-audit/" has no <html> element
+  * "/templates/reproducibility-checklist/" has no <html> element
+  * "/templates/research-log/" has no <html> element
+  * "/templates/research-task-brief/" has no <html> element
+  * "/templates/presentation-web-qa/" has no <html> element
+  * "/templates/literature-evidence-matrix/" has no <html> element
+  * "/learn/06-verification-review/" has no <html> element
+  * "/learn/02-literature-evidence/" has no <html> element
+  * "/learn/04-research-outputs/" has no <html> element
+  * "/learn/03-context-knowledge-base/" has no <html> element
+  * "/learn/05-reproducibility-git/" has no <html> element
+  * "/learn/01-task-specification/" has no <html> element
+  * "/learn/07-workflow-automation/" has no <html> element
+
+[Reading languages]
+Discovered 1 language: zh-hant
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 45 pages
+  Indexed 1798 words
+  Indexed 0 filters
+  Indexed 0 sorts
+Note: Pagefind doesn't support stemming for the language zh-hant. 
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh-hant. 
+Search will still work, but will not match across root words.
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│  Pagefind found references to the Default UI (pagefind-ui.js)           │
+│  on your site. The Default UI is supported and will continue            │
+│  to work.                                                               │
+│                                                                         │
+│  As of 1.5.0, if you are setting up a new integration, use the          │
+│  Component UI instead. It includes a search modal, better               │
+│  accessibility and customization: https://pagefind.app/docs/search-ui/  │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Finished in 0.828 seconds
+
+> graduate-ai-research-workbench@0.1.0 test:e2e
+> playwright test
+
+[WebServer] (node:3322314) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3322601) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 30 pages found without an <html> element. 
+[WebServer] Pages without an outer <html> element will not be processed by default. 
+[WebServer] If adding this element is not possible, use the root selector config to target a different root element.
+[WebServer]   * "/skills/source-verification/" has no <html> element
+[WebServer]   * "/skills/" has no <html> element
+[WebServer]   * "/skills/visual-verification/" has no <html> element
+[WebServer]   * "/skills/data-provenance/" has no <html> element
+[WebServer]   * "/skills/subagent-delegation/" has no <html> element
+[WebServer]   * "/skills/counterexample-checking/" has no <html> element
+[WebServer]   * "/skills/context-management/" has no <html> element
+[WebServer]   * "/skills/skill-design/" has no <html> element
+[WebServer]   * "/skills/literature-synthesis/" has no <html> element
+[WebServer]   * "/skills/git-version-control/" has no <html> element
+[WebServer]   * "/skills/reproducible-research/" has no <html> element
+[WebServer]   * "/skills/task-specification/" has no <html> element
+[WebServer]   * "/skills/claim-evidence-mapping/" has no <html> element
+[WebServer]   * "/skills/academic-writing/" has no <html> element
+[WebServer]   * "/cases/document-cache/" has no <html> element
+[WebServer]   * "/cases/reproducible-experiment/" has no <html> element
+[WebServer]   * "/templates/manuscript-review-checklist/" has no <html> element
+[WebServer]   * "/templates/claim-citation-audit/" has no <html> element
+[WebServer]   * "/templates/reproducibility-checklist/" has no <html> element
+[WebServer]   * "/templates/research-log/" has no <html> element
+[WebServer]   * "/templates/research-task-brief/" has no <html> element
+[WebServer]   * "/templates/presentation-web-qa/" has no <html> element
+[WebServer]   * "/templates/literature-evidence-matrix/" has no <html> element
+[WebServer]   * "/learn/06-verification-review/" has no <html> element
+[WebServer]   * "/learn/02-literature-evidence/" has no <html> element
+[WebServer]   * "/learn/04-research-outputs/" has no <html> element
+[WebServer]   * "/learn/03-context-knowledge-base/" has no <html> element
+[WebServer]   * "/learn/05-reproducibility-git/" has no <html> element
+[WebServer]   * "/learn/01-task-specification/" has no <html> element
+[WebServer]   * "/learn/07-workflow-automation/" has no <html> element
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] (node:3322841) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 270 tests using 14 workers
+
+(node:3322920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322919) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322926) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322933) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322970) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322946) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322977) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3323002) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3323003) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3322996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    4 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link present selects present (886ms)
+  ✓   12 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link experiment selects experiment (735ms)
+  ✓    5 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link publish selects write (883ms)
+  ✓    3 [desktop] › tests/e2e/research-skills.spec.ts:53:1 › direct card links open details and invalid filters fall back to all categories (914ms)
+  ✓   13 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link read selects read (792ms)
+  ✓    2 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link write selects write (948ms)
+  ✓    6 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link automate selects plan (920ms)
+  ✓    8 [desktop] › tests/e2e/research-skills.spec.ts:7:1 › homepage searches skills directly (1.1s)
+  ✓    7 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds evals (1.3s)
+  ✓    9 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds grill-me (1.3s)
+  ✓   14 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds spec (1.2s)
+  ✓   18 [desktop] › tests/e2e/research-skills.spec.ts:92:1 › lesson tables render as tables, not Markdown code (558ms)
+  ✓   10 [desktop] › tests/e2e/research-skills.spec.ts:18:1 › cards support searching, combining categories, resetting, and sharing (1.4s)
+  ✓   19 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › context-cache-index previews, copies and downloads its Markdown (686ms)
+  ✓   20 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › independent-review previews, copies and downloads its Markdown (720ms)
+  ✓   21 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › usage-review previews, copies and downloads its Markdown (698ms)
+  ✓   22 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › handoff previews, copies and downloads its Markdown (711ms)
+  ✓   16 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Hook (1.0s)
+  ✓   15 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds handoff (1.1s)
+  ✓   17 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Colab (1.1s)
+  ✓   11 [desktop] › tests/e2e/research-skills.spec.ts:62:1 › guide links from lessons and templates still resolve (2.0s)
+  ✓   26 [desktop] › tests/e2e/research-skills.spec.ts:146:3 › without JavaScript › the old tasks page offers links to the new catalog (550ms)
+  ✓   23 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › model-delegation previews, copies and downloads its Markdown (712ms)
+  ✓   25 [desktop] › tests/e2e/research-skills.spec.ts:134:3 › without JavaScript › all skills and native details remain readable (1.1s)
+  ✓   29 [desktop] › tests/e2e/research-workflow.spec.ts:40:1 › HTML reports are discoverable by use, category, permalink and lesson (1.3s)
+  ✓   30 [desktop] › tests/e2e/research-workflow.spec.ts:20:1 › each prompt copies its own full text and reports clipboard failure (1.5s)
+  ✓   36 [desktop] › tests/e2e/visual.spec.ts:15:3 › research-skills fits the viewport and renders its visual assets (1.2s)
+  ✓   35 [desktop] › tests/e2e/visual.spec.ts:15:3 › research-workflow fits the viewport and renders its visual assets (1.3s)
+  ✓   37 [desktop] › tests/e2e/visual.spec.ts:15:3 › home fits the viewport and renders its visual assets (1.2s)
+  ✓   38 [desktop] › tests/e2e/visual.spec.ts:15:3 › lesson-7 fits the viewport and renders its visual assets (1.1s)
+  ✓   43 [desktop] › tests/e2e/workbench.spec.ts:52:1 › homepage introduces an agent-first learning journey with three clear entry points (433ms)
+  ✓   28 [desktop] › tests/e2e/research-workflow.spec.ts:4:1 › homepage stages reach the matching guide sections and existing resources (2.2s)
+  ✓   39 [desktop] › tests/e2e/visual.spec.ts:15:3 › tools fits the viewport and renders its visual assets (941ms)
+  ✓   44 [desktop] › tests/e2e/workbench.spec.ts:63:1 › the standalone learning path ships seven lessons (327ms)
+  ✓   41 [desktop] › tests/e2e/visual.spec.ts:15:3 › cases fits the viewport and renders its visual assets (891ms)
+  ✓   46 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/ has no presentation-dependent framing (304ms)
+  ✓   45 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./ has no presentation-dependent framing (408ms)
+  ✓   40 [desktop] › tests/e2e/visual.spec.ts:15:3 › tasks fits the viewport and renders its visual assets (1.1s)
+  ✓   48 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/ has no presentation-dependent framing (325ms)
+  ✓   47 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ has no presentation-dependent framing (427ms)
+  ✓   32 [desktop] › tests/e2e/research-workflow.spec.ts:69:1 › safety checklist has nine labeled items, resets and does not retain checks on reload (2.5s)
+  ✓   50 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ has no presentation-dependent framing (344ms)
+  ✓   42 [desktop] › tests/e2e/visual.spec.ts:15:3 › safety fits the viewport and renders its visual assets (1.2s)
+  ✓   34 [desktop] › tests/e2e/research-workflow.spec.ts:103:3 › without JavaScript › workflow prompts, resource links and checklist remain usable (2.6s)
+  ✓   51 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-workflow/ has no presentation-dependent framing (402ms)
+  ✓   49 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-skills/ has no presentation-dependent framing (503ms)
+  ✓   52 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/01-from-chat-to-agent/ has no presentation-dependent framing (458ms)
+  ✓   53 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/02-ask-before-action/ has no presentation-dependent framing (424ms)
+  ✓    1 [desktop] › tests/e2e/links.spec.ts:4:1 › all discoverable internal links resolve (4.9s)
+  ✓   55 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/04-checkpoints-and-tools/ has no presentation-dependent framing (374ms)
+  ✓   54 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/03-context-and-indexes/ has no presentation-dependent framing (485ms)
+  ✓   56 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/05-challenge-and-review/ has no presentation-dependent framing (398ms)
+  ✓   59 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/agents-md/ has no presentation-dependent framing (328ms)
+  ✓   33 [desktop] › tests/e2e/research-workflow.spec.ts:89:1 › expanded workflow and safety checklist remain accessible with no runtime errors (3.1s)
+  ✓   60 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ask-user-question/ has no presentation-dependent framing (315ms)
+  ✓   58 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/07-reproducible-research/ has no presentation-dependent framing (387ms)
+  ✓   57 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/06-build-your-toolbox/ has no presentation-dependent framing (427ms)
+  ✓   62 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-code/ has no presentation-dependent framing (320ms)
+  ✓   61 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/chatgpt/ has no presentation-dependent framing (344ms)
+  ✓   63 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/codex/ has no presentation-dependent framing (315ms)
+  ✓   65 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/gemini-cli/ has no presentation-dependent framing (297ms)
+  ✓   64 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-md/ has no presentation-dependent framing (342ms)
+  ✓   66 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/git-github/ has no presentation-dependent framing (296ms)
+  ✓   67 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/hook/ has no presentation-dependent framing (335ms)
+  ✓   69 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/notebooklm/ has no presentation-dependent framing (305ms)
+  ✓   70 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/insights/ has no presentation-dependent framing (310ms)
+  ✓   68 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/mcp/ has no presentation-dependent framing (322ms)
+  ✓   71 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/skill/ has no presentation-dependent framing (353ms)
+  ✓   72 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/subagent/ has no presentation-dependent framing (342ms)
+  ✓   73 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/algorithm-visualization/ has no presentation-dependent framing (349ms)
+  ✓   74 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/anonymous-manuscript-review/ has no presentation-dependent framing (326ms)
+  ✓   75 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/course-site-pages/ has no presentation-dependent framing (328ms)
+  ✓   76 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/interactive-calculus/ has no presentation-dependent framing (374ms)
+  ✓   77 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/programmatic-slides/ has no presentation-dependent framing (354ms)
+  ✓   81 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/handoff/ has no presentation-dependent framing (299ms)
+  ✓   79 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/context-cache-index/ has no presentation-dependent framing (316ms)
+  ✓   78 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ask-before-action/ has no presentation-dependent framing (338ms)
+  ✓   80 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/git-checkpoint-release/ has no presentation-dependent framing (333ms)
+  ✓   82 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/independent-review/ has no presentation-dependent framing (375ms)
+  ✓   84 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/six-part-brief/ has no presentation-dependent framing (310ms)
+  ✓   83 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/model-delegation/ has no presentation-dependent framing (381ms)
+  ✓   85 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/usage-review/ has no presentation-dependent framing (328ms)
+  ✓   86 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/workspace-rules/ has no presentation-dependent framing (311ms)
+  ✓   89 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./content-license/ has no presentation-dependent framing (243ms)
+  ✓   88 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./search/ has no presentation-dependent framing (302ms)
+  ✓   87 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./safety/ has no presentation-dependent framing (331ms)
+  ✓   90 [desktop] › tests/e2e/workbench.spec.ts:84:1 › lesson seven exposes outcomes, prerequisites, tools, and two to four named references (536ms)
+  ✓   91 [desktop] › tests/e2e/workbench.spec.ts:103:1 › tool glossary filters named products and concepts with a resettable empty state (605ms)
+  ✓   27 [desktop] › tests/e2e/research-skills.spec.ts:153:1 › model delegation is directly reachable from the homepage and skill catalog (4.8s)
+  ✓   97 [desktop] › tests/e2e/workbench.spec.ts:211:1 › lesson pages teach presentation concepts through named tools and a usable prompt (437ms)
+  ✓   92 [desktop] › tests/e2e/workbench.spec.ts:117:1 › tool glossary includes multi-interface agents in type and level filters (679ms)
+  ✓   96 [desktop] › tests/e2e/workbench.spec.ts:194:1 › research safety covers data, privilege, injection, secrets, publication, and policy (468ms)
+  ✓  100 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/02-literature-evidence/ redirects to ./learn/03-context-and-indexes/ (405ms)
+  ✓   99 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/01-task-specification/ redirects to ./learn/02-ask-before-action/ (436ms)
+  ✓   95 [desktop] › tests/e2e/workbench.spec.ts:181:1 › case catalog shows the remaining research work and redirects retired examples (527ms)
+  ✓   93 [desktop] › tests/e2e/workbench.spec.ts:139:1 › capability filters surface agents and source-grounded tools (819ms)
+  ✓  101 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/03-context-knowledge-base/ redirects to ./learn/03-context-and-indexes/ (420ms)
+  ✓  102 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/04-research-outputs/ redirects to ./learn/02-ask-before-action/ (367ms)
+  ✓   94 [desktop] › tests/e2e/workbench.spec.ts:166:1 › tool cards and details expose all six capability facets (833ms)
+  ✓   24 [desktop] › tests/e2e/research-skills.spec.ts:123:1 › catalog and expanded templates are accessible and fit the viewport (5.4s)
+  ✓  103 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/05-reproducibility-git/ redirects to ./learn/04-checkpoints-and-tools/ (390ms)
+  ✓  104 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/06-verification-review/ redirects to ./learn/05-challenge-and-review/ (372ms)
+  ✓  107 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/academic-writing/ redirects to ./guides/research-skills/#write (372ms)
+  ✓  106 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/ redirects to ./tools/ (403ms)
+  ✓  105 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/07-workflow-automation/ redirects to ./learn/06-build-your-toolbox/ (411ms)
+  ✓  108 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/claim-evidence-mapping/ redirects to ./learn/05-challenge-and-review/ (419ms)
+  ✓  109 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/context-management/ redirects to ./learn/03-context-and-indexes/ (442ms)
+  ✓   98 [desktop] › tests/e2e/workbench.spec.ts:220:1 › Pagefind returns the AskUserQuestion tool result and follows its destination (967ms)
+  ✓  112 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/git-version-control/ redirects to ./tools/git-github/ (332ms)
+  ✓  110 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/counterexample-checking/ redirects to ./learn/05-challenge-and-review/ (395ms)
+  ✓  111 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/data-provenance/ redirects to ./learn/04-checkpoints-and-tools/ (376ms)
+  ✓  115 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/skill-design/ redirects to ./tools/skill/ (343ms)
+  ✓  113 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/literature-synthesis/ redirects to ./learn/03-context-and-indexes/ (434ms)
+  ✓  114 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/reproducible-research/ redirects to ./learn/04-checkpoints-and-tools/ (391ms)
+  ✓  117 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/subagent-delegation/ redirects to ./tools/subagent/ (363ms)
+  ✓  116 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/source-verification/ redirects to ./learn/05-challenge-and-review/ (382ms)
+  ✓  120 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/claim-citation-audit/ redirects to ./templates/independent-review/ (315ms)
+  ✓  119 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/visual-verification/ redirects to ./learn/05-challenge-and-review/ (356ms)
+  ✓  118 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/task-specification/ redirects to ./learn/02-ask-before-action/ (377ms)
+  ✓  121 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/literature-evidence-matrix/ redirects to ./templates/context-cache-index/ (319ms)
+  ✓  122 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/manuscript-review-checklist/ redirects to ./templates/independent-review/ (337ms)
+  -  128 [desktop] › tests/e2e/workbench.spec.ts:265:1 › mobile navigation opens without covering the menu control
+  ✓  123 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/presentation-web-qa/ redirects to ./templates/git-checkpoint-release/ (337ms)
+  ✓  124 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/reproducibility-checklist/ redirects to ./templates/git-checkpoint-release/ (329ms)
+  ✓  125 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-log/ redirects to ./templates/usage-review/ (315ms)
+  ✓  126 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-task-brief/ redirects to ./templates/six-part-brief/ (316ms)
+  ✓  127 [desktop] › tests/e2e/workbench.spec.ts:249:1 › templates can be copied and downloaded as Markdown (426ms)
+  ✓  135 [desktop] › tests/e2e/workbench.spec.ts:301:3 › without JavaScript › navigation and lesson content remain readable (437ms)
+(node:3326211) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3326248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3326270) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3326257) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3326290) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3326350) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   31 [desktop] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide (6.1s)
+(node:3326385) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  132 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./templates/six-part-brief/ has no automatically detectable accessibility violations (1.1s)
+  ✓  131 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./tools/notebooklm/ has no automatically detectable accessibility violations (1.2s)
+  ✓  133 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./safety/ has no automatically detectable accessibility violations (1.3s)
+(node:3326757) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  130 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./learn/02-ask-before-action/ has no automatically detectable accessibility violations (1.6s)
+(node:3326879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  129 [desktop] › tests/e2e/workbench.spec.ts:278:1 › homepage has no automatically detectable accessibility violations (1.7s)
+(node:3326963) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  138 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link read selects read (800ms)
+  ✓  140 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link write selects write (775ms)
+  ✓  137 [mobile] › tests/e2e/research-skills.spec.ts:7:1 › homepage searches skills directly (930ms)
+  ✓  141 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link experiment selects experiment (743ms)
+(node:3327047) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  142 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link present selects present (868ms)
+(node:3327170) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3327262) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  134 [desktop] › tests/e2e/workbench.spec.ts:292:1 › /tools/ has no automatically detectable accessibility violations (2.4s)
+  ✓  143 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link publish selects write (755ms)
+  ✓  139 [mobile] › tests/e2e/research-skills.spec.ts:18:1 › cards support searching, combining categories, resetting, and sharing (1.6s)
+  ✓  145 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds handoff (998ms)
+  ✓  151 [mobile] › tests/e2e/research-skills.spec.ts:92:1 › lesson tables render as tables, not Markdown code (599ms)
+  ✓  144 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds evals (1.1s)
+  ✓  146 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link automate selects plan (897ms)
+  ✓  147 [mobile] › tests/e2e/research-skills.spec.ts:53:1 › direct card links open details and invalid filters fall back to all categories (835ms)
+  ✓  148 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Hook (1.0s)
+(node:3327677) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  154 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › independent-review previews, copies and downloads its Markdown (712ms)
+  ✓  155 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › usage-review previews, copies and downloads its Markdown (699ms)
+  ✓  156 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › handoff previews, copies and downloads its Markdown (607ms)
+  ✓  157 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › model-delegation previews, copies and downloads its Markdown (701ms)
+  ✓  149 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Colab (1.6s)
+  ✓  160 [mobile] › tests/e2e/research-skills.spec.ts:146:3 › without JavaScript › the old tasks page offers links to the new catalog (635ms)
+  ✓  152 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds grill-me (1.2s)
+  ✓  159 [mobile] › tests/e2e/research-skills.spec.ts:134:3 › without JavaScript › all skills and native details remain readable (1.0s)
+  ✓  150 [mobile] › tests/e2e/research-skills.spec.ts:62:1 › guide links from lessons and templates still resolve (1.8s)
+  ✓  162 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › context-cache-index previews, copies and downloads its Markdown (809ms)
+  ✓  153 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds spec (1.6s)
+  ✓  165 [mobile] › tests/e2e/research-workflow.spec.ts:40:1 › HTML reports are discoverable by use, category, permalink and lesson (1.1s)
+  ✓  164 [mobile] › tests/e2e/research-workflow.spec.ts:20:1 › each prompt copies its own full text and reports clipboard failure (1.2s)
+  ✓  136 [mobile] › tests/e2e/links.spec.ts:4:1 › all discoverable internal links resolve (4.1s)
+  ✓  170 [mobile] › tests/e2e/visual.spec.ts:15:3 › research-workflow fits the viewport and renders its visual assets (1.7s)
+  ✓  171 [mobile] › tests/e2e/visual.spec.ts:15:3 › research-skills fits the viewport and renders its visual assets (1.6s)
+  ✓  167 [mobile] › tests/e2e/research-workflow.spec.ts:69:1 › safety checklist has nine labeled items, resets and does not retain checks on reload (2.2s)
+  ✓  173 [mobile] › tests/e2e/visual.spec.ts:15:3 › lesson-7 fits the viewport and renders its visual assets (1.6s)
+  ✓  172 [mobile] › tests/e2e/visual.spec.ts:15:3 › home fits the viewport and renders its visual assets (1.8s)
+  ✓  176 [mobile] › tests/e2e/visual.spec.ts:15:3 › cases fits the viewport and renders its visual assets (1.1s)
+  -  180 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./ has no presentation-dependent framing
+  -  181 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/ has no presentation-dependent framing
+  ✓  178 [mobile] › tests/e2e/workbench.spec.ts:52:1 › homepage introduces an agent-first learning journey with three clear entry points (445ms)
+  ✓  169 [mobile] › tests/e2e/research-workflow.spec.ts:103:3 › without JavaScript › workflow prompts, resource links and checklist remain usable (2.5s)
+  -  182 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/ has no presentation-dependent framing
+  ✓  179 [mobile] › tests/e2e/workbench.spec.ts:63:1 › the standalone learning path ships seven lessons (342ms)
+  ✓  168 [mobile] › tests/e2e/research-workflow.spec.ts:89:1 › expanded workflow and safety checklist remain accessible with no runtime errors (2.6s)
+  -  183 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ has no presentation-dependent framing
+  -  184 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ has no presentation-dependent framing
+  ✓  175 [mobile] › tests/e2e/visual.spec.ts:15:3 › tasks fits the viewport and renders its visual assets (1.6s)
+  -  185 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-skills/ has no presentation-dependent framing
+  -  186 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/01-from-chat-to-agent/ has no presentation-dependent framing
+  ✓  174 [mobile] › tests/e2e/visual.spec.ts:15:3 › tools fits the viewport and renders its visual assets (1.7s)
+  -  188 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-workflow/ has no presentation-dependent framing
+  -  187 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/02-ask-before-action/ has no presentation-dependent framing
+  -  189 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/03-context-and-indexes/ has no presentation-dependent framing
+  ✓  163 [mobile] › tests/e2e/research-workflow.spec.ts:4:1 › homepage stages reach the matching guide sections and existing resources (3.0s)
+  -  190 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/04-checkpoints-and-tools/ has no presentation-dependent framing
+  -  191 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/05-challenge-and-review/ has no presentation-dependent framing
+  -  192 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/06-build-your-toolbox/ has no presentation-dependent framing
+  -  193 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/07-reproducible-research/ has no presentation-dependent framing
+  -  194 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/agents-md/ has no presentation-dependent framing
+  -  196 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-code/ has no presentation-dependent framing
+  -  197 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/chatgpt/ has no presentation-dependent framing
+  -  198 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-md/ has no presentation-dependent framing
+  -  199 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/gemini-cli/ has no presentation-dependent framing
+  -  195 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ask-user-question/ has no presentation-dependent framing
+  -  200 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/codex/ has no presentation-dependent framing
+  -  201 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/git-github/ has no presentation-dependent framing
+  -  202 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/hook/ has no presentation-dependent framing
+  -  203 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/insights/ has no presentation-dependent framing
+  -  204 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/mcp/ has no presentation-dependent framing
+  -  205 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/notebooklm/ has no presentation-dependent framing
+  -  206 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/skill/ has no presentation-dependent framing
+  -  207 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/subagent/ has no presentation-dependent framing
+  -  208 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/anonymous-manuscript-review/ has no presentation-dependent framing
+  -  209 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/algorithm-visualization/ has no presentation-dependent framing
+  -  210 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/course-site-pages/ has no presentation-dependent framing
+  -  211 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/interactive-calculus/ has no presentation-dependent framing
+  -  212 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/programmatic-slides/ has no presentation-dependent framing
+  -  213 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ask-before-action/ has no presentation-dependent framing
+  -  219 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/six-part-brief/ has no presentation-dependent framing
+  -  214 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/git-checkpoint-release/ has no presentation-dependent framing
+  -  216 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/handoff/ has no presentation-dependent framing
+  -  218 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/model-delegation/ has no presentation-dependent framing
+  -  217 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/independent-review/ has no presentation-dependent framing
+  -  215 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/context-cache-index/ has no presentation-dependent framing
+  -  221 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./safety/ has no presentation-dependent framing
+  -  220 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/usage-review/ has no presentation-dependent framing
+  -  222 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/workspace-rules/ has no presentation-dependent framing
+  -  224 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./content-license/ has no presentation-dependent framing
+  -  223 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./search/ has no presentation-dependent framing
+  -  234 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/01-task-specification/ redirects to ./learn/02-ask-before-action/
+  -  235 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/02-literature-evidence/ redirects to ./learn/03-context-and-indexes/
+  ✓  158 [mobile] › tests/e2e/research-skills.spec.ts:123:1 › catalog and expanded templates are accessible and fit the viewport (4.4s)
+  ✓  230 [mobile] › tests/e2e/workbench.spec.ts:181:1 › case catalog shows the remaining research work and redirects retired examples (429ms)
+  ✓  232 [mobile] › tests/e2e/workbench.spec.ts:211:1 › lesson pages teach presentation concepts through named tools and a usable prompt (409ms)
+  ✓  225 [mobile] › tests/e2e/workbench.spec.ts:84:1 › lesson seven exposes outcomes, prerequisites, tools, and two to four named references (514ms)
+  -  236 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/03-context-knowledge-base/ redirects to ./learn/03-context-and-indexes/
+  ✓  231 [mobile] › tests/e2e/workbench.spec.ts:194:1 › research safety covers data, privilege, injection, secrets, publication, and policy (453ms)
+  ✓  227 [mobile] › tests/e2e/workbench.spec.ts:117:1 › tool glossary includes multi-interface agents in type and level filters (602ms)
+  ✓  226 [mobile] › tests/e2e/workbench.spec.ts:103:1 › tool glossary filters named products and concepts with a resettable empty state (609ms)
+  -  238 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/05-reproducibility-git/ redirects to ./learn/04-checkpoints-and-tools/
+  -  237 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/04-research-outputs/ redirects to ./learn/02-ask-before-action/
+  -  240 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/07-workflow-automation/ redirects to ./learn/06-build-your-toolbox/
+  -  239 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/06-verification-review/ redirects to ./learn/05-challenge-and-review/
+  -  241 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/ redirects to ./tools/
+  -  242 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/academic-writing/ redirects to ./guides/research-skills/#write
+  ✓  228 [mobile] › tests/e2e/workbench.spec.ts:139:1 › capability filters surface agents and source-grounded tools (735ms)
+  -  243 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/claim-evidence-mapping/ redirects to ./learn/05-challenge-and-review/
+  ✓  177 [mobile] › tests/e2e/visual.spec.ts:15:3 › safety fits the viewport and renders its visual assets (1.9s)
+  -  246 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/data-provenance/ redirects to ./learn/04-checkpoints-and-tools/
+  -  245 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/counterexample-checking/ redirects to ./learn/05-challenge-and-review/
+  -  244 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/context-management/ redirects to ./learn/03-context-and-indexes/
+  ✓  229 [mobile] › tests/e2e/workbench.spec.ts:166:1 › tool cards and details expose all six capability facets (767ms)
+  -  249 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/literature-synthesis/ redirects to ./learn/03-context-and-indexes/
+  -  247 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/git-version-control/ redirects to ./tools/git-github/
+  -  248 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/reproducible-research/ redirects to ./learn/04-checkpoints-and-tools/
+  -  250 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/skill-design/ redirects to ./tools/skill/
+  -  252 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/subagent-delegation/ redirects to ./tools/subagent/
+  -  251 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/source-verification/ redirects to ./learn/05-challenge-and-review/
+  -  257 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/manuscript-review-checklist/ redirects to ./templates/independent-review/
+  -  256 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/task-specification/ redirects to ./learn/02-ask-before-action/
+  -  254 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/claim-citation-audit/ redirects to ./templates/independent-review/
+  -  253 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/visual-verification/ redirects to ./learn/05-challenge-and-review/
+  -  255 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/literature-evidence-matrix/ redirects to ./templates/context-cache-index/
+  -  259 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/reproducibility-checklist/ redirects to ./templates/git-checkpoint-release/
+  -  258 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/presentation-web-qa/ redirects to ./templates/git-checkpoint-release/
+  -  260 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-log/ redirects to ./templates/usage-review/
+  -  261 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-task-brief/ redirects to ./templates/six-part-brief/
+  ✓  233 [mobile] › tests/e2e/workbench.spec.ts:220:1 › Pagefind returns the AskUserQuestion tool result and follows its destination (865ms)
+  ✓  262 [mobile] › tests/e2e/workbench.spec.ts:249:1 › templates can be copied and downloaded as Markdown (448ms)
+  ✓  263 [mobile] › tests/e2e/workbench.spec.ts:265:1 › mobile navigation opens without covering the menu control (464ms)
+  ✓  270 [mobile] › tests/e2e/workbench.spec.ts:301:3 › without JavaScript › navigation and lesson content remain readable (436ms)
+  ✓  267 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./templates/six-part-brief/ has no automatically detectable accessibility violations (826ms)
+  ✓  266 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./tools/notebooklm/ has no automatically detectable accessibility violations (901ms)
+  ✓  268 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./safety/ has no automatically detectable accessibility violations (1.0s)
+  ✓  264 [mobile] › tests/e2e/workbench.spec.ts:278:1 › homepage has no automatically detectable accessibility violations (1.1s)
+  ✓  265 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./learn/02-ask-before-action/ has no automatically detectable accessibility violations (1.1s)
+  ✓  161 [mobile] › tests/e2e/research-skills.spec.ts:153:1 › model delegation is directly reachable from the homepage and skill catalog (6.1s)
+  ✓  269 [mobile] › tests/e2e/workbench.spec.ts:292:1 › /tools/ has no automatically detectable accessibility violations (1.4s)
+  ✘  166 [mobile] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide (5.9s)
+
+
+  1) [desktop] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: '依研究階段開始', level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByRole('heading', { name: '依研究階段開始', level: 1 })
+
+
+      64 |   await expect(result).toBeVisible();
+      65 |   await result.click();
+    > 66 |   await expect(page.getByRole('heading', { level: 1, name: '依研究階段開始' })).toBeVisible();
+         |                                                                          ^
+      67 | });
+      68 |
+      69 | test('safety checklist has nine labeled items, resets and does not retain checks on reload', async ({ page }) => {
+        at /home/phonchi/learn_cli/graduate-ai-research-workbench/tests/e2e/research-workflow.spec.ts:66:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: '依研究階段開始', level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByRole('heading', { name: '依研究階段開始', level: 1 })
+
+
+      64 |   await expect(result).toBeVisible();
+      65 |   await result.click();
+    > 66 |   await expect(page.getByRole('heading', { level: 1, name: '依研究階段開始' })).toBeVisible();
+         |                                                                          ^
+      67 | });
+      68 |
+      69 | test('safety checklist has nine labeled items, resets and does not retain checks on reload', async ({ page }) => {
+        at /home/phonchi/learn_cli/graduate-ai-research-workbench/tests/e2e/research-workflow.spec.ts:66:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/research-workflow-site-wid-66a7e-udes-the-new-workflow-guide-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+    [mobile] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide 
+  74 skipped
+  194 passed (27.6s)
+
+> graduate-ai-research-workbench@0.1.0 verify
+> npm run lint && npm run test && npm run build && npm run test:e2e
+
+
+> graduate-ai-research-workbench@0.1.0 lint
+> eslint .
+
+
+> graduate-ai-research-workbench@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /home/phonchi/learn_cli/graduate-ai-research-workbench
+
+
+ Test Files  7 passed (7)
+      Tests  27 passed (27)
+   Start at  15:05:26
+   Duration  290ms (transform 210ms, setup 0ms, import 335ms, tests 313ms, environment 1ms)
+
+
+> graduate-ai-research-workbench@0.1.0 build
+> astro check && astro build && pagefind --site dist
+
+15:05:27 [content] Syncing content
+15:05:27 [content] Synced content
+15:05:27 [types] Generated 404ms
+15:05:27 [check] Getting diagnostics for Astro files in /home/phonchi/learn_cli/graduate-ai-research-workbench...
+Result (49 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
+
+15:05:34 [content] Syncing content
+15:05:34 [content] Synced content
+15:05:34 [types] Generated 389ms
+15:05:34 [build] output: "static"
+15:05:34 [build] mode: "static"
+15:05:34 [build] directory: /home/phonchi/learn_cli/graduate-ai-research-workbench/dist/
+15:05:34 [build] Collecting build info...
+15:05:34 [build] ✓ Completed in 409ms.
+15:05:34 [build] Building static entrypoints...
+15:05:35 [vite] ✓ built in 662ms
+15:05:35 [vite] ✓ built in 23ms
+15:05:35 [build] Rearranging server assets...
+
+ generating static routes 
+15:05:35   ├─ /404.html (+6ms) 
+15:05:35   ├─ /cases/document-cache/index.html (+1ms) 
+15:05:35   ├─ /cases/reproducible-experiment/index.html (+1ms) 
+15:05:35   ├─ /cases/index.html (+3ms) 
+15:05:35   ├─ /cases/algorithm-visualization/index.html (+2ms) 
+15:05:35   ├─ /cases/anonymous-manuscript-review/index.html (+2ms) 
+15:05:35   ├─ /cases/course-site-pages/index.html (+1ms) 
+15:05:35   ├─ /cases/interactive-calculus/index.html (+2ms) 
+15:05:35   ├─ /cases/programmatic-slides/index.html (+2ms) 
+15:05:35   ├─ /content-license/index.html (+2ms) 
+15:05:35   ├─ /guides/research-skills/index.html (+4ms) 
+15:05:35   ├─ /guides/research-workflow/index.html (+3ms) 
+15:05:35   ├─ /learn/01-task-specification/index.html (+1ms) 
+15:05:35   ├─ /learn/02-literature-evidence/index.html (+0ms) 
+15:05:35   ├─ /learn/03-context-knowledge-base/index.html (+0ms) 
+15:05:35   ├─ /learn/04-research-outputs/index.html (+0ms) 
+15:05:35   ├─ /learn/05-reproducibility-git/index.html (+0ms) 
+15:05:35   ├─ /learn/06-verification-review/index.html (+0ms) 
+15:05:35   ├─ /learn/07-workflow-automation/index.html (+0ms) 
+15:05:35   ├─ /learn/index.html (+2ms) 
+15:05:35   ├─ /learn/01-from-chat-to-agent/index.html (+2ms) 
+15:05:35   ├─ /learn/02-ask-before-action/index.html (+1ms) 
+15:05:35   ├─ /learn/03-context-and-indexes/index.html (+2ms) 
+15:05:35   ├─ /learn/04-checkpoints-and-tools/index.html (+1ms) 
+15:05:35   ├─ /learn/05-challenge-and-review/index.html (+1ms) 
+15:05:35   ├─ /learn/06-build-your-toolbox/index.html (+2ms) 
+15:05:35   ├─ /learn/07-reproducible-research/index.html (+1ms) 
+15:05:35   ├─ /safety/index.html (+2ms) 
+15:05:35   ├─ /search/index.html (+1ms) 
+15:05:35   ├─ /skills/academic-writing/index.html (+1ms) 
+15:05:35   ├─ /skills/claim-evidence-mapping/index.html (+0ms) 
+15:05:35   ├─ /skills/context-management/index.html (+0ms) 
+15:05:35   ├─ /skills/counterexample-checking/index.html (+0ms) 
+15:05:35   ├─ /skills/data-provenance/index.html (+0ms) 
+15:05:35   ├─ /skills/git-version-control/index.html (+0ms) 
+15:05:35   ├─ /skills/literature-synthesis/index.html (+0ms) 
+15:05:35   ├─ /skills/reproducible-research/index.html (+0ms) 
+15:05:35   ├─ /skills/skill-design/index.html (+0ms) 
+15:05:35   ├─ /skills/source-verification/index.html (+0ms) 
+15:05:35   ├─ /skills/subagent-delegation/index.html (+0ms) 
+15:05:35   ├─ /skills/task-specification/index.html (+0ms) 
+15:05:35   ├─ /skills/visual-verification/index.html (+0ms) 
+15:05:35   ├─ /skills/index.html (+0ms) 
+15:05:35   ├─ /tasks/index.html (+1ms) 
+15:05:35   ├─ /templates/claim-citation-audit/index.html (+1ms) 
+15:05:35   ├─ /templates/literature-evidence-matrix/index.html (+1ms) 
+15:05:35   ├─ /templates/manuscript-review-checklist/index.html (+0ms) 
+15:05:35   ├─ /templates/presentation-web-qa/index.html (+0ms) 
+15:05:35   ├─ /templates/reproducibility-checklist/index.html (+0ms) 
+15:05:35   ├─ /templates/research-log/index.html (+0ms) 
+15:05:35   ├─ /templates/research-task-brief/index.html (+0ms) 
+15:05:35   ├─ /templates/index.html (+2ms) 
+15:05:35   ├─ /templates/ask-before-action/index.html (+1ms) 
+15:05:35   ├─ /templates/context-cache-index/index.html (+1ms) 
+15:05:35   ├─ /templates/git-checkpoint-release/index.html (+2ms) 
+15:05:35   ├─ /templates/handoff/index.html (+1ms) 
+15:05:35   ├─ /templates/independent-review/index.html (+1ms) 
+15:05:35   ├─ /templates/model-delegation/index.html (+1ms) 
+15:05:35   ├─ /templates/six-part-brief/index.html (+1ms) 
+15:05:35   ├─ /templates/usage-review/index.html (+1ms) 
+15:05:35   ├─ /templates/workspace-rules/index.html (+1ms) 
+15:05:35   ├─ /tools/index.html (+2ms) 
+15:05:35   ├─ /tools/agents-md/index.html (+1ms) 
+15:05:35   ├─ /tools/ask-user-question/index.html (+1ms) 
+15:05:35   ├─ /tools/chatgpt/index.html (+1ms) 
+15:05:35   ├─ /tools/claude-code/index.html (+1ms) 
+15:05:35   ├─ /tools/claude-md/index.html (+1ms) 
+15:05:35   ├─ /tools/codex/index.html (+1ms) 
+15:05:35   ├─ /tools/gemini-cli/index.html (+1ms) 
+15:05:35   ├─ /tools/git-github/index.html (+1ms) 
+15:05:35   ├─ /tools/hook/index.html (+1ms) 
+15:05:35   ├─ /tools/insights/index.html (+1ms) 
+15:05:35   ├─ /tools/mcp/index.html (+1ms) 
+15:05:35   ├─ /tools/notebooklm/index.html (+1ms) 
+15:05:35   ├─ /tools/skill/index.html (+1ms) 
+15:05:35   ├─ /tools/subagent/index.html (+4ms) 
+15:05:35   ├─ /index.html (+4ms) 
+15:05:35 ✓ Completed in 115ms.
+
+15:05:35 [build] ✓ Completed in 825ms.
+15:05:35 [build] 47 page(s) built in 1.24s
+15:05:35 [build] Complete!
+
+Running Pagefind v1.5.2 (Extended)
+Running from: "/home/phonchi/learn_cli/graduate-ai-research-workbench"
+Source:       "dist"
+Output:       "dist/pagefind"
+
+[Walking source directory]
+Found 77 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+30 pages found without an <html> element. 
+Pages without an outer <html> element will not be processed by default. 
+If adding this element is not possible, use the root selector config to target a different root element.
+  * "/skills/source-verification/" has no <html> element
+  * "/skills/" has no <html> element
+  * "/skills/visual-verification/" has no <html> element
+  * "/skills/data-provenance/" has no <html> element
+  * "/skills/subagent-delegation/" has no <html> element
+  * "/skills/counterexample-checking/" has no <html> element
+  * "/skills/context-management/" has no <html> element
+  * "/skills/skill-design/" has no <html> element
+  * "/skills/literature-synthesis/" has no <html> element
+  * "/skills/git-version-control/" has no <html> element
+  * "/skills/reproducible-research/" has no <html> element
+  * "/skills/task-specification/" has no <html> element
+  * "/skills/claim-evidence-mapping/" has no <html> element
+  * "/skills/academic-writing/" has no <html> element
+  * "/cases/document-cache/" has no <html> element
+  * "/cases/reproducible-experiment/" has no <html> element
+  * "/templates/manuscript-review-checklist/" has no <html> element
+  * "/templates/claim-citation-audit/" has no <html> element
+  * "/templates/reproducibility-checklist/" has no <html> element
+  * "/templates/research-log/" has no <html> element
+  * "/templates/research-task-brief/" has no <html> element
+  * "/templates/presentation-web-qa/" has no <html> element
+  * "/templates/literature-evidence-matrix/" has no <html> element
+  * "/learn/06-verification-review/" has no <html> element
+  * "/learn/02-literature-evidence/" has no <html> element
+  * "/learn/04-research-outputs/" has no <html> element
+  * "/learn/03-context-knowledge-base/" has no <html> element
+  * "/learn/05-reproducibility-git/" has no <html> element
+  * "/learn/01-task-specification/" has no <html> element
+  * "/learn/07-workflow-automation/" has no <html> element
+
+[Reading languages]
+Discovered 1 language: zh-hant
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 45 pages
+  Indexed 1798 words
+  Indexed 0 filters
+  Indexed 0 sorts
+Note: Pagefind doesn't support stemming for the language zh-hant. 
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh-hant. 
+Search will still work, but will not match across root words.
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│  Pagefind found references to the Default UI (pagefind-ui.js)           │
+│  on your site. The Default UI is supported and will continue            │
+│  to work.                                                               │
+│                                                                         │
+│  As of 1.5.0, if you are setting up a new integration, use the          │
+│  Component UI instead. It includes a search modal, better               │
+│  accessibility and customization: https://pagefind.app/docs/search-ui/  │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Finished in 0.836 seconds
+
+> graduate-ai-research-workbench@0.1.0 test:e2e
+> playwright test
+
+[WebServer] (node:3331053) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3331237) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 30 pages found without an <html> element. 
+[WebServer] Pages without an outer <html> element will not be processed by default. 
+[WebServer] If adding this element is not possible, use the root selector config to target a different root element.
+[WebServer]   * "/skills/source-verification/" has no <html> element
+[WebServer]   * "/skills/" has no <html> element
+[WebServer]   * "/skills/visual-verification/" has no <html> element
+[WebServer]   * "/skills/data-provenance/" has no <html> element
+[WebServer]   * "/skills/subagent-delegation/" has no <html> element
+[WebServer]   * "/skills/counterexample-checking/" has no <html> element
+[WebServer]   * "/skills/context-management/" has no <html> element
+[WebServer]   * "/skills/skill-design/" has no <html> element
+[WebServer]   * "/skills/literature-synthesis/" has no <html> element
+[WebServer]   * "/skills/git-version-control/" has no <html> element
+[WebServer]   * "/skills/reproducible-research/" has no <html> element
+[WebServer]   * "/skills/task-specification/" has no <html> element
+[WebServer]   * "/skills/claim-evidence-mapping/" has no <html> element
+[WebServer]   * "/skills/academic-writing/" has no <html> element
+[WebServer]   * "/cases/document-cache/" has no <html> element
+[WebServer]   * "/cases/reproducible-experiment/" has no <html> element
+[WebServer]   * "/templates/manuscript-review-checklist/" has no <html> element
+[WebServer]   * "/templates/claim-citation-audit/" has no <html> element
+[WebServer]   * "/templates/reproducibility-checklist/" has no <html> element
+[WebServer]   * "/templates/research-log/" has no <html> element
+[WebServer]   * "/templates/research-task-brief/" has no <html> element
+[WebServer]   * "/templates/presentation-web-qa/" has no <html> element
+[WebServer]   * "/templates/literature-evidence-matrix/" has no <html> element
+[WebServer]   * "/learn/06-verification-review/" has no <html> element
+[WebServer]   * "/learn/02-literature-evidence/" has no <html> element
+[WebServer]   * "/learn/04-research-outputs/" has no <html> element
+[WebServer]   * "/learn/03-context-knowledge-base/" has no <html> element
+[WebServer]   * "/learn/05-reproducibility-git/" has no <html> element
+[WebServer]   * "/learn/01-task-specification/" has no <html> element
+[WebServer]   * "/learn/07-workflow-automation/" has no <html> element
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] Note: Pagefind doesn't support stemming for the language zh-hant. 
+[WebServer] Search will still work, but will not match across root words.
+[WebServer] (node:3331523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 270 tests using 14 workers
+
+(node:3331547) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331560) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331579) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331550) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331597) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331578) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331546) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331554) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331561) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331630) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331629) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3331623) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    4 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link experiment selects experiment (817ms)
+  ✓    5 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link publish selects write (881ms)
+  ✓    8 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link read selects read (837ms)
+  ✓    1 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link write selects write (957ms)
+  ✓    7 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link automate selects plan (910ms)
+  ✓   10 [desktop] › tests/e2e/research-skills.spec.ts:43:3 › old task link present selects present (882ms)
+  ✓   11 [desktop] › tests/e2e/research-skills.spec.ts:53:1 › direct card links open details and invalid filters fall back to all categories (915ms)
+  ✓    9 [desktop] › tests/e2e/research-skills.spec.ts:7:1 › homepage searches skills directly (1.1s)
+  ✓    3 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds grill-me (1.5s)
+  ✓   13 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds evals (1.3s)
+  ✓   14 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds spec (1.3s)
+  ✓   18 [desktop] › tests/e2e/research-skills.spec.ts:92:1 › lesson tables render as tables, not Markdown code (650ms)
+  ✓   12 [desktop] › tests/e2e/research-skills.spec.ts:18:1 › cards support searching, combining categories, resetting, and sharing (1.4s)
+  ✓   20 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › independent-review previews, copies and downloads its Markdown (799ms)
+  ✓   19 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › context-cache-index previews, copies and downloads its Markdown (865ms)
+  ✓   21 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › usage-review previews, copies and downloads its Markdown (845ms)
+  ✓   22 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › handoff previews, copies and downloads its Markdown (745ms)
+  ✓   16 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Hook (1.1s)
+  ✓   15 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds handoff (1.1s)
+  ✓   17 [desktop] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Colab (1.2s)
+  ✓   27 [desktop] › tests/e2e/research-skills.spec.ts:146:3 › without JavaScript › the old tasks page offers links to the new catalog (585ms)
+  ✓    6 [desktop] › tests/e2e/research-skills.spec.ts:62:1 › guide links from lessons and templates still resolve (2.2s)
+  ✓   23 [desktop] › tests/e2e/research-skills.spec.ts:101:3 › model-delegation previews, copies and downloads its Markdown (793ms)
+  ✓   25 [desktop] › tests/e2e/research-skills.spec.ts:134:3 › without JavaScript › all skills and native details remain readable (1.3s)
+  ✓   31 [desktop] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide (1.2s)
+  ✓   30 [desktop] › tests/e2e/research-workflow.spec.ts:40:1 › HTML reports are discoverable by use, category, permalink and lesson (1.5s)
+  ✓   29 [desktop] › tests/e2e/research-workflow.spec.ts:20:1 › each prompt copies its own full text and reports clipboard failure (1.6s)
+  ✓   37 [desktop] › tests/e2e/visual.spec.ts:15:3 › research-skills fits the viewport and renders its visual assets (1.3s)
+  ✓   35 [desktop] › tests/e2e/visual.spec.ts:15:3 › research-workflow fits the viewport and renders its visual assets (1.4s)
+  ✓   36 [desktop] › tests/e2e/visual.spec.ts:15:3 › home fits the viewport and renders its visual assets (1.4s)
+  ✓   38 [desktop] › tests/e2e/visual.spec.ts:15:3 › lesson-7 fits the viewport and renders its visual assets (1.2s)
+  ✓   44 [desktop] › tests/e2e/workbench.spec.ts:63:1 › the standalone learning path ships seven lessons (383ms)
+  ✓   28 [desktop] › tests/e2e/research-workflow.spec.ts:4:1 › homepage stages reach the matching guide sections and existing resources (2.4s)
+  ✓   43 [desktop] › tests/e2e/workbench.spec.ts:52:1 › homepage introduces an agent-first learning journey with three clear entry points (542ms)
+  ✓   39 [desktop] › tests/e2e/visual.spec.ts:15:3 › tools fits the viewport and renders its visual assets (1.0s)
+  ✓   41 [desktop] › tests/e2e/visual.spec.ts:15:3 › cases fits the viewport and renders its visual assets (922ms)
+  ✓   46 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/ has no presentation-dependent framing (385ms)
+  ✓   45 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./ has no presentation-dependent framing (500ms)
+  ✓   40 [desktop] › tests/e2e/visual.spec.ts:15:3 › tasks fits the viewport and renders its visual assets (1.2s)
+  ✓   32 [desktop] › tests/e2e/research-workflow.spec.ts:69:1 › safety checklist has nine labeled items, resets and does not retain checks on reload (2.7s)
+  ✓   48 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/ has no presentation-dependent framing (417ms)
+  ✓   49 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ has no presentation-dependent framing (363ms)
+  ✓   47 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ has no presentation-dependent framing (462ms)
+  ✓   34 [desktop] › tests/e2e/research-workflow.spec.ts:103:3 › without JavaScript › workflow prompts, resource links and checklist remain usable (2.8s)
+  ✓   42 [desktop] › tests/e2e/visual.spec.ts:15:3 › safety fits the viewport and renders its visual assets (1.4s)
+  ✓   51 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-workflow/ has no presentation-dependent framing (542ms)
+  ✓   52 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/01-from-chat-to-agent/ has no presentation-dependent framing (530ms)
+  ✓   50 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-skills/ has no presentation-dependent framing (647ms)
+  ✓   55 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/05-challenge-and-review/ has no presentation-dependent framing (535ms)
+  ✓   53 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/04-checkpoints-and-tools/ has no presentation-dependent framing (575ms)
+  ✓   56 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/02-ask-before-action/ has no presentation-dependent framing (602ms)
+  ✓   54 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/03-context-and-indexes/ has no presentation-dependent framing (613ms)
+  ✓   57 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/06-build-your-toolbox/ has no presentation-dependent framing (584ms)
+  ✓   59 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/agents-md/ has no presentation-dependent framing (518ms)
+  ✓   60 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ask-user-question/ has no presentation-dependent framing (531ms)
+  ✓   61 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/chatgpt/ has no presentation-dependent framing (516ms)
+  ✓   62 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-code/ has no presentation-dependent framing (508ms)
+  ✓   58 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/07-reproducible-research/ has no presentation-dependent framing (719ms)
+  ✓   63 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-md/ has no presentation-dependent framing (514ms)
+  ✓   65 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/gemini-cli/ has no presentation-dependent framing (523ms)
+  ✓    2 [desktop] › tests/e2e/links.spec.ts:4:1 › all discoverable internal links resolve (5.9s)
+  ✓   66 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/git-github/ has no presentation-dependent framing (547ms)
+  ✓   64 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/codex/ has no presentation-dependent framing (623ms)
+  ✓   67 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/hook/ has no presentation-dependent framing (602ms)
+  ✓   33 [desktop] › tests/e2e/research-workflow.spec.ts:89:1 › expanded workflow and safety checklist remain accessible with no runtime errors (4.0s)
+  ✓   68 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/insights/ has no presentation-dependent framing (547ms)
+  ✓   69 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/mcp/ has no presentation-dependent framing (560ms)
+  ✓   70 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/notebooklm/ has no presentation-dependent framing (529ms)
+  ✓   71 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/skill/ has no presentation-dependent framing (535ms)
+  ✓   72 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/subagent/ has no presentation-dependent framing (559ms)
+  ✓   73 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/algorithm-visualization/ has no presentation-dependent framing (516ms)
+  ✓   74 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/anonymous-manuscript-review/ has no presentation-dependent framing (468ms)
+  ✓   76 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/programmatic-slides/ has no presentation-dependent framing (538ms)
+  ✓   26 [desktop] › tests/e2e/research-skills.spec.ts:153:1 › model delegation is directly reachable from the homepage and skill catalog (4.9s)
+  ✓   75 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/interactive-calculus/ has no presentation-dependent framing (596ms)
+  ✓   77 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ask-before-action/ has no presentation-dependent framing (564ms)
+  ✓   78 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/course-site-pages/ has no presentation-dependent framing (537ms)
+  ✓   79 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/context-cache-index/ has no presentation-dependent framing (528ms)
+  ✓   80 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/git-checkpoint-release/ has no presentation-dependent framing (541ms)
+  ✓   81 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/independent-review/ has no presentation-dependent framing (488ms)
+  ✓   82 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/handoff/ has no presentation-dependent framing (483ms)
+  ✓   84 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/six-part-brief/ has no presentation-dependent framing (476ms)
+  ✓   83 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/model-delegation/ has no presentation-dependent framing (565ms)
+  ✓   85 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/usage-review/ has no presentation-dependent framing (521ms)
+  ✓   86 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/workspace-rules/ has no presentation-dependent framing (504ms)
+  ✓   88 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./content-license/ has no presentation-dependent framing (393ms)
+  ✓   90 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./search/ has no presentation-dependent framing (459ms)
+  ✓   87 [desktop] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./safety/ has no presentation-dependent framing (537ms)
+  ✓   89 [desktop] › tests/e2e/workbench.spec.ts:84:1 › lesson seven exposes outcomes, prerequisites, tools, and two to four named references (879ms)
+  ✓   97 [desktop] › tests/e2e/workbench.spec.ts:211:1 › lesson pages teach presentation concepts through named tools and a usable prompt (612ms)
+  ✓   99 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/01-task-specification/ redirects to ./learn/02-ask-before-action/ (588ms)
+  ✓   96 [desktop] › tests/e2e/workbench.spec.ts:194:1 › research safety covers data, privilege, injection, secrets, publication, and policy (671ms)
+  ✓   95 [desktop] › tests/e2e/workbench.spec.ts:181:1 › case catalog shows the remaining research work and redirects retired examples (734ms)
+  ✓   91 [desktop] › tests/e2e/workbench.spec.ts:103:1 › tool glossary filters named products and concepts with a resettable empty state (923ms)
+  ✓   92 [desktop] › tests/e2e/workbench.spec.ts:117:1 › tool glossary includes multi-interface agents in type and level filters (941ms)
+  ✓  100 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/02-literature-evidence/ redirects to ./learn/03-context-and-indexes/ (614ms)
+  ✓  102 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/04-research-outputs/ redirects to ./learn/02-ask-before-action/ (587ms)
+  ✓  101 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/03-context-knowledge-base/ redirects to ./learn/03-context-and-indexes/ (671ms)
+  ✓   93 [desktop] › tests/e2e/workbench.spec.ts:139:1 › capability filters surface agents and source-grounded tools (1.1s)
+  ✓   94 [desktop] › tests/e2e/workbench.spec.ts:166:1 › tool cards and details expose all six capability facets (1.2s)
+  ✓  103 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/05-reproducibility-git/ redirects to ./learn/04-checkpoints-and-tools/ (535ms)
+  ✓  104 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/06-verification-review/ redirects to ./learn/05-challenge-and-review/ (570ms)
+  ✓  107 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/academic-writing/ redirects to ./guides/research-skills/#write (549ms)
+  ✓  106 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/ redirects to ./tools/ (559ms)
+  ✓  108 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/claim-evidence-mapping/ redirects to ./learn/05-challenge-and-review/ (552ms)
+  ✓  105 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/07-workflow-automation/ redirects to ./learn/06-build-your-toolbox/ (613ms)
+  ✓  110 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/counterexample-checking/ redirects to ./learn/05-challenge-and-review/ (578ms)
+  ✓   98 [desktop] › tests/e2e/workbench.spec.ts:220:1 › Pagefind returns the AskUserQuestion tool result and follows its destination (1.3s)
+  ✓  111 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/data-provenance/ redirects to ./learn/04-checkpoints-and-tools/ (565ms)
+  ✓  112 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/git-version-control/ redirects to ./tools/git-github/ (496ms)
+  ✓  109 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/context-management/ redirects to ./learn/03-context-and-indexes/ (684ms)
+  ✓  113 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/literature-synthesis/ redirects to ./learn/03-context-and-indexes/ (601ms)
+  ✓  115 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/skill-design/ redirects to ./tools/skill/ (468ms)
+  ✓  114 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/reproducible-research/ redirects to ./learn/04-checkpoints-and-tools/ (549ms)
+  ✓  117 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/subagent-delegation/ redirects to ./tools/subagent/ (443ms)
+  ✓  120 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/claim-citation-audit/ redirects to ./templates/independent-review/ (452ms)
+  ✓  119 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/visual-verification/ redirects to ./learn/05-challenge-and-review/ (492ms)
+  ✓  116 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/source-verification/ redirects to ./learn/05-challenge-and-review/ (531ms)
+  ✓   24 [desktop] › tests/e2e/research-skills.spec.ts:123:1 › catalog and expanded templates are accessible and fit the viewport (7.2s)
+  ✓  121 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/literature-evidence-matrix/ redirects to ./templates/context-cache-index/ (448ms)
+  ✓  118 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/task-specification/ redirects to ./learn/02-ask-before-action/ (558ms)
+  ✓  122 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/manuscript-review-checklist/ redirects to ./templates/independent-review/ (436ms)
+  ✓  123 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/presentation-web-qa/ redirects to ./templates/git-checkpoint-release/ (464ms)
+  ✓  124 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/reproducibility-checklist/ redirects to ./templates/git-checkpoint-release/ (467ms)
+  -  128 [desktop] › tests/e2e/workbench.spec.ts:265:1 › mobile navigation opens without covering the menu control
+  ✓  125 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-log/ redirects to ./templates/usage-review/ (509ms)
+  ✓  126 [desktop] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-task-brief/ redirects to ./templates/six-part-brief/ (464ms)
+  ✓  127 [desktop] › tests/e2e/workbench.spec.ts:249:1 › templates can be copied and downloaded as Markdown (575ms)
+  ✓  135 [desktop] › tests/e2e/workbench.spec.ts:301:3 › without JavaScript › navigation and lesson content remain readable (561ms)
+(node:3335413) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3335430) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3335440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3335424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3335456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3335483) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3335491) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3335501) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  132 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./templates/six-part-brief/ has no automatically detectable accessibility violations (1.3s)
+  ✓  131 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./tools/notebooklm/ has no automatically detectable accessibility violations (1.5s)
+  ✓  134 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./safety/ has no automatically detectable accessibility violations (1.6s)
+  ✓  129 [desktop] › tests/e2e/workbench.spec.ts:278:1 › homepage has no automatically detectable accessibility violations (2.0s)
+  ✓  130 [desktop] › tests/e2e/workbench.spec.ts:285:3 › ./learn/02-ask-before-action/ has no automatically detectable accessibility violations (2.0s)
+  ✓  138 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link read selects read (904ms)
+  ✓  140 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link write selects write (905ms)
+  ✓  141 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link experiment selects experiment (779ms)
+(node:3336109) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  139 [mobile] › tests/e2e/research-skills.spec.ts:7:1 › homepage searches skills directly (1.1s)
+(node:3336229) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3336243) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  142 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link present selects present (1.0s)
+  ✓  143 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link publish selects write (942ms)
+(node:3336285) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3336295) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  137 [mobile] › tests/e2e/research-skills.spec.ts:18:1 › cards support searching, combining categories, resetting, and sharing (1.8s)
+  ✓  133 [desktop] › tests/e2e/workbench.spec.ts:292:1 › /tools/ has no automatically detectable accessibility violations (2.9s)
+  ✓  149 [mobile] › tests/e2e/research-skills.spec.ts:92:1 › lesson tables render as tables, not Markdown code (710ms)
+  ✓  144 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds evals (1.2s)
+  ✓  145 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds handoff (1.3s)
+  ✓  146 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Hook (1.2s)
+  ✓  148 [mobile] › tests/e2e/research-skills.spec.ts:43:3 › old task link automate selects plan (1.0s)
+  ✓  152 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › context-cache-index previews, copies and downloads its Markdown (864ms)
+  ✓  147 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds Colab (1.3s)
+  ✓  150 [mobile] › tests/e2e/research-skills.spec.ts:53:1 › direct card links open details and invalid filters fall back to all categories (1.0s)
+(node:3336899) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  154 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › independent-review previews, copies and downloads its Markdown (879ms)
+  ✓  156 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › handoff previews, copies and downloads its Markdown (826ms)
+  ✓  157 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › model-delegation previews, copies and downloads its Markdown (878ms)
+  ✓  160 [mobile] › tests/e2e/research-skills.spec.ts:146:3 › without JavaScript › the old tasks page offers links to the new catalog (886ms)
+  ✓  153 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds grill-me (1.5s)
+  ✓  155 [mobile] › tests/e2e/research-skills.spec.ts:82:3 › site-wide search finds spec (1.4s)
+  ✓  159 [mobile] › tests/e2e/research-skills.spec.ts:134:3 › without JavaScript › all skills and native details remain readable (1.3s)
+  ✓  151 [mobile] › tests/e2e/research-skills.spec.ts:62:1 › guide links from lessons and templates still resolve (2.2s)
+  ✓  165 [mobile] › tests/e2e/research-skills.spec.ts:101:3 › usage-review previews, copies and downloads its Markdown (1.1s)
+  ✓  166 [mobile] › tests/e2e/research-workflow.spec.ts:59:1 › site-wide search includes the new workflow guide (1.3s)
+  ✓  163 [mobile] › tests/e2e/research-workflow.spec.ts:20:1 › each prompt copies its own full text and reports clipboard failure (1.7s)
+  ✓  164 [mobile] › tests/e2e/research-workflow.spec.ts:40:1 › HTML reports are discoverable by use, category, permalink and lesson (1.6s)
+  ✓  136 [mobile] › tests/e2e/links.spec.ts:4:1 › all discoverable internal links resolve (5.1s)
+  ✓  170 [mobile] › tests/e2e/visual.spec.ts:15:3 › research-workflow fits the viewport and renders its visual assets (2.0s)
+  ✓  162 [mobile] › tests/e2e/research-workflow.spec.ts:4:1 › homepage stages reach the matching guide sections and existing resources (3.0s)
+  ✓  171 [mobile] › tests/e2e/visual.spec.ts:15:3 › research-skills fits the viewport and renders its visual assets (1.8s)
+  -  180 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./ has no presentation-dependent framing
+  ✓  176 [mobile] › tests/e2e/visual.spec.ts:15:3 › cases fits the viewport and renders its visual assets (1.4s)
+  ✓  167 [mobile] › tests/e2e/research-workflow.spec.ts:69:1 › safety checklist has nine labeled items, resets and does not retain checks on reload (2.7s)
+  -  181 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/ has no presentation-dependent framing
+  -  182 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ has no presentation-dependent framing
+  -  183 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/ has no presentation-dependent framing
+  ✓  179 [mobile] › tests/e2e/workbench.spec.ts:63:1 › the standalone learning path ships seven lessons (537ms)
+  -  184 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ has no presentation-dependent framing
+  -  185 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-skills/ has no presentation-dependent framing
+  ✓  178 [mobile] › tests/e2e/workbench.spec.ts:52:1 › homepage introduces an agent-first learning journey with three clear entry points (663ms)
+  ✓  173 [mobile] › tests/e2e/visual.spec.ts:15:3 › lesson-7 fits the viewport and renders its visual assets (2.0s)
+  -  186 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./guides/research-workflow/ has no presentation-dependent framing
+  ✓  172 [mobile] › tests/e2e/visual.spec.ts:15:3 › home fits the viewport and renders its visual assets (2.3s)
+  -  187 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/01-from-chat-to-agent/ has no presentation-dependent framing
+  ✓  169 [mobile] › tests/e2e/research-workflow.spec.ts:103:3 › without JavaScript › workflow prompts, resource links and checklist remain usable (2.8s)
+  -  188 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/02-ask-before-action/ has no presentation-dependent framing
+  -  189 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/03-context-and-indexes/ has no presentation-dependent framing
+  -  191 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/06-build-your-toolbox/ has no presentation-dependent framing
+  -  190 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/04-checkpoints-and-tools/ has no presentation-dependent framing
+  -  192 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/05-challenge-and-review/ has no presentation-dependent framing
+  -  193 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./learn/07-reproducible-research/ has no presentation-dependent framing
+  ✓  175 [mobile] › tests/e2e/visual.spec.ts:15:3 › tasks fits the viewport and renders its visual assets (2.1s)
+  -  194 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/agents-md/ has no presentation-dependent framing
+  -  195 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/ask-user-question/ has no presentation-dependent framing
+  -  196 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/chatgpt/ has no presentation-dependent framing
+  ✓  174 [mobile] › tests/e2e/visual.spec.ts:15:3 › tools fits the viewport and renders its visual assets (2.2s)
+  -  197 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-code/ has no presentation-dependent framing
+  -  200 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/gemini-cli/ has no presentation-dependent framing
+  -  198 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/codex/ has no presentation-dependent framing
+  -  199 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/claude-md/ has no presentation-dependent framing
+  -  202 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/insights/ has no presentation-dependent framing
+  -  201 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/git-github/ has no presentation-dependent framing
+  -  204 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/mcp/ has no presentation-dependent framing
+  -  203 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/hook/ has no presentation-dependent framing
+  -  205 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/notebooklm/ has no presentation-dependent framing
+  -  206 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/subagent/ has no presentation-dependent framing
+  ✓  168 [mobile] › tests/e2e/research-workflow.spec.ts:89:1 › expanded workflow and safety checklist remain accessible with no runtime errors (3.4s)
+  -  207 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./tools/skill/ has no presentation-dependent framing
+  -  210 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/course-site-pages/ has no presentation-dependent framing
+  -  208 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/algorithm-visualization/ has no presentation-dependent framing
+  -  209 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/anonymous-manuscript-review/ has no presentation-dependent framing
+  -  212 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/programmatic-slides/ has no presentation-dependent framing
+  -  211 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./cases/interactive-calculus/ has no presentation-dependent framing
+  -  213 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/git-checkpoint-release/ has no presentation-dependent framing
+  -  214 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/ask-before-action/ has no presentation-dependent framing
+  -  216 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/handoff/ has no presentation-dependent framing
+  -  215 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/context-cache-index/ has no presentation-dependent framing
+  -  218 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/independent-review/ has no presentation-dependent framing
+  -  217 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/model-delegation/ has no presentation-dependent framing
+  -  219 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/six-part-brief/ has no presentation-dependent framing
+  -  220 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/usage-review/ has no presentation-dependent framing
+  -  221 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./templates/workspace-rules/ has no presentation-dependent framing
+  -  222 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./safety/ has no presentation-dependent framing
+  -  223 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./search/ has no presentation-dependent framing
+  -  225 [mobile] › tests/e2e/workbench.spec.ts:74:5 › public content presentation independence › ./content-license/ has no presentation-dependent framing
+  -  235 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/02-literature-evidence/ redirects to ./learn/03-context-and-indexes/
+  -  234 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/01-task-specification/ redirects to ./learn/02-ask-before-action/
+  ✓  177 [mobile] › tests/e2e/visual.spec.ts:15:3 › safety fits the viewport and renders its visual assets (2.3s)
+  -  236 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/03-context-knowledge-base/ redirects to ./learn/03-context-and-indexes/
+  -  237 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/04-research-outputs/ redirects to ./learn/02-ask-before-action/
+  ✓  232 [mobile] › tests/e2e/workbench.spec.ts:211:1 › lesson pages teach presentation concepts through named tools and a usable prompt (546ms)
+  -  238 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/06-verification-review/ redirects to ./learn/05-challenge-and-review/
+  -  240 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/05-reproducibility-git/ redirects to ./learn/04-checkpoints-and-tools/
+  -  239 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./learn/07-workflow-automation/ redirects to ./learn/06-build-your-toolbox/
+  ✓  229 [mobile] › tests/e2e/workbench.spec.ts:181:1 › case catalog shows the remaining research work and redirects retired examples (610ms)
+  ✓  224 [mobile] › tests/e2e/workbench.spec.ts:84:1 › lesson seven exposes outcomes, prerequisites, tools, and two to four named references (709ms)
+  ✓  230 [mobile] › tests/e2e/workbench.spec.ts:194:1 › research safety covers data, privilege, injection, secrets, publication, and policy (617ms)
+  ✓  226 [mobile] › tests/e2e/workbench.spec.ts:103:1 › tool glossary filters named products and concepts with a resettable empty state (765ms)
+  -  241 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/ redirects to ./tools/
+  ✓  227 [mobile] › tests/e2e/workbench.spec.ts:117:1 › tool glossary includes multi-interface agents in type and level filters (804ms)
+  -  244 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/context-management/ redirects to ./learn/03-context-and-indexes/
+  -  242 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/academic-writing/ redirects to ./guides/research-skills/#write
+  -  245 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/counterexample-checking/ redirects to ./learn/05-challenge-and-review/
+  -  243 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/claim-evidence-mapping/ redirects to ./learn/05-challenge-and-review/
+  -  247 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/git-version-control/ redirects to ./tools/git-github/
+  -  246 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/data-provenance/ redirects to ./learn/04-checkpoints-and-tools/
+  ✓  158 [mobile] › tests/e2e/research-skills.spec.ts:123:1 › catalog and expanded templates are accessible and fit the viewport (5.5s)
+  -  248 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/literature-synthesis/ redirects to ./learn/03-context-and-indexes/
+  ✓  228 [mobile] › tests/e2e/workbench.spec.ts:139:1 › capability filters surface agents and source-grounded tools (949ms)
+  -  251 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/subagent-delegation/ redirects to ./tools/subagent/
+  -  252 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/source-verification/ redirects to ./learn/05-challenge-and-review/
+  -  249 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/reproducible-research/ redirects to ./learn/04-checkpoints-and-tools/
+  -  250 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/skill-design/ redirects to ./tools/skill/
+  -  254 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/visual-verification/ redirects to ./learn/05-challenge-and-review/
+  -  253 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./skills/task-specification/ redirects to ./learn/02-ask-before-action/
+  ✓  231 [mobile] › tests/e2e/workbench.spec.ts:166:1 › tool cards and details expose all six capability facets (987ms)
+  -  256 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/literature-evidence-matrix/ redirects to ./templates/context-cache-index/
+  -  255 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/claim-citation-audit/ redirects to ./templates/independent-review/
+  -  257 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/presentation-web-qa/ redirects to ./templates/git-checkpoint-release/
+  -  259 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/reproducibility-checklist/ redirects to ./templates/git-checkpoint-release/
+  -  258 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/manuscript-review-checklist/ redirects to ./templates/independent-review/
+  -  261 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-task-brief/ redirects to ./templates/six-part-brief/
+  -  260 [mobile] › tests/e2e/workbench.spec.ts:239:5 › legacy redirects › ./templates/research-log/ redirects to ./templates/usage-review/
+  ✓  233 [mobile] › tests/e2e/workbench.spec.ts:220:1 › Pagefind returns the AskUserQuestion tool result and follows its destination (1.1s)
+  ✓  262 [mobile] › tests/e2e/workbench.spec.ts:249:1 › templates can be copied and downloaded as Markdown (582ms)
+  ✓  263 [mobile] › tests/e2e/workbench.spec.ts:265:1 › mobile navigation opens without covering the menu control (606ms)
+  ✓  270 [mobile] › tests/e2e/workbench.spec.ts:301:3 › without JavaScript › navigation and lesson content remain readable (582ms)
+  ✓  161 [mobile] › tests/e2e/research-skills.spec.ts:153:1 › model delegation is directly reachable from the homepage and skill catalog (6.4s)
+  ✓  267 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./templates/six-part-brief/ has no automatically detectable accessibility violations (1.1s)
+  ✓  266 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./tools/notebooklm/ has no automatically detectable accessibility violations (1.1s)
+  ✓  268 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./safety/ has no automatically detectable accessibility violations (1.2s)
+  ✓  264 [mobile] › tests/e2e/workbench.spec.ts:285:3 › ./learn/02-ask-before-action/ has no automatically detectable accessibility violations (1.4s)
+  ✓  265 [mobile] › tests/e2e/workbench.spec.ts:278:1 › homepage has no automatically detectable accessibility violations (1.4s)
+  ✓  269 [mobile] › tests/e2e/workbench.spec.ts:292:1 › /tools/ has no automatically detectable accessibility violations (1.7s)
+
+  74 skipped
+  196 passed (30.2s)

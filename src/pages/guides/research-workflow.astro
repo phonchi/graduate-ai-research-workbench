@@ -1,0 +1,89 @@
+---
+import { ArrowLeft, ArrowRight, Copy } from 'lucide-astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { buildSitePath } from '../../lib/site';
+import { researchWorkflow } from '../../data/research-workflow';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="依研究階段開始" description="從選題、文獻檢索與閱讀，到研究設計、寫作與傳播，找到 AI 可以協助的工作、人工查核重點與可直接修改的交辦範例。">
+  <header class="page-header"><div>
+    <a class="back-link" href={buildSitePath(base, '/')}><ArrowLeft size={16} aria-hidden="true" />研究工作台首頁</a>
+    <h1 data-pagefind-meta="title">依研究階段開始</h1>
+    <p>先看你現在卡在哪一步，再選適合的工具。研究常會回到前一步，不必依序做完才往下讀。</p>
+  </div></header>
+
+  <div class="page-band workflow-guide">
+    <nav class="workflow-nav" aria-label="研究階段">
+      <ol>{researchWorkflow.map((stage, index) => <li><a href={`#${stage.id}`}><span>{String(index + 1).padStart(2, '0')}</span>{stage.title}</a></li>)}</ol>
+    </nav>
+    <p class="workflow-note">你設定問題、方法與判準，AI 協助整理與執行；重要內容仍要回到來源查證。開始前可先看<a href={`${buildSitePath(base, '/safety/')}#research-checklist`}>研究安全檢核</a>。各校資源與規範不同，請向所屬圖書館、系所或研究計畫確認。</p>
+
+    {researchWorkflow.map((stage, index) => <section id={stage.id} class="workflow-stage" aria-labelledby={`${stage.id}-title`}>
+      <header><span class="section-kicker">研究階段 {String(index + 1).padStart(2, '0')}</span><h2 id={`${stage.id}-title`}>{stage.title}</h2><p>{stage.summary}</p></header>
+      <dl class="workflow-responsibilities">
+        <div><dt>先準備什麼</dt><dd>{stage.prepare}</dd></div>
+        <div><dt>AI 可以協助</dt><dd>{stage.assistance}</dd></div>
+        <div><dt>自己要查核什麼</dt><dd>{stage.check}</dd></div>
+      </dl>
+      <details class="workflow-prompt">
+        <summary>查看「{stage.title}」交辦範例</summary>
+        <p>先填入自己的材料與條件，再交給 AI。讀不到來源或條件未釐清時，請它先回報。</p>
+        <pre tabindex="0"><code data-workflow-prompt>{stage.prompt}</code></pre>
+        <button type="button" class="button secondary workflow-copy" data-copy-workflow aria-label={`複製${stage.title}交辦範例`}><Copy size={16} aria-hidden="true" />複製交辦範例</button>
+        <p class="workflow-copy-status" role="status" aria-live="polite"></p>
+      </details>
+      <nav class="workflow-resources" aria-label={`${stage.title}相關教材`}><strong>接著可以用</strong><ul>{stage.links.map((link) => <li><a href={`${buildSitePath(base, link.route)}${link.hash ? `#${link.hash}` : ''}`}>{link.label}<ArrowRight size={15} aria-hidden="true" /></a></li>)}</ul></nav>
+    </section>)}
+
+    <aside class="workflow-reference prose" aria-label="參考來源">
+      <h2>來源與下一步</h2>
+      <p>本頁參考<a href="https://ncku-ai-literacy-research.em65780.chatgpt.site/">成大圖書館「AI 素養與研究支援」</a>的研究流程導引，依本工作台既有教材重新整理交辦範例與學習入口。校內訂閱資源與服務請查詢所屬機構；本頁不代表成大圖書館提供服務。</p>
+      <p>第一次使用 Agent，可以從<a href={buildSitePath(base, '/learn/')}>概念與習慣</a>開始；已經知道要做什麼，直接到<a href={buildSitePath(base, '/guides/research-skills/')}>技能工具箱</a>找用法。</p>
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.workflow-prompt').forEach((panel) => {
+    panel.querySelector<HTMLButtonElement>('[data-copy-workflow]')?.addEventListener('click', async () => {
+      const status = panel.querySelector<HTMLElement>('.workflow-copy-status');
+      const text = panel.querySelector<HTMLElement>('[data-workflow-prompt]')?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        if (status) status.textContent = '已複製交辦範例，請填入自己的材料與條件。';
+      } catch {
+        if (status) status.textContent = '無法自動複製，請選取上方文字手動複製。';
+      }
+    });
+  });
+</script>
+
+<style>
+  .workflow-guide { padding-top: 32px; }
+  .workflow-nav ol { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin: 0; padding: 0; }
+  .workflow-nav a { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); text-decoration: none; }
+  .workflow-nav span { color: var(--coral); font-weight: 750; }
+  .workflow-nav a:hover { background: var(--surface-soft); }
+  .workflow-note { max-width: var(--reading); margin: 28px 0 0; color: var(--muted); }
+  .workflow-note a, .workflow-resources a { color: var(--teal-dark); }
+  .workflow-stage { padding: 48px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 100px; }
+  .workflow-stage h2 { margin: 8px 0; font-family: Georgia, "Noto Serif TC", serif; font-size: clamp(1.6rem, 3vw, 2.15rem); line-height: 1.3; }
+  .workflow-stage header > p { margin: 0 0 24px; color: var(--muted); }
+  .workflow-responsibilities { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0 0 28px; }
+  .workflow-responsibilities div { padding: 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+  .workflow-responsibilities dt { margin-bottom: 10px; font-weight: 750; }
+  .workflow-responsibilities dd { margin: 0; color: var(--muted); }
+  .workflow-prompt { max-width: var(--reading); padding: 0 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-soft); }
+  .workflow-prompt summary { padding: 16px 0; color: var(--teal-dark); font-weight: 750; cursor: pointer; }
+  .workflow-prompt pre { padding: 18px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); white-space: pre-wrap; overflow-wrap: anywhere; font-size: .95rem; }
+  .workflow-copy-status { min-height: 1.65em; color: var(--teal-dark); }
+  :global(.no-js) .workflow-copy, :global(.no-js) .workflow-copy-status { display: none; }
+  .workflow-resources { margin-top: 24px; }
+  .workflow-resources ul { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; margin: 8px 0 0; padding: 0; }
+  .workflow-resources a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
+  .workflow-resources svg { flex-shrink: 0; }
+  .workflow-reference { max-width: var(--reading); }
+  p, dd, a { text-wrap: pretty; }
+  @media (max-width: 760px) { .workflow-responsibilities { grid-template-columns: 1fr; gap: 12px; } .workflow-stage { padding: 36px 0; } .workflow-resources ul { display: block; } }
+</style>

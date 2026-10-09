@@ -12,7 +12,7 @@ const collectionSlugs = (collection: string) => readdirSync(`src/content/${colle
   .map((file) => file.replace(/\.mdx?$/, ''));
 const toolCount = collectionSlugs('tools').length;
 const publicContentRoutes = [
-  './', './learn/', './tools/', './cases/', './templates/', './guides/research-skills/',
+  './', './learn/', './tools/', './cases/', './templates/', './guides/research-skills/', './guides/research-workflow/',
   ...Object.entries({ lessons: 'learn', tools: 'tools', cases: 'cases', templates: 'templates' })
     .flatMap(([collection, route]) => collectionSlugs(collection).map((slug) => `./${route}/${slug}/`)),
   './safety/', './search/', './content-license/',
